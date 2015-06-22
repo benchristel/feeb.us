@@ -44,15 +44,22 @@
         }
       }
 
-      function stopVideo() {
-        player.stopVideo();
+      function playVideo() {
+        $('#pause').show();
+        $('#play').hide();
+        player.playVideo();
       }
 
       function pauseVideo() {
-        player.pauseVideo()
+        $('#pause').hide();
+        $('#play').show();
+        player.pauseVideo();
       }
 
-      $('body').append($('<button>Pause</button>').click(pauseVideo))
+      $('body')
+        .append($('<button id="pause">Pause</button>').click(pauseVideo))
+        .append($('<button id="play">Play</button>').click(playVideo).hide())
+
     </script>
   </body>
 </html>

@@ -34,14 +34,14 @@
             {
               height: '390',
               width: '640',
-              videoId: 'au3-hk-pXsM',
+              videoId: this.queue.current().getId(),
               events: {
                 'onReady': function() { player.onReady() },
                 'onStateChange': function(event) { player.onStateChange(event) }
               }
             }
           )
-          
+
           this.playButton.show()
           this.pauseButton.hide()
         }
@@ -65,19 +65,71 @@
 
         onStateChange(event) {
           console.log('changed to: '+event.data)
+          if (event.data === YT.PlayerState.ENDED) {
+            this.queue.advance()
+            this.youtubePlayer.cueVideoById({videoId: this.queue.current().id})
+            this.youtubePlayer.playVideo()
+          }
         }
       }
 
       Player.instanceCount = 0;
 
+      class VideoQueue {
+        constructor() {
+          this.currentIndex = 0;
+          this.videos = []
+        }
+
+        add(video) {
+          this.videos.push(video)
+          return this
+        }
+
+        current() {
+          var video = this.videos[this.currentIndex]
+          if (!video) {
+            video = new NullVideo()
+          }
+          return video
+        }
+
+        advance() {
+          this.currentIndex++
+          if (this.currentIndex >= this.videos.length) {
+            this.currentIndex = -1
+          }
+        }
+      }
+
+      class Video {
+        constructor(id) {
+          this.id = id
+        }
+
+        getId() {
+          return this.id
+        }
+      }
+
+      class NullVideo extends Video {
+        constructor() {
+          super(null)
+        }
+      }
+
       var g = {}
 
       function onYouTubeIframeAPIReady() {
+        var queue = new VideoQueue()
+            .add(new Video('au3-hk-pXsM'))
+            .add(new Video('HsUgZANvAbU'))
+
         g.player = new Player({
           container: $('body'),
           play: $('#play'),
           pause: $('#pause'),
-          queue: null
+          queue: queue
         });
       }
     </script>

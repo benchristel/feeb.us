@@ -10,56 +10,76 @@
     </style>
   </head>
   <body>
-    <div id="player"></div>
+    <button id="pause">Pause</button>
+    <button id="play">Play</button>
 
     <script src="//cdn.jsdelivr.net/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-      var tag = document.createElement('script');
+      "use strict";
 
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      class Player {
+        constructor(options) {
+          var player = this
+          this.container = options.container
+          this.playButton = options.play
+          this.pauseButton = options.pause
+          this.queue = options.queue
 
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: '390',
-          width: '640',
-          videoId: 'au3-hk-pXsM',
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
-        });
-      }
+          var playerElementId = 'player-' + Player.instanceCount
+          $('<div>').attr('id', playerElementId).appendTo($('body'))
 
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
+          this.youtubePlayer = new YT.Player(
+            playerElementId,
+            {
+              height: '390',
+              width: '640',
+              videoId: 'au3-hk-pXsM',
+              events: {
+                'onReady': function() { player.onReady() },
+                'onStateChange': function(event) { player.onStateChange(event) }
+              }
+            }
+          )
+          
+          this.playButton.show()
+          this.pauseButton.hide()
+        }
 
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.ENDED) {
-          player.cueVideoById({videoId: 'HsUgZANvAbU'})
-          player.playVideo()
+        onReady() {
+          console.log('ready!')
+          var player = this;
+
+          this.playButton.click(function() {
+            player.playButton.hide()
+            player.pauseButton.show()
+            player.youtubePlayer.playVideo()
+          })
+
+          this.pauseButton.click(function() {
+            player.pauseButton.hide()
+            player.playButton.show()
+            player.youtubePlayer.pauseVideo()
+          })
+        }
+
+        onStateChange(event) {
+          console.log('changed to: '+event.data)
         }
       }
 
-      function playVideo() {
-        $('#pause').show();
-        $('#play').hide();
-        player.playVideo();
+      Player.instanceCount = 0;
+
+      var g = {}
+
+      function onYouTubeIframeAPIReady() {
+        g.player = new Player({
+          container: $('body'),
+          play: $('#play'),
+          pause: $('#pause'),
+          queue: null
+        });
       }
-
-      function pauseVideo() {
-        $('#pause').hide();
-        $('#play').show();
-        player.pauseVideo();
-      }
-
-      $('body')
-        .append($('<button id="pause">Pause</button>').click(pauseVideo))
-        .append($('<button id="play">Play</button>').click(playVideo).hide())
-
     </script>
   </body>
 </html>

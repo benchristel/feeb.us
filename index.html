@@ -77,28 +77,32 @@
 
       class VideoQueue {
         constructor() {
-          this.currentIndex = 0;
-          this.videos = []
+          this.first = null
+          this.last = null
+          this.curr = null
         }
 
         add(video) {
-          this.videos.push(video)
+          var listItem = {video: video, next: null}
+          if (this.last) {
+            this.last.next = listItem
+            this.last = listItem
+          } else {
+            this.last = this.first = this.curr = listItem
+          }
           return this
         }
 
         current() {
-          var video = this.videos[this.currentIndex]
-          if (!video) {
+          if (this.curr) {
+            return this.curr.video
+          } else {
             video = new NullVideo()
           }
-          return video
         }
 
         advance() {
-          this.currentIndex++
-          if (this.currentIndex >= this.videos.length) {
-            this.currentIndex = -1
-          }
+          this.curr = this.curr.next
         }
       }
 

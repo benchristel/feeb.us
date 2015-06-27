@@ -7,12 +7,25 @@
         position: absolute;
         top: -1000px;
       }
+
+      .queue-item {
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #aaa;
+        margin-top: 2px;
+        margin-bottom: 2px;
+      }
+
+      .queue-item.playing {
+        background-color: #ffd;
+      }
     </style>
   </head>
   <body>
     <button id="pause">Pause</button>
     <button id="play">Play</button>
     <div id="queue-container"></div>
+
 
     <script src="//cdn.jsdelivr.net/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -98,10 +111,12 @@
             events = new EventDispatcher()
 
         function Item(video) {
-          var current = false
+          var current = false,
+              events = new EventDispatcher()
 
           this.setCurrent = function(value) {
             current = value
+            events.fire('changed')
           }
 
           this.isCurrent = function() {
@@ -115,11 +130,16 @@
           this.id = function() {
             return video.getId()
           }
+
+          this.events = function() {
+            return events
+          }
         }
 
         this.add = function(video) {
           var item = new Item(video)
           items.push(item)
+          if (items.length === 1) item.setCurrent(true)
           events.fire('added', item)
           return this
         }
@@ -147,23 +167,34 @@
         var $queue = $('<div class="queue">')
 
         for (var item of queue.items()) {
-          $('<div class="queue-item">')
-            .text(item.id())
-            .appendTo($queue)
+          new VideoQueueItemView(item).appendTo($queue)
         }
 
         queue.events().on('added', function(item) {
-          $('<div class="queue-item">')
-            .text(item.id())
-            .appendTo($queue)
+          new VideoQueueItemView(item).appendTo($queue)
         })
 
         $queue.appendTo($container)
       }
 
-      //function VideoQueueItemView(item) {
-      //  var $e =
-      //}
+      function VideoQueueItemView(item) {
+        var $e = $('<div class="queue-item">'),
+            thisItemView = this
+
+        item.events().on('changed', function() { thisItemView.render() })
+
+        this.render = function() {
+          $e.text(item.id())
+          $e.toggleClass('playing', item.isCurrent())
+          return this
+        }
+
+        this.appendTo = function(parent) {
+          this.render()
+          $e.appendTo(parent)
+          return this
+        }
+      }
 
       class Video {
         constructor(id) {
@@ -187,6 +218,7 @@
         var queue = g.queue = new VideoQueue()
           .add(new Video('au3-hk-pXsM'))
           .add(new Video('HsUgZANvAbU'))
+          .add(new Video('5ARw19AnLK4'))
 
         new VideoQueueView(queue, $('#queue-container'))
 

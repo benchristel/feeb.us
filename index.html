@@ -12,6 +12,7 @@
   <body>
     <button id="pause">Pause</button>
     <button id="play">Play</button>
+    <div id="queue-container"></div>
 
     <script src="//cdn.jsdelivr.net/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -34,7 +35,7 @@
             {
               height: '390',
               width: '640',
-              videoId: this.queue.current().getId(),
+              videoId: this.queue.current().id(),
               events: {
                 'onReady': function() { player.onReady() },
                 'onStateChange': function(event) { player.onStateChange(event) }
@@ -67,7 +68,7 @@
           console.log('changed to: '+event.data)
           if (event.data === YT.PlayerState.ENDED) {
             this.queue.advance()
-            this.youtubePlayer.cueVideoById({videoId: this.queue.current().id})
+            this.youtubePlayer.cueVideoById({videoId: this.queue.current().id()})
             this.youtubePlayer.playVideo()
           }
         }
@@ -75,36 +76,94 @@
 
       Player.instanceCount = 0;
 
-      class VideoQueue {
-        constructor() {
-          this.first = null
-          this.last = null
-          this.curr = null
+      function EventDispatcher() {
+        var listeners = {}
+
+        this.fire = function(event, data) {
+          if (!listeners[event]) return
+          for (var listener of listeners[event]) {
+            listener(data)
+          }
         }
 
-        add(video) {
-          var listItem = {video: video, next: null}
-          if (this.last) {
-            this.last.next = listItem
-            this.last = listItem
-          } else {
-            this.last = this.first = this.curr = listItem
+        this.on = function(event, callback) {
+          if (!listeners[event]) listeners[event] = []
+          listeners[event].push(callback)
+        }
+      }
+
+      function VideoQueue() {
+        var items = [],
+            current = 0,
+            events = new EventDispatcher()
+
+        function Item(video) {
+          var current = false
+
+          this.setCurrent = function(value) {
+            current = value
           }
+
+          this.isCurrent = function() {
+            return current
+          }
+
+          this.video = function() {
+            return video
+          }
+
+          this.id = function() {
+            return video.getId()
+          }
+        }
+
+        this.add = function(video) {
+          var item = new Item(video)
+          items.push(item)
+          events.fire('added', item)
           return this
         }
 
-        current() {
-          if (this.curr) {
-            return this.curr.video
-          } else {
-            video = new NullVideo()
-          }
+        this.current = function(video) {
+          return items[current]
         }
 
-        advance() {
-          this.curr = this.curr.next
+        this.advance = function() {
+          items[current++].setCurrent(false)
+          items[current].setCurrent(true)
+          return this
+        }
+
+        this.events = function() {
+          return events
+        }
+
+        this.items = function() {
+          return items
         }
       }
+
+      function VideoQueueView(queue, $container) {
+        var $queue = $('<div class="queue">')
+
+        for (var item of queue.items()) {
+          $('<div class="queue-item">')
+            .text(item.id())
+            .appendTo($queue)
+        }
+
+        queue.events().on('added', function(item) {
+          $('<div class="queue-item">')
+            .text(item.id())
+            .appendTo($queue)
+        })
+
+        $queue.appendTo($container)
+      }
+
+      //function VideoQueueItemView(item) {
+      //  var $e =
+      //}
 
       class Video {
         constructor(id) {
@@ -125,9 +184,11 @@
       var g = {}
 
       function onYouTubeIframeAPIReady() {
-        var queue = new VideoQueue()
-            .add(new Video('au3-hk-pXsM'))
-            .add(new Video('HsUgZANvAbU'))
+        var queue = g.queue = new VideoQueue()
+          .add(new Video('au3-hk-pXsM'))
+          .add(new Video('HsUgZANvAbU'))
+
+        new VideoQueueView(queue, $('#queue-container'))
 
         g.player = new Player({
           container: $('body'),

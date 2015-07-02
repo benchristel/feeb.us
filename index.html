@@ -20,6 +20,14 @@
         cursor: pointer;
       }
 
+      .player-controls .button {
+        display: none;
+      }
+
+      .player-controls .actionable.button {
+        display: inline;
+      }
+
       .queue-item.playing {
         background-color: #ffd;
       }
@@ -31,12 +39,27 @@
   </head>
   <body>
     <div id="player-container">
-      <i id="pause" class="fa fa-pause fa-3x button"></i>
-      <i id="play" class="fa fa-play fa-3x button"></i>
-      <i id="resume" class="fa fa-play fa-3x button"></i>
       <div id="youtube-player"></div>
     </div>
+
     <div id="app-container" ng-app="OathStructure">
+      <div class="player-controls" ng-controller="PlayerController">
+        <i id="pause"
+           class="fa fa-pause fa-3x button"
+           ng-class="{actionable: isPlaying()}"
+           ng-click="pause()"
+           ></i>
+        <i id="play"
+           class="fa fa-play fa-3x button"
+           ng-class="{actionable: isStopped()}"
+           ng-click="play()"
+           ></i>
+        <i id="resume"
+           class="fa fa-play fa-3x button"
+           ng-class="{actionable: isPaused()}"
+           ng-click="resume()"
+           ></i>
+      </div>
       <div class="queue-container" ng-controller="QueueController">
 
         <ol class="queue" ng-cloak>
@@ -182,7 +205,7 @@
 
         function ready() {
           if (readyCount === 2) {
-
+            message.send('deejay-ready')
           }
         }
 
@@ -205,38 +228,7 @@
 
       var global = {}
       function onYouTubeIframeAPIReady() {
-
         global.deejay = new Deejay()
-
-        var playButton = $('#play')
-        playButton.click(function() {
-          message.send('play')
-        })
-
-        message.on('started-playing', function() {
-          playButton.hide()
-          resumeButton.hide()
-          pauseButton.show()
-        })
-
-        var resumeButton = $('#resume')
-        resumeButton.click(function() {
-          message.send('resume')
-          playButton.hide()
-          resumeButton.hide()
-          pauseButton.show()
-        })
-
-        var pauseButton = $('#pause')
-        pauseButton.click(function() {
-          message.send('pause')
-          pauseButton.hide()
-          playButton.hide()
-          resumeButton.show()
-        })
-
-        pauseButton.hide()
-        resumeButton.hide()
       }
 
       var message = (function() {
@@ -251,17 +243,19 @@
 
         message.send = function() {
           var message = arguments[0]
-          for (var handler of handlers[message]) {
-            handler.call(null, arguments[1])
+          if (handlers[message]) {
+            for (var handler of handlers[message]) {
+              handler.call(null, arguments[1])
+            }
           }
         }
 
         return message
       })();
 
-      var os = angular.module('OathStructure', [])
+      var app = angular.module('OathStructure', [])
 
-      os.controller('QueueController', function($scope) {
+      app.controller('QueueController', function($scope) {
 
         var current = 0
 
@@ -297,8 +291,6 @@
         function startPlaying() {
           current = 0
           playCurrentSong()
-          $scope.$apply()
-          message.send('started-playing')
         }
 
         function playCurrentSong() {
@@ -311,6 +303,57 @@
           }
         }
 
+      })
+
+      app.controller('PlayerController', function($scope) {
+        var STOPPED = 0,
+            PLAYING = 1,
+            PAUSED  = 2
+
+        $scope.state = STOPPED
+
+        $scope.play = function() {
+          if ($scope.state === STOPPED) {
+            $scope.state = PLAYING
+            message.send('play')
+          }
+        }
+
+        $scope.pause = function() {
+          if ($scope.isPlaying()) {
+            $scope.state = PAUSED
+            message.send('pause')
+          }
+        }
+
+        $scope.resume = function() {
+          if ($scope.state === PAUSED) {
+            $scope.state = PLAYING
+            message.send('resume')
+          }
+        }
+
+        $scope.stop = function() {
+          if ($scope.state !== STOPPED) {
+            $scope.state = STOPPED
+            message.send('stop-playing')
+          }
+        }
+
+        $scope.isPlaying = function() {
+          return $scope.state === PLAYING
+        }
+
+        $scope.isPaused = function() {
+          return $scope.state === PAUSED
+        }
+
+        $scope.isStopped = function() {
+          return $scope.state === STOPPED
+        }
+
+        message.on('play-now', $scope.play)
+        message.on('play-now', $scope.resume)
       })
     </script>
   </body>

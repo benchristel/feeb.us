@@ -3,10 +3,10 @@
   <head>
     <title>Oath Structure</title>
     <style type="text/css" rel="stylesheet">
-      iframe {
-        position: absolute;
-        top: -1000px;
-      }
+      /*iframe {*/
+      /*  position: absolute;*/
+      /*  top: -1000px;*/
+      /*}*/
 
       .queue-item {
         padding: 5px;
@@ -19,216 +19,247 @@
       .queue-item.playing {
         background-color: #ffd;
       }
+
+      [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+      }
     </style>
   </head>
   <body>
-    <button id="pause">Pause</button>
-    <button id="play">Play</button>
-    <div id="queue-container"></div>
-
+    <div id="player-container">
+      <button id="pause">Pause</button>
+      <button id="play">Play</button>
+      <div id="youtube-player"></div>
+    </div>
+    <div id="app-container" ng-app="OathStructure">
+      <div class="queue-container" ng-controller="QueueController">
+        <div class="search">
+          <input type="text" ng-model="searchQuery">
+        </div>
+        <ol class="queue" ng-cloak>
+          <li ng-repeat="song in queue | filter:searchQuery" class="queue-item">
+            {{ song.title }}
+          </li>
+        </ol>
+        <input type="text" ng-model="addition">
+        <button ng-click="enqueue(addition)">Add</button>
+      </div>
+    </div>
 
     <script src="//cdn.jsdelivr.net/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <script src="/angular.min.js" type="text/javascript"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
       "use strict";
 
-      class Player {
-        constructor(options) {
-          var player = this
-          this.container = options.container
-          this.playButton = options.play
-          this.pauseButton = options.pause
-          this.queue = options.queue
+      function Deejay() {
+        var div = document.createElement('div')
+        div.setAttribute('id', 'youtube-player-1')
+        document.getElementById('player-container').appendChild(div)
 
-          var playerElementId = 'player-' + Player.instanceCount
-          $('<div>').attr('id', playerElementId).appendTo($('body'))
+        div = document.createElement('div')
+        div.setAttribute('id', 'youtube-player-2')
+        document.getElementById('player-container').appendChild(div)
 
-          this.youtubePlayer = new YT.Player(
-            playerElementId,
-            {
-              height: '390',
-              width: '640',
-              videoId: this.queue.current().id(),
-              events: {
-                'onReady': function() { player.onReady() },
-                'onStateChange': function(event) { player.onStateChange(event) }
-              }
+        var players = []
+        players.push(new YT.Player(
+          'youtube-player-1',
+          {
+            height: '195',
+            width: '320',
+            videoId: 'au3-hk-pXsM',
+            playerVars: { rel: 0, controls: 0 },
+            events: {
+              'onReady': readyPlayer1,
+              'onStateChange': stateChangePlayer1
             }
-          )
-
-          this.playButton.show()
-          this.pauseButton.hide()
-        }
-
-        onReady() {
-          console.log('ready!')
-          var player = this;
-
-          this.playButton.click(function() {
-            player.playButton.hide()
-            player.pauseButton.show()
-            player.youtubePlayer.playVideo()
-          })
-
-          this.pauseButton.click(function() {
-            player.pauseButton.hide()
-            player.playButton.show()
-            player.youtubePlayer.pauseVideo()
-          })
-        }
-
-        onStateChange(event) {
-          console.log('changed to: '+event.data)
-          if (event.data === YT.PlayerState.ENDED) {
-            this.queue.advance()
-            this.youtubePlayer.cueVideoById({videoId: this.queue.current().id()})
-            this.youtubePlayer.playVideo()
           }
-        }
-      }
+        ))
 
-      Player.instanceCount = 0;
-
-      function EventDispatcher() {
-        var listeners = {}
-
-        this.fire = function(event, data) {
-          if (!listeners[event]) return
-          for (var listener of listeners[event]) {
-            listener(data)
+        players.push(new YT.Player(
+          'youtube-player-2',
+          {
+            height: '195',
+            width: '320',
+            videoId: 'au3-hk-pXsM',
+            playerVars: { rel: 0, controls: 0 },
+            events: {
+              'onReady': readyPlayer2,
+              'onStateChange': stateChangePlayer2
+            }
           }
-        }
+        ))
 
-        this.on = function(event, callback) {
-          if (!listeners[event]) listeners[event] = []
-          listeners[event].push(callback)
-        }
-      }
-
-      function VideoQueue() {
-        var items = [],
-            current = 0,
-            events = new EventDispatcher()
-
-        function Item(video) {
-          var current = false,
-              events = new EventDispatcher()
-
-          this.setCurrent = function(value) {
-            current = value
-            events.fire('changed')
+        message.on('play-now', function(videoId) {
+          stop()
+          if (inactivePlayer().getVideoData()['video_id'] === videoId) {
+            swapActivePlayer()
+          } else {
+            activePlayer().cueVideoById(videoId)
           }
-
-          this.isCurrent = function() {
-            return current
-          }
-
-          this.video = function() {
-            return video
-          }
-
-          this.id = function() {
-            return video.getId()
-          }
-
-          this.events = function() {
-            return events
-          }
-        }
-
-        this.add = function(video) {
-          var item = new Item(video)
-          items.push(item)
-          if (items.length === 1) item.setCurrent(true)
-          events.fire('added', item)
-          return this
-        }
-
-        this.current = function(video) {
-          return items[current]
-        }
-
-        this.advance = function() {
-          items[current++].setCurrent(false)
-          items[current].setCurrent(true)
-          return this
-        }
-
-        this.events = function() {
-          return events
-        }
-
-        this.items = function() {
-          return items
-        }
-      }
-
-      function VideoQueueView(queue, $container) {
-        var $queue = $('<div class="queue">')
-
-        for (var item of queue.items()) {
-          new VideoQueueItemView(item).appendTo($queue)
-        }
-
-        queue.events().on('added', function(item) {
-          new VideoQueueItemView(item).appendTo($queue)
+          play()
         })
 
-        $queue.appendTo($container)
+        message.on('play-next', function(videoId) {
+          inactivePlayer().cueVideoById(videoId)
+          // hack: start playing the video and immediately pause when the
+          // state changes from BUFFERING to PLAYING. This will cause the
+          // video to buffer in the background.
+          // http://stackoverflow.com/questions/8088245/preloading-a-youtube-embed
+          inactivePlayer().playVideo()
+        })
+
+        message.on('resume', function() {
+          play()
+        })
+
+        message.on('pause', function() {
+          stop()
+        })
+
+        function activePlayerStateChanged(event) {
+          if (event.data === YT.PlayerState.ENDED) {
+            message.send('song-complete')
+          }
+        }
+
+        function inactivePlayerStateChanged(event) {
+          if (event.data === YT.PlayerState.PLAYING) {
+            inactivePlayer().pauseVideo()
+          }
+        }
+
+        function stop(hammerTime) {
+          activePlayer().pauseVideo()
+        }
+
+        function play() {
+          activePlayer().playVideo()
+        }
+
+        var activePlayerIndex = 0
+        function activePlayer() {
+          return players[activePlayerIndex]
+        }
+
+        function inactivePlayer() {
+          return players[+!activePlayerIndex]
+        }
+
+        function swapActivePlayer() {
+          activePlayerIndex = +!activePlayerIndex
+        }
+
+        var readyCount = 0
+        function readyPlayer1() {
+          readyCount++
+          ready()
+        }
+
+        function readyPlayer2() {
+          readyCount++
+          ready()
+        }
+
+        function ready() {
+          if (readyCount === 2) {
+
+          }
+        }
+
+        function stateChangePlayer1(event) {
+          if (!activePlayerIndex) {
+            activePlayerStateChanged(event)
+          } else {
+            inactivePlayerStateChanged(event)
+          }
+        }
+
+        function stateChangePlayer2(event) {
+          if (activePlayerIndex) {
+            activePlayerStateChanged(event)
+          } else {
+            inactivePlayerStateChanged(event)
+          }
+        }
+
+        setInterval(function() {
+          console.log("active: " + activePlayer().getVideoData()['title'] + " " + (activePlayer().getVideoLoadedFraction() * 100 | 0))
+          console.log("inactive: " + inactivePlayer().getVideoData()['title'] + " " + (inactivePlayer().getVideoLoadedFraction() * 100 | 0))
+        }, 1000)
       }
 
-      function VideoQueueItemView(item) {
-        var $e = $('<div class="queue-item">'),
-            thisItemView = this
-
-        item.events().on('changed', function() { thisItemView.render() })
-
-        this.render = function() {
-          $e.text(item.id())
-          $e.toggleClass('playing', item.isCurrent())
-          return this
-        }
-
-        this.appendTo = function(parent) {
-          this.render()
-          $e.appendTo(parent)
-          return this
-        }
-      }
-
-      class Video {
-        constructor(id) {
-          this.id = id
-        }
-
-        getId() {
-          return this.id
-        }
-      }
-
-      class NullVideo extends Video {
-        constructor() {
-          super(null)
-        }
-      }
-
-      var g = {}
-
+      var global = {}
       function onYouTubeIframeAPIReady() {
-        var queue = g.queue = new VideoQueue()
-          .add(new Video('au3-hk-pXsM'))
-          .add(new Video('HsUgZANvAbU'))
-          .add(new Video('5ARw19AnLK4'))
 
-        new VideoQueueView(queue, $('#queue-container'))
+        global.deejay = new Deejay()
 
-        g.player = new Player({
-          container: $('body'),
-          play: $('#play'),
-          pause: $('#pause'),
-          queue: queue
-        });
+        var playButton = $('#play')
+        playButton.click(function() {
+          message.send('resume')
+          playButton.hide()
+          pauseButton.show()
+        })
+
+        var pauseButton = $('#pause')
+        pauseButton.click(function() {
+          message.send('pause')
+          pauseButton.hide()
+          playButton.show()
+        })
+
+        pauseButton.hide()
       }
+
+      var message = (function() {
+        var handlers = {}
+        var message = {}
+
+        message.on = function(message, handler) {
+          if (!handlers[message]) handlers[message] = []
+          handlers[message].push(handler)
+          console.log('there are now ' + handlers[message].length + ' handlers for "'+message+'".')
+        }
+
+        message.send = function() {
+          var message = arguments[0]
+          for (var handler of handlers[message]) {
+            handler.call(null, arguments[1])
+          }
+        }
+
+        return message
+      })();
+
+      var os = angular.module('OathStructure', [])
+
+      os.controller('QueueController', function($scope) {
+
+        var current = 0
+
+        message.on('song-complete', requestNextSong)
+        function requestNextSong() {
+          $scope.advance()
+          message.send("play-now", queue[current].id)
+          message.send("play-next", queue[current + 1].id)
+          $scope.$apply()
+        }
+
+        var queue = $scope.queue = [
+          { title: 'Magical Trevor #1', id: 'au3-hk-pXsM' },
+          { title: 'Magical Trevor #2', id: 'HsUgZANvAbU' },
+          { title: 'Video Game Music Compilation', id: '5ARw19AnLK4'  }
+        ]
+
+        $scope.enqueue = function(title) {
+          $scope.queue.push({title: title})
+          $scope.addition = ''
+        }
+
+        $scope.advance = function() {
+          current++
+        }
+      })
     </script>
   </body>
 </html>

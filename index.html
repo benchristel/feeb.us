@@ -20,14 +20,6 @@
         cursor: pointer;
       }
 
-      .player-controls .button {
-        display: none;
-      }
-
-      .player-controls .actionable.button {
-        display: inline;
-      }
-
       .queue-item.playing {
         background-color: #ffd;
       }
@@ -43,39 +35,42 @@
     </div>
 
     <div id="app-container" ng-app="OathStructure">
-      <div class="player-controls" ng-controller="PlayerController">
-        <div ng-hide="!isReady()">
+      <div class="music-player" ng-controller="PlayerController">
+        <div class="player-controls" ng-show="isReady()">
           <i id="pause"
              class="fa fa-pause fa-3x button"
-             ng-class="{actionable: isPlaying()}"
-             ng-click="pause()"
+             ng-show="isPlaying()"
+             ng-click="pauseClicked()"
              ></i>
+
           <i id="play"
              class="fa fa-play fa-3x button"
-             ng-class="{actionable: isStopped()}"
-             ng-click="play()"
+             ng-show="isStopped()"
+             ng-click="playClicked()"
              ></i>
+
           <i id="resume"
              class="fa fa-play fa-3x button"
-             ng-class="{actionable: isPaused()}"
-             ng-click="resume()"
+             ng-show="isPaused()"
+             ng-click="resumeClicked()"
              ></i>
         </div>
-      </div>
-      <div class="queue-container" ng-controller="QueueController">
 
-        <ol class="queue" ng-cloak>
-          <li class="queue-item"
-              ng-repeat="song in queue() track by song.listId"
-              ng-class="{playing: isPlaying(song.listId)}"
-              ng-click="jumpTo(song.listId)"
-              >
-            {{ song.title }}
-          </li>
-        </ol>
-        <input type="text" ng-model="addition">
-        <button ng-click="enqueue(addition)">Add</button>
+        <div class="queue-container" ng-controller="QueueController">
+          <ol class="queue" ng-cloak>
+            <li class="queue-item"
+                ng-repeat="song in queue() track by song.listId"
+                ng-class="{playing: isPlaying(song.listId)}"
+                ng-click="jumpTo(song.listId)"
+                >
+              {{ song.title }}
+            </li>
+          </ol>
+          <input type="text" ng-model="addition">
+          <button ng-click="enqueue(addition)">Add</button>
+        </div>
       </div>
+
       <div class="library-container">
         <!-- <div class="search">
           <input type="text" ng-model="searchQuery">
@@ -110,64 +105,50 @@
       app.controller('QueueController', QueueController)
 
       app.controller('PlayerController', function($scope) {
-        var STOPPED = 0,
-            PLAYING = 1,
-            PAUSED  = 2
+        $scope.STOPPED = 0,
+        $scope.PLAYING = 1,
+        $scope.PAUSED  = 2
 
-        $scope.state = STOPPED
+        $scope.playerState = {}
+        $scope.playerState.state = $scope.STOPPED
 
         var ready = false
         $scope.isReady = function() {
           return ready
         }
 
-        $scope.play = function() {
-          if ($scope.state === STOPPED) {
-            $scope.state = PLAYING
-            message.send('play')
-          }
+        $scope.playClicked = function() {
+          $scope.playerState.state = $scope.PLAYING
+          message.send('play')
         }
 
-        $scope.pause = function() {
-          if ($scope.isPlaying()) {
-            $scope.state = PAUSED
-            message.send('pause')
-          }
+        $scope.pauseClicked = function() {
+          $scope.playerState.state = $scope.PAUSED
+          message.send('pause')
         }
 
-        $scope.resume = function() {
-          if ($scope.state === PAUSED) {
-            $scope.state = PLAYING
-            message.send('resume')
-          }
+        $scope.resumeClicked = function() {
+          $scope.playerState.state = $scope.PLAYING
+          message.send('resume')
         }
 
-        $scope.stop = function() {
-          if ($scope.state !== STOPPED) {
-            $scope.state = STOPPED
-            message.send('stop-playing')
-          }
+        $scope.stopClicked = function() {
+          $scope.playerState.state = $scope.STOPPED
+          message.send('stop-playing')
         }
 
         $scope.isPlaying = function() {
-          return $scope.state === PLAYING
+          return $scope.playerState.state === $scope.PLAYING
         }
 
         $scope.isPaused = function() {
-          return $scope.state === PAUSED
+          return $scope.playerState.state === $scope.PAUSED
         }
 
         $scope.isStopped = function() {
-          return $scope.state === STOPPED
+          return $scope.playerState.state === $scope.STOPPED
         }
 
-        message.on('stop', function() {
-          $scope.stop()
-        })
-        message.on('play-now', function() {
-          $scope.state = PLAYING
-        })
-        message.on('play-now', $scope.resume)
         message.on('deejay-ready', function() {
           ready = true
           $scope.$apply()

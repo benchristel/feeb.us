@@ -59,13 +59,14 @@ var QueueController = function($scope) {
 
   function playCurrentSong() {
     if (current) {
+      $scope.playerState.state = $scope.PLAYING
       message.send("play-now", SongRequest(current))
 
       if (queue.next(current.listId)) {
         message.send("play-next", queue.next(current.listId).id)
       }
     } else {
-      message.send("stop")
+      $scope.playerState.state = $scope.STOPPED
     }
   }
 

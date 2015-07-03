@@ -238,28 +238,6 @@
         global.deejay = new Deejay()
       }
 
-      //var message = (function() {
-      //  var handlers = {}
-      //  var message = {}
-      //
-      //  message.on = function(message, handler) {
-      //    if (!handlers[message]) handlers[message] = []
-      //    handlers[message].push(handler)
-      //    console.log('there are now ' + handlers[message].length + ' handlers for "'+message+'".')
-      //  }
-      //
-      //  message.send = function() {
-      //    var message = arguments[0]
-      //    if (handlers[message]) {
-      //      for (var handler of handlers[message]) {
-      //        handler.call(null, arguments[1])
-      //      }
-      //    }
-      //  }
-      //
-      //  return message
-      //})();
-
       var app = angular.module('OathStructure', [])
 
       app.controller('QueueController', QueueController)
@@ -316,7 +294,12 @@
           return $scope.state === STOPPED
         }
 
-        message.on('play-now', $scope.play)
+        message.on('stop', function() {
+          $scope.stop()
+        })
+        message.on('play-now', function() {
+          $scope.state = PLAYING
+        })
         message.on('play-now', $scope.resume)
         message.on('deejay-ready', function() {
           ready = true

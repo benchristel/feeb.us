@@ -70,4 +70,19 @@ describe('QueueController', function() {
         expect(queue.isPlaying(requests[0].queueId())).toBe(false)
         expect(queue.isPlaying(requests[1].queueId())).toBe(false)
     })
+
+    it('jumps to a song', function() {
+        queue.enqueue('one')
+        queue.enqueue('two')
+        queue.enqueue('three')
+
+        var requests = []
+        message.on('play-now', function(songRequest) {
+            requests.push(songRequest)
+        })
+
+        queue.jumpTo(1)
+
+        expect(requests.length).toEqual(1)
+    })
 })

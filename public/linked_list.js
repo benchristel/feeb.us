@@ -78,6 +78,12 @@ var LinkedList = function() {
         return item.next.item
     }
 
+    this.get = function(id) {
+        var item = map[id]
+        if (!item) return null
+        return item.item
+    }
+
     this.toArray = function() {
         var collected = []
 

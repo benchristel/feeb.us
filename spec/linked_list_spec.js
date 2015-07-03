@@ -20,6 +20,13 @@ describe('LinkedList', function() {
         expect(list.first()).toEqual('dumbledore')
     })
 
+    it('gets an item by id', function() {
+        var list = new LinkedList()
+        list.add('dumbledore')
+        var snapeId = list.add('snape')
+        expect(list.get(snapeId)).toEqual('snape')
+    })
+
     it('gets the next item after the one with the given ID', function() {
         var list = new LinkedList()
         var dumbleNum = list.add('dumbledore')

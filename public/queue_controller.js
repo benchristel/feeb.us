@@ -64,6 +64,8 @@ var QueueController = function($scope) {
       if (queue.next(current.listId)) {
         message.send("play-next", queue.next(current.listId).id)
       }
+    } else {
+      message.send("stop")
     }
   }
 
@@ -94,5 +96,5 @@ var QueueController = function($scope) {
 
   $scope.enqueue('au3-hk-pXsM', 'Magical Trevor #1')
   $scope.enqueue('HsUgZANvAbU', 'Magical Trevor #2')
-  $scope.enqueue('5ARw19AnLK4', 'VGM Compilation')
+  //$scope.enqueue('5ARw19AnLK4', 'VGM Compilation')
 }

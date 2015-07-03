@@ -1,4 +1,3 @@
-
 var LinkedList = function() {
     "use strict"
     var _first = null

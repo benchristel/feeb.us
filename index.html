@@ -66,9 +66,9 @@
 
         <ol class="queue" ng-cloak>
           <li class="queue-item"
-              ng-repeat="song in queue()"
-              ng-class="{playing: isPlaying($index)}"
-              ng-click="jumpTo($index)"
+              ng-repeat="song in queue() track by song.listId"
+              ng-class="{playing: isPlaying(song.listId)}"
+              ng-click="jumpTo(song.listId)"
               >
             {{ song.title }}
           </li>

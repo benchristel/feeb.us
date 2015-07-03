@@ -1,9 +1,8 @@
 describe('QueueController', function() {
     var queue
     beforeEach(function() {
-        queue = {$apply: function(){}}
+        queue = {$apply: function(){}, playerState: {}}
         QueueController(queue)
-        queue.clear()
     })
 
     afterEach(function() {

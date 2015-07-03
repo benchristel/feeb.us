@@ -3,6 +3,10 @@
   <head>
     <title>Oath Structure</title>
     <style type="text/css" rel="stylesheet">
+      * {
+        box-sizing: border-box;
+      }
+
       iframe {
         position: absolute;
         top: -1000px;
@@ -22,6 +26,15 @@
 
       .queue-item.playing {
         background-color: #ffd;
+      }
+
+      .search input {
+        font-size: 14px;
+        width: 100%;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #aaa;
+        box-shadow: 1px 1px 5px #ddd inset;
       }
 
       [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -66,18 +79,20 @@
               {{ song.title }}
             </li>
           </ol>
-          <input type="text" ng-model="addition">
-          <button ng-click="enqueue(addition)">Add</button>
         </div>
       </div>
 
-      <div class="library-container">
-        <!-- <div class="search">
-          <input type="text" ng-model="searchQuery">
-        </div>-->
+      <div class="library-container" ng-controller="LibraryController">
+        <div class="search">
+          <input type="text"
+                 placeholder="Search {{library.length}} curated songs"
+                 ng-model="searchQuery">
+        </div>
         <ul class="library" ng-cloak>
            <li class="library-item"
-               ng-repeat="song in library | filter:searchQuery">
+               ng-repeat="song in library | filter:searchQuery"
+               ng-click="add($index)"
+               >
               {{ song.title }}
            </li>
         </ul>
@@ -153,6 +168,22 @@
           ready = true
           $scope.$apply()
         })
+      })
+
+      app.controller('LibraryController', function($scope) {
+        $scope.library = [
+          song('au3-hk-pXsM', 'Magical Trevor #1'),
+          song('HsUgZANvAbU', 'Magical Trevor #2'),
+          song('5ARw19AnLK4', 'VGM Compilation')
+        ]
+
+        $scope.add = function(index) {
+          message.send('add-to-queue', $scope.library[index])
+        }
+
+        function song(id, title) {
+          return {id: id, title: title}
+        }
       })
     </script>
   </body>

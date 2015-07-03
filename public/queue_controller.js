@@ -51,6 +51,11 @@ var QueueController = function($scope) {
     playCurrentSong()
   }
 
+  subs.push(message.on('add-to-queue', addToQueue))
+  function addToQueue(song) {
+    $scope.enqueue(song.id, song.title)
+  }
+
   $scope.destroy = function() {
     for (var subscription of subs) {
         subscription.cancel()
@@ -94,8 +99,4 @@ var QueueController = function($scope) {
   function onPlayCompleted() {
     requestNextSong()
   }
-
-  $scope.enqueue('au3-hk-pXsM', 'Magical Trevor #1')
-  $scope.enqueue('HsUgZANvAbU', 'Magical Trevor #2')
-  //$scope.enqueue('5ARw19AnLK4', 'VGM Compilation')
 }

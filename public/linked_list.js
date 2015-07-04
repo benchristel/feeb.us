@@ -62,7 +62,7 @@ var LinkedList = function() {
 
         toInsert.next = next
         toInsert.prev = next.prev
-        //next.prev = toInsert
+        next.prev = toInsert
         return toInsert.id
     }
 

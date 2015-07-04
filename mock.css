@@ -1,0 +1,103 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+#player-chrome {
+    height: 80px;
+    width: 100%;
+    background-color: #444;
+    position: relative;
+}
+
+#player-chrome .song-info {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    height: 70px;
+    width: 210px;
+}
+
+.song-info .text {
+    position: absolute;
+    left: 75px;
+    height: 33%;
+    width: 140px;
+
+    font-family: 'Lucida Grande', Helvetica, sans-serif;
+    font-size: 13px;
+    color: #fff;
+    text-shadow: 0px 1px 0 #333;
+    white-space: nowrap;
+}
+
+.song-info .text:before {
+    color: #ddd;
+    text-shadow: none;
+    font-size: 12px;
+}
+
+.song-info .song-title {
+    top: 0%;
+}
+
+.song-info .artist-name {
+    top: 33%;
+}
+
+.song-info .artist-name:before {
+    content: 'by: ';
+}
+
+.song-info .album-name {
+    top: 67%;
+}
+
+.song-info .album-name:before {
+    content: 'on: ';
+}
+
+.cover-image {
+    height: 100%;
+    width: 70px;
+    background-color: #efefef;
+    border: 2px solid #efefef;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.scrubber-fill {
+    background-color: #f67f00;
+    width: 20%;
+    height: 100%;
+    position: absolute;
+}
+
+.player-controls {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.player-controls .play.button {
+    font-size: 50px;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.player-controls .button {
+    color: #fff;
+    font-size: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
+    vertical-align: middle;
+
+    /* vertical centering trick, from http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/ */
+    position: relative;
+    top: 15px;
+}

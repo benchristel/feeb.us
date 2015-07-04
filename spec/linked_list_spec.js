@@ -82,6 +82,17 @@ describe('LinkedList', function() {
         expect(list.toArray()).toEqual(['dumbledore', 'snape'])
     })
 
+    it('moves an item', function() {
+        var list = new LinkedList()
+        list.add('dumbledore')
+        var potter = list.add('potter')
+        list.add('snape')
+        var weasley = list.add('weasley')
+        list.moveBefore(potter, weasley)
+
+        expect(list.toArray()).toEqual(['dumbledore', 'weasley', 'potter', 'snape'])
+    })
+
     it('inserts and removes an item in the middle of the list', function() {
         var list = new LinkedList()
         list.add('dumbledore')

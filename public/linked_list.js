@@ -49,10 +49,7 @@ var LinkedList = function() {
         map[id] = null
     }
 
-    this.insertBefore = function(nextId, item) {
-        var next = map[nextId]
-        if (!next) return null
-        var toInsert = wrap(item)
+    function insertWrappedItemBefore(next, toInsert) {
         map[toInsert.id] = toInsert
 
         if (_first === next) {
@@ -65,7 +62,22 @@ var LinkedList = function() {
 
         toInsert.next = next
         toInsert.prev = next.prev
+        //next.prev = toInsert
         return toInsert.id
+    }
+
+    this.insertBefore = function(nextId, item) {
+        var toInsert = wrap(item)
+        var next = map[nextId]
+        if (!next) return null
+
+        return insertWrappedItemBefore(next, toInsert)
+    }
+
+    this.moveBefore = function(beforeId, toMoveId) {
+        var toMove = map[toMoveId]
+        this.remove(toMoveId)
+        insertWrappedItemBefore(map[beforeId], toMove)
     }
 
     this.first = function() {

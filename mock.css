@@ -70,9 +70,13 @@
 
 .scrubber-fill {
     background-color: #f67f00;
-    width: 20%;
     height: 100%;
     position: absolute;
+    /*animation-duration: 200s;*/
+    /*animation-name: songprogress;*/
+    /*animation-iteration-count: infinite;*/
+    /*animation-timing-function: linear;*/
+    width: 20%;
 }
 
 .player-controls {
@@ -96,8 +100,94 @@
     margin-left: 15px;
     margin-right: 15px;
     vertical-align: middle;
-
-    /* vertical centering trick, from http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/ */
     position: relative;
     top: 15px;
+}
+
+#playlist-manager {
+    position: absolute;
+    width: 100%;
+    top: 80px;
+    bottom: 0px;
+    background-color: #ddd;
+}
+
+#queue-container {
+    position: relative;
+    width: 320px;
+    height: 100%;
+    background-color: #444;
+    overflow: hidden;
+}
+
+
+.queue .song {
+    height: 60px;
+    width: 310px;
+    margin: 5px;
+    background-color: #222;
+    border: 1px solid #222;
+    position: relative;
+}
+
+.queue .song.playing {
+    background-color: #f67f00;
+}
+
+.queue .song.done {
+    opacity: 0.5;
+}
+
+.queue .song:hover:after {
+    display: block;
+    background-color: #0980ff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 10px;
+    content: '\f00c'; /* checkmark */
+    line-height: 60px;
+    color: #fff;
+    text-align: center;
+    border-left: 1px solid #222;
+    font-family: 'FontAwesome';
+    animation-duration: 0.2s;
+    animation-name: peek-in;
+    overflow: hidden;
+}
+
+.queue .song.selected:after {
+    display: block;
+    background-color: #0980ff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 20px;
+    content: '\f00c'; /* checkmark */
+    line-height: 60px;
+    color: #fff;
+    text-align: center;
+    border-left: 1px solid #222;
+    font-family: 'FontAwesome';
+    animation-duration: 0.2s;
+    animation-name: pop-in;
+    overflow: hidden;
+    /*animation-timing-function: linear;*/
+}
+
+@keyframes pop-in {
+    from { width: 10px; }
+    to { width: 20px; }
+}
+
+@keyframes peek-in {
+    from { width: 0px; }
+    to { width: 10px; }
+}
+
+@keyframes songprogress {
+    from {width: 0%;}
+    to {width: 100%;}
 }

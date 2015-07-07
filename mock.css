@@ -72,10 +72,10 @@
     background-color: #f67f00;
     height: 100%;
     position: absolute;
-    /*animation-duration: 200s;*/
-    /*animation-name: songprogress;*/
-    /*animation-iteration-count: infinite;*/
-    /*animation-timing-function: linear;*/
+    animation-duration: 200s;
+    animation-name: songprogress;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
     width: 20%;
 }
 
@@ -188,6 +188,28 @@
     overflow: hidden;
 }
 
+.queue .song .play-button {
+    display: none;
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    top: 0;
+    left: 0;
+    line-height: 60px;
+    font-size: 40px;
+    opacity: 0.5;
+    background-color: #222;
+    text-align: center;
+}
+
+.queue .song:hover .play-button {
+    display: block;
+}
+
+.queue .song:hover .play-button:hover {
+    opacity: 0.8;
+}
+
 .queue .song.selected:after {
     display: block;
     background-color: #0980ff;
@@ -206,6 +228,51 @@
     animation-name: pop-in;
     overflow: hidden;
     /*animation-timing-function: linear;*/
+}
+
+.queue-actions {
+    height: 30px;
+    width: 100%;
+}
+
+.queue-actions .action-button {
+    height: 100%;
+    min-width: 40px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    font-size: 20px;
+    padding-top: 2px;
+    color: #ddd;
+    text-shadow: 0 -1px 0 #111;
+}
+
+.action-button:hover {
+    color: #fff;
+}
+
+.queue-actions .left {
+    float: left;
+}
+
+.queue-actions .right {
+    float: right;
+}
+
+.library-container {
+    left: 320px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    position: absolute;
+    padding: 20px;
+}
+
+.library-container .search {
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 @keyframes pop-in {

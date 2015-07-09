@@ -20,6 +20,11 @@
     width: 210px;
 }
 
+.video-player.inactive {
+  visibility: hidden;
+  position: absolute;
+}
+
 .song-info .text {
     position: absolute;
     left: 75px;
@@ -88,7 +93,8 @@
     height: 100%;
 }
 
-.player-controls .play.button {
+.player-controls .play.button,
+.player-controls .pause.button {
     font-size: 50px;
 }
 
@@ -111,7 +117,7 @@
     width: 100%;
     top: 80px;
     bottom: 0px;
-    background-color: #ddd;
+    background-color: #e8e8e0;
 }
 
 #queue-container {
@@ -121,7 +127,6 @@
     background-color: #444;
     overflow: hidden;
 }
-
 
 .queue .song {
     height: 60px;
@@ -273,7 +278,7 @@
 .library-container .search {
     width: 100%;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: 100px;
     padding: 5px;
 }
 

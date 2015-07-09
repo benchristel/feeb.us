@@ -1,21 +1,22 @@
 function Deejay() {
   "use strict"
-  
-  var div = document.createElement('div')
-  div.setAttribute('id', 'youtube-player-1')
-  document.getElementById('player-container').appendChild(div)
 
-  div = document.createElement('div')
-  div.setAttribute('id', 'youtube-player-2')
-  document.getElementById('player-container').appendChild(div)
+  // var div = document.createElement('div')
+  // div.setAttribute('id', 'youtube-player-1')
+  // document.getElementById('player-container').appendChild(div)
+  //
+  // div = document.createElement('div')
+  // div.setAttribute('id', 'youtube-player-2')
+  // document.getElementById('player-container').appendChild(div)
 
+  var pausedVideo = null
   var players = []
   players.push(new YT.Player(
     'youtube-player-1',
     {
       height: '195',
       width: '320',
-      videoId: 'au3-hk-pXsM',
+      // videoId: 'au3-hk-pXsM',
       playerVars: { rel: 0, controls: 0 },
       events: {
         'onReady': readyPlayer1,
@@ -29,7 +30,7 @@ function Deejay() {
     {
       height: '195',
       width: '320',
-      videoId: 'au3-hk-pXsM',
+      // videoId: 'au3-hk-pXsM',
       playerVars: { rel: 0, controls: 0 },
       events: {
         'onReady': readyPlayer2,
@@ -38,8 +39,8 @@ function Deejay() {
     }
   ))
 
-  message.on('play-now', function(request) {
-    var videoId = request.mediaId()
+  message.on('play-now', function(song) {
+    var videoId = song.youtubeId
     stop()
     var cued = inactivePlayer().getVideoData()
     if (cued && cued['video_id'] === videoId) {
@@ -47,6 +48,7 @@ function Deejay() {
     } else {
       activePlayer().cueVideoById(videoId)
     }
+    message.send('song-playing')
     play()
   })
 
@@ -59,17 +61,32 @@ function Deejay() {
     inactivePlayer().playVideo()
   })
 
-  message.on('resume', function() {
-    play()
+  message.on('play', function() {
+    if (pausedVideo) {
+      message.send('song-playing')
+      pausedVideo = false
+      activePlayer().playVideo()
+    } else {
+      message.send('deejay-needs-a-song')
+    }
   })
 
   message.on('pause', function() {
+    message.send('song-paused')
+    pausedVideo = true
     stop()
   })
 
   function activePlayerStateChanged(event) {
     if (event.data === YT.PlayerState.ENDED) {
-      message.send('song-complete')
+      pausedVideo = false
+      message.send('deejay-needs-a-song')
+    } else if (event.data === YT.PlayerState.PLAYING) {
+      pausedVideo = false
+      message.send('song-played-from-youtube-player')
+    } else if (event.data === YT.PlayerState.PAUSED) {
+      message.send('song-paused-from-youtube-player')
+      pausedVideo = true
     }
   }
 

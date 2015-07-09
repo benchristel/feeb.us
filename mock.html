@@ -3,9 +3,9 @@
 <link href="mock.css" rel="stylesheet"></link>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
-<body>
+<body ng-app="OathStructure">
 
-<div id="player-chrome">
+<div id="player-chrome" ng-controller="PlayerController">
     <div class="scrubber-fill"></div>
 
     <div class="song-info">
@@ -19,16 +19,20 @@
 
     <div class="player-controls">
         <div class="replay button fa fa-backward"></div>
-        <div class="play button fa fa-play"></div>
+        <div class="play button fa fa-play" ng-click="play()" ng-hide="playing"></div>
+        <div class="pause button fa fa-pause" ng-click="pause()" ng-show="playing"></div>
         <div class="stop button fa fa-stop"></div>
         <div class="skip button fa fa-forward"></div>
     </div>
 </div>
 
 <div id="playlist-manager">
-    <div id="queue-container">
-        <div class="video-player">
-            <iframe width="320" height="180" src="https://www.youtube.com/embed/YHD29tzk69A?controls=0&rel=0" frameborder="0"></iframe>
+    <div id="queue-container" ng-controller="QueueController">
+        <div class="video-player" id="youtube-player-1">
+            <!-- <iframe width="320" height="180" src="https://www.youtube.com/embed/YHD29tzk69A?controls=0&rel=0" frameborder="0"></iframe> -->
+        </div>
+        <div class="video-player inactive" id="youtube-player-2">
+            <!-- <iframe width="320" height="180" src="https://www.youtube.com/embed/YHD29tzk69A?controls=0&rel=0" frameborder="0"></iframe> -->
         </div>
 
         <div class="queue-actions">
@@ -39,81 +43,18 @@
             <div class="action-button fa fa-save right"></div>
         </div>
         <div class="queue">
-            <div class="song done selected">
+            <div class="song" ng-repeat="song in queue" ng-class="{playing: song.playing}">
                 <div class="cover-image"
-                     style="background-image: url('https://i.ytimg.com/vi_webp/YHD29tzk69A/default.webp')">
+                     style="background-image: url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/mqdefault.jpg')">
                 </div>
                 <div class="fa fa-play-circle-o play-button"></div>
-                <div class="song-title text">The Wrath of Marcie</div>
-                <div class="artist-name text">The Go! Team</div>
-            </div>
-
-            <div class="song done">
-                <div class="cover-image"
-                     style="background-image: url('https://i.ytimg.com/vi_webp/YHD29tzk69A/default.webp')">
-                </div>
-                <div class="fa fa-play-circle-o play-button"></div>
-                <div class="song-title text">I Never Needed It Now So Much</div>
-                <div class="artist-name text">The Go! Team</div>
-            </div>
-
-            <div class="song playing selected">
-                <div class="cover-image"
-                     style="background-image: url('https://i.ytimg.com/vi_webp/YHD29tzk69A/default.webp')">
-                </div>
-                <div class="fa fa-play-circle-o play-button"></div>
-                <div class="song-title text">Patricia's Moving Picture</div>
-                <div class="artist-name text">The Go! Team</div>
-            </div>
-
-            <div class="song selected">
-                <div class="cover-image"
-                     style="background-image: url('https://i.ytimg.com/vi_webp/YHD29tzk69A/default.webp')">
-                </div>
-                <div class="fa fa-play-circle-o play-button"></div>
-                <div class="song-title text">Grip Like A Vice</div>
-                <div class="artist-name text">The Go! Team</div>
-            </div>
-
-            <div class="song selected">
-                <div class="cover-image"
-                     style="background-image: url('https://i.ytimg.com/vi_webp/YHD29tzk69A/default.webp')">
-                </div>
-                <div class="fa fa-play-circle-o play-button"></div>
-                <div class="song-title text">Doing It Right</div>
-                <div class="artist-name text">The Go! Team</div>
-            </div>
-
-            <div class="song">
-                <div class="cover-image"
-                     style="background-image: url('https://i.ytimg.com/vi_webp/YHD29tzk69A/default.webp')">
-                </div>
-                <div class="fa fa-play-circle-o play-button"></div>
-                <div class="song-title text">My World</div>
-                <div class="artist-name text">The Go! Team</div>
-            </div>
-
-            <div class="song">
-                <div class="cover-image"
-                     style="background-image: url('https://i.ytimg.com/vi_webp/YHD29tzk69A/default.webp')">
-                </div>
-                <div class="fa fa-play-circle-o play-button"></div>
-                <div class="song-title text">Titanic Vandalism</div>
-                <div class="artist-name text">The Go! Team</div>
-            </div>
-
-            <div class="song">
-                <div class="cover-image"
-                     style="background-image: url('https://i.ytimg.com/vi_webp/YHD29tzk69A/default.webp')">
-                </div>
-                <div class="fa fa-play-circle-o play-button"></div>
-                <div class="song-title text">Fake Id</div>
-                <div class="artist-name text">The Go! Team</div>
+                <div class="song-title text">{{ song.title }}</div>
+                <div class="artist-name text">{{ song.artist }}</div>
             </div>
         </div>
     </div>
 
-    <div class="library-container">
+    <div class="library-container" ng-controller="LibraryController">
         <input type="text" class="search" placeholder="Search 1380 songs">
 
         <div class="library">
@@ -123,31 +64,126 @@
                 <span class="artist">Artist</span>
                 <span class="album">Album</span>
             </div>
-            <div class="song">
-                <span class="track-number">1</span>
+            <div class="song"
+                 ng-repeat="song in library">
+                <span class="track-number">{{ song.trackNumber }}</span>
                 <span class="add-button fa fa-plus"></span>
-                <span class="title">Heartbreaking Bravery</span>
-                <span class="artist">Moonface</span>
-                <span class="album">With Siinai: Heartbreaking Bravery</span>
-            </div>
-            <div class="song">
-                <span class="track-number">2</span>
-                <span class="add-button fa fa-plus"></span>
-                <span class="title">Yesterday's Fire</span>
-                <span class="artist">Moonface</span>
-                <span class="album">With Siinai: Heartbreaking Bravery</span>
-            </div>
-            <div class="song">
-                <span class="track-number">3</span>
-                <span class="add-button fa fa-plus"></span>
-                <span class="title">Quickfire, I Tried</span>
-                <span class="artist">Moonface</span>
-                <span class="album">With Siinai: Heartbreaking Bravery</span>
+                <span class="title">{{ song.title }}</span>
+                <span class="artist">{{ song.artist }}</span>
+                <span class="album">{{ song.album }}</span>
             </div>
         </div>
     </div>
 </div>
 
 
+<script src="//cdn.jsdelivr.net/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+<script src="//cdn.jsdelivr.net/underscorejs/1.8.3/underscore-min.js" type="text/javascript"></script>
+<script src="/angular.min.js" type="text/javascript"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="message.js"></script>
+<script src="library_importer.js"></script>
+<script src="deejay.js"></script>
+<script src="linked_list.js"></script>
+<script src="queue_controller.js"></script>
+
+<script type="text/javascript">
+"use strict";
+
+function onYouTubeIframeAPIReady() {
+  var deejay = new Deejay()
+}
+
+var app = angular.module('OathStructure', [])
+
+app.controller('LibraryController', function($scope) {
+  $scope.library = [
+    {title: 'blah', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 1, youtubeImageId: 'lPmOcJ9YdYw'},
+    {title: 'snoo', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 2, youtubeImageId: 'lPmOcJ9YdYw'},
+    {title: 'ergo, the problem is choice', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 3, youtubeImageId: 'lPmOcJ9YdYw'}
+  ]
+})
+
+app.controller('QueueController', function($scope) {
+  $scope.queue = [
+    {youtubeId: 'UiyDmqO59QE', title: 'Missing', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 2, youtubeImageId: 'au3-hk-pXsM'},
+    {youtubeId: 'au3-hk-pXsM', title: 'Magical Trevor 1', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 2, youtubeImageId: 'au3-hk-pXsM'},
+    {youtubeId: 'HsUgZANvAbU', title: 'Magical Trevor 2', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 3, youtubeImageId: 'HsUgZANvAbU'},
+    {youtubeId: 'lPmOcJ9YdYw', title: 'blah', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 1, youtubeImageId: 'lPmOcJ9YdYw'}
+  ]
+
+  message.on('deejay-needs-a-song', function() {
+    advance()
+    message.send('play-now', current())
+  })
+
+  function current() {
+    return songAt(currentlyPlayingIndex())
+  }
+
+  function advance() {
+    var currentlyPlaying = currentlyPlayingIndex()
+    if (currentlyPlaying === null && indexInQueue(0)) {
+      songAt(0).playing = true
+      return
+    }
+
+    if (currentlyPlaying) {
+      songAt(currentlyPlaying).playing = false
+    }
+
+    if (indexInQueue(currentlyPlaying + 1)) {
+      songAt(currentlyPlaying + 1).playing = true
+    }
+  }
+
+  function indexInQueue(i) {
+    return i < $scope.queue.length && i >= 0
+  }
+
+  function songAt(index) {
+    return $scope.queue[index]
+  }
+
+  function currentlyPlayingIndex() {
+    for (var i = 0; i < $scope.queue.length; i++) {
+      if ($scope.queue[i].playing) {
+        return i
+      }
+    }
+    return null
+  }
+})
+
+app.controller('PlayerController', function($scope) {
+  $scope.play = function() {
+    message.send('play')
+  }
+
+  $scope.pause = function() {
+    message.send('pause')
+  }
+
+  message.on('song-playing', function() {
+    $scope.playing = true;
+  })
+
+  message.on('song-paused', function() {
+    $scope.playing = false;
+  })
+
+  message.on('song-paused-from-youtube-player', function() {
+    $scope.$apply(function() {
+      $scope.playing = false
+    })
+  })
+
+  message.on('song-played-from-youtube-player', function() {
+    $scope.$apply(function() {
+      $scope.playing = true
+    })
+  })
+})
+</script>
 </body>
 </html>

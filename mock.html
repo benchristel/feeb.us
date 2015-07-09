@@ -22,7 +22,7 @@
         <div class="play button fa fa-play" ng-click="play()" ng-hide="playing"></div>
         <div class="pause button fa fa-pause" ng-click="pause()" ng-show="playing"></div>
         <div class="stop button fa fa-stop"></div>
-        <div class="skip button fa fa-forward"></div>
+        <div class="skip button fa fa-forward" ng-click="forward()"></div>
     </div>
 </div>
 
@@ -117,18 +117,20 @@ app.controller('QueueController', function($scope) {
     message.send('play-now', current())
   })
 
+
   function current() {
     return songAt(currentlyPlayingIndex())
   }
 
   function advance() {
     var currentlyPlaying = currentlyPlayingIndex()
+
     if (currentlyPlaying === null && indexInQueue(0)) {
       songAt(0).playing = true
       return
     }
 
-    if (currentlyPlaying) {
+    if (currentlyPlaying !== null) {
       songAt(currentlyPlaying).playing = false
     }
 
@@ -164,6 +166,9 @@ app.controller('PlayerController', function($scope) {
     message.send('pause')
   }
 
+  $scope.forward = function(){
+    message.send('forward')
+  }
   message.on('song-playing', function() {
     $scope.playing = true;
   })

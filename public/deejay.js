@@ -77,6 +77,11 @@ function Deejay() {
     stop()
   })
 
+  message.on('forward', function(){
+    stop()
+    message.send('deejay-needs-a-song')
+  })
+
   function activePlayerStateChanged(event) {
     if (event.data === YT.PlayerState.ENDED) {
       pausedVideo = false

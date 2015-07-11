@@ -56,7 +56,7 @@
     </div>
 
     <div class="library-container" ng-controller="LibraryController">
-        <input type="text" class="search" placeholder="Search 1380 songs">
+        <input type="text" class="search" placeholder="Search {{library.length}} songs">
 
         <div class="library">
             <div class="header">
@@ -100,9 +100,12 @@ var app = angular.module('OathStructure', ['perfect_scrollbar'])
 
 app.controller('LibraryController', function($scope) {
   $scope.library = [
-    {title: 'blah', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 1, youtubeImageId: 'lPmOcJ9YdYw'},
-    {title: 'snoo', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 2, youtubeImageId: 'lPmOcJ9YdYw'},
-    {title: 'ergo, the problem is choice', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 3, youtubeImageId: 'lPmOcJ9YdYw'}
+    {youtubeId: 'au3-hk-pXsM', title: 'Magical Trevor 1', artist: 'Mr Weebl', album: 'Weebl\'s Stuff', trackNumber: 1, youtubeImageId: 'au3-hk-pXsM'},
+    {youtubeId: 'HsUgZANvAbU', title: 'Magical Trevor 2', artist: 'Mr Weebl', album: 'Weebl\'s Stuff', trackNumber: 2, youtubeImageId: 'HsUgZANvAbU'},
+    {youtubeId: 'zvOyMIZtG6k', title: 'Grip Like a Vice', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 1, youtubeImageId: 'YHD29tzk69A'},
+    {youtubeId: 'A2rtlWWahnU', title: 'Doing it Right', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 2, youtubeImageId: 'YHD29tzk69A'},
+    {youtubeId: '-o8FOGC_Puc', title: 'My World', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 3, youtubeImageId: 'YHD29tzk69A'},
+    {youtubeId: 'BvkkHgLzM_k', title: 'Titanic Vandalism', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 4, youtubeImageId: 'YHD29tzk69A'},
   ]
 })
 

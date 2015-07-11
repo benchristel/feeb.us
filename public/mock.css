@@ -124,9 +124,17 @@
     overflow: hidden;
 }
 
+.queue {
+    position: absolute;
+    overflow-y: hidden;
+    bottom: 0;
+    top: 225px;
+    width: 320px;
+}
+
 .queue .song {
     height: 60px;
-    width: 310px;
+    width: 300px;
     margin: 5px;
     background-color: #222;
     border: 1px solid #222;

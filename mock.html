@@ -106,10 +106,13 @@ app.controller('LibraryController', function($scope) {
 
 app.controller('QueueController', function($scope) {
   $scope.queue = [
-    {youtubeId: 'UiyDmqO59QE', title: 'Missing', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 2, youtubeImageId: 'au3-hk-pXsM'},
-    {youtubeId: 'au3-hk-pXsM', title: 'Magical Trevor 1', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 2, youtubeImageId: 'au3-hk-pXsM'},
-    {youtubeId: 'HsUgZANvAbU', title: 'Magical Trevor 2', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 3, youtubeImageId: 'HsUgZANvAbU'},
-    {youtubeId: 'lPmOcJ9YdYw', title: 'blah', artist: 'monkeys in heat', album: 'wubhumping', trackNumber: 1, youtubeImageId: 'lPmOcJ9YdYw'}
+    {youtubeId: 'UiyDmqO59QE', title: 'Missing', artist: '5 Second Films', album: 'Unknown', trackNumber: 2, youtubeImageId: 'UiyDmqO59QE'},
+    {youtubeId: 'au3-hk-pXsM', title: 'Magical Trevor 1', artist: 'Mr Weebl', album: 'Weebl\'s Stuff', trackNumber: 2, youtubeImageId: 'au3-hk-pXsM'},
+    {youtubeId: 'HsUgZANvAbU', title: 'Magical Trevor 2', artist: 'Mr Weebl', album: 'Weebl\'s Stuff', trackNumber: 3, youtubeImageId: 'HsUgZANvAbU'},
+    {youtubeId: 'zvOyMIZtG6k', title: 'Grip Like a Vice', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 1, youtubeImageId: 'YHD29tzk69A'},
+    {youtubeId: 'A2rtlWWahnU', title: 'Doing it Right', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 1, youtubeImageId: 'YHD29tzk69A'},
+    {youtubeId: '-o8FOGC_Puc', title: 'My World', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 1, youtubeImageId: 'YHD29tzk69A'},
+    {youtubeId: 'BvkkHgLzM_k', title: 'Titanic Vandalism', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 1, youtubeImageId: 'YHD29tzk69A'}
   ]
 
   message.on('deejay-needs-a-song', function() {
@@ -169,12 +172,18 @@ app.controller('PlayerController', function($scope) {
   $scope.forward = function(){
     message.send('forward')
   }
-  message.on('song-playing', function() {
+  message.on('song-playing', function(progress) {
     $scope.playing = true;
+    updateProgress(progress)
   })
 
-  message.on('song-paused', function() {
+  message.on('song-paused', function(progress) {
     $scope.playing = false;
+    updateProgress(progress)
+  })
+
+  message.on('song-ended', function() {
+    updateProgress({position: 0, total: 1})
   })
 
   message.on('song-paused-from-youtube-player', function() {
@@ -188,6 +197,17 @@ app.controller('PlayerController', function($scope) {
       $scope.playing = true
     })
   })
+
+  message.on('song-progress', function(progress) {
+    if ($scope.playing) updateProgress(progress, true)
+  })
+
+  function updateProgress(progress, animate) {
+    var lookahead = animate ? 1 : 0
+    var fraction = (progress.position + lookahead) / progress.total
+    $('.scrubber-fill').css('transition', animate ? '1s linear' : '0s')
+    $('.scrubber-fill').css('transform', 'scaleX('+fraction+')')
+  }
 })
 </script>
 </body>

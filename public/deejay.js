@@ -1,14 +1,6 @@
 function Deejay() {
   "use strict"
 
-  // var div = document.createElement('div')
-  // div.setAttribute('id', 'youtube-player-1')
-  // document.getElementById('player-container').appendChild(div)
-  //
-  // div = document.createElement('div')
-  // div.setAttribute('id', 'youtube-player-2')
-  // document.getElementById('player-container').appendChild(div)
-
   var pausedVideo = null
   var players = []
   players.push(new YT.Player(
@@ -39,6 +31,14 @@ function Deejay() {
     }
   ))
 
+  function sendProgressUpdate() {
+    var player = activePlayer()
+    if (player && player.getCurrentTime && player.getDuration) {
+      message.send('song-progress', {position: player.getCurrentTime(), total: player.getDuration()})
+    }
+  }
+  window.setInterval(sendProgressUpdate, 1000)
+
   message.on('play-now', function(song) {
     var videoId = song.youtubeId
     stop()
@@ -48,7 +48,7 @@ function Deejay() {
     } else {
       activePlayer().cueVideoById(videoId)
     }
-    message.send('song-playing')
+    message.send('song-playing', {position: activePlayer().getCurrentTime() || 0, total: activePlayer().getDuration() || 1})
     play()
   })
 
@@ -62,17 +62,19 @@ function Deejay() {
   })
 
   message.on('play', function() {
+    var player = activePlayer()
     if (pausedVideo) {
-      message.send('song-playing')
+      message.send('song-playing', {position: player.getCurrentTime() || 0, total: player.getDuration() || 1})
       pausedVideo = false
-      activePlayer().playVideo()
+      player.playVideo()
     } else {
       message.send('deejay-needs-a-song')
     }
   })
 
   message.on('pause', function() {
-    message.send('song-paused')
+    var player = activePlayer()
+    message.send('song-paused', {position: player.getCurrentTime(), total: player.getDuration()})
     pausedVideo = true
     stop()
   })
@@ -85,6 +87,7 @@ function Deejay() {
   function activePlayerStateChanged(event) {
     if (event.data === YT.PlayerState.ENDED) {
       pausedVideo = false
+      message.send('song-ended')
       message.send('deejay-needs-a-song')
     } else if (event.data === YT.PlayerState.PLAYING) {
       pausedVideo = false
@@ -110,6 +113,7 @@ function Deejay() {
   }
 
   var activePlayerIndex = 0
+
   function activePlayer() {
     return players[activePlayerIndex]
   }

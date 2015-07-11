@@ -21,8 +21,8 @@
 }
 
 .video-player.inactive {
-  visibility: hidden;
-  position: absolute;
+    visibility: hidden;
+    position: absolute;
 }
 
 .song-info .text {
@@ -78,10 +78,6 @@
     background-color: #f67f00;
     height: 100%;
     position: absolute;
-    animation-duration: 200s;
-    animation-name: songprogress;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
     width: 100%;
     transform-origin: 0 0;
 }
@@ -278,8 +274,10 @@
 .library-container .search {
     width: 100%;
     font-size: 16px;
+    border: 2px solid #ccc;
     border-radius: 100px;
     padding: 5px;
+    padding-left: 15px;
 }
 
 .library .header span {
@@ -355,9 +353,4 @@
 @keyframes peek-in {
     from { width: 0px; }
     to { width: 10px; }
-}
-
-@keyframes songprogress {
-    from {transform: scaleX(0);}
-    to {transform: scaleX(1);}
 }

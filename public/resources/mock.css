@@ -332,12 +332,14 @@ input:focus {
     float: left;
     padding-left: 5px;
     padding-right: 5px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .library .song span {
     height: 28px;
     line-height: 28px;
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid #ccc;
 }
 
 .library .song:hover span {

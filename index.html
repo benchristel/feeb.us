@@ -9,7 +9,7 @@
 <div id="player-chrome" ng-controller="PlayerController">
     <div class="scrubber-fill"></div>
 
-    <div class="song-info" ng-show="currentSong">
+    <div class="song-info" ng-show="currentSong" ng-cloak>
         <div class="cover-image"
              style="background-image: url('https://i.ytimg.com/vi/{{currentSong.youtubeImageId}}/mqdefault.jpg')">
         </div>
@@ -39,7 +39,7 @@
             <div class="action-button fa fa-upload right"></div>
             <div class="action-button fa fa-save right"></div>
         </div>
-        <perfect-scrollbar class="queue" wheel-propagation="false" wheel-speed="20" refresh-on-change="queue">
+        <perfect-scrollbar class="queue" wheel-propagation="false" wheel-speed="20" refresh-on-change="queue" ng-cloak>
             <div class="song" ng-repeat="song in queue" ng-class="{playing: song.playing}">
                 <div class="cover-image"
                      style="background-image: url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/mqdefault.jpg')">
@@ -51,7 +51,7 @@
         </perfect-scrollbar>
     </div>
 
-    <div class="library-container" ng-controller="LibraryController">
+    <div class="library-container" ng-controller="LibraryController" ng-cloak>
         <input type="text" class="search" placeholder="Search {{library.length}} songs" ng-model="searchQuery">
 
         <div class="library">
@@ -70,6 +70,10 @@
                     <span class="artist">{{ song.artist }}</span>
                     <span class="album">{{ song.album }}</span>
                 </div>
+              </div>
+
+              <div class="import">
+                Can't find what you're looking for? <div class="button">Import a Library</div>.
               </div>
             </perfect-scrollbar>
         </div>

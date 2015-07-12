@@ -5,6 +5,10 @@
     font-family: 'Lucida Grande', Helvetica, sans-serif;
 }
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 input:focus {
     outline: 0;
 }
@@ -293,9 +297,9 @@ input:focus {
 }
 
 .library .header span {
-    color: #444;
-    font-weight: bold;
-    font-size: 16px;
+    color: #888;
+    /*font-weight: bold;*/
+    font-size: 14px;
     padding-top: 20px;
     padding-bottom: 2px;
     border-bottom: 1px solid #888;
@@ -372,6 +376,21 @@ input:focus {
 
 .library .artist {
     width: 20%;
+}
+
+.library  .import {
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 20px;
+    clear: both;
+    color: #444;
+}
+
+.library .import .button {
+    cursor: pointer;
+    color: #888;
+    display: inline;
+
 }
 
 @keyframes pop-in {

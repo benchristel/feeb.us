@@ -37,6 +37,7 @@ angular.module('perfect_scrollbar', []).directive('perfectScrollbar',
         });
       });
 
+      var prevScrollHeight = 0
       function update(event) {
         $scope.$evalAsync(function() {
           if ($attr.scrollDown == 'true' && event != 'mouseenter') {
@@ -44,8 +45,17 @@ angular.module('perfect_scrollbar', []).directive('perfectScrollbar',
               $($elem).scrollTop($($elem).prop("scrollHeight"));
             }, 100);
           }
+          if ($attr.scrollUp) {
+            ////var newScrollTop = $($elem).scrollTop() - (prevScrollHeight - $($elem).prop("scrollHeight"))
+            //if (newScrollTop < 0) newScrollTop = 0
+            $($elem).scrollTop(0)
+          }
           $elem.perfectScrollbar('update');
         });
+      }
+
+      function contentGotShorter() {
+        return $($elem).prop("scrollHeight") < prevScrollHeight
       }
 
       // This is necessary when you don't watch anything with the scrollbar

@@ -162,32 +162,6 @@ app.controller('LibraryController', function($scope) {
 })
 
 app.controller('AppController', function($scope) {
-  $scope.library = [{"youtubeId":"ISgwLkgrdCQ","title":"Heartbreaking Bravery","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":1,"youtubeImageId":"usmZtzeoK4g"},
-{"youtubeId":"lXb0cmewl2s","title":"Yesterday's Fire","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":2,"youtubeImageId":"usmZtzeoK4g"},
-{"youtubeId":"jFKiLyh3FwQ","title":"Shitty City","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":3,"youtubeImageId":"usmZtzeoK4g"},
-{"youtubeId":"-OI_r_wzrEI","title":"Quickfire, I Tried","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":4,"youtubeImageId":"usmZtzeoK4g"},
-{"youtubeId":"G0QObwY6Tns","title":"I'm Not the Phoenix Yet","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":5,"youtubeImageId":"usmZtzeoK4g"},
-{"youtubeId":"r6jMLq4RU9I","title":"10,000 Scorpions","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":6,"youtubeImageId":"usmZtzeoK4g"},
-{"youtubeId":"tzo_oxy3WeY","title":"Faraway Lightning","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":7,"youtubeImageId":"usmZtzeoK4g"},
-{"youtubeId":"16dJPN6MOJg","title":"Headed For The Door","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":8,"youtubeImageId":"usmZtzeoK4g"},
-{"youtubeId":"H_Ddz6aFe60","title":"Teary Eyes and Bloody Lips","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":9,"youtubeImageId":"usmZtzeoK4g"},
-{"youtubeId":"TOKzBId2wvs","title":"Lay Your Cheek On Down","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":10,"youtubeImageId":"usmZtzeoK4g"},
-{"youtubeId":"au3-hk-pXsM","title":"Magical Trevor Episode 1","artist":"Mr. Weebl","album":"Weebl's Stuff","trackNumber":1,"youtubeImageId":"au3-hk-pXsM"},
-{"youtubeId":"HsUgZANvAbU","title":"Magical Trevor Episode 2","artist":"Mr. Weebl","album":"Weebl's Stuff","trackNumber":2,"youtubeImageId":"au3-hk-pXsM"},
-{"youtubeId":"nzMAf1tbkfw","title":"Game Music for Studying 1","artist":"VideoGameMusic Playlists","album":"Video Game Music Playlists","trackNumber":1,"youtubeImageId":"nzMAf1tbkfw"},
-{"youtubeId":"5ARw19AnLK4","title":"Game Music for Studying 2","artist":"VideoGameMusic Playlists","album":"Video Game Music Playlists","trackNumber":2,"youtubeImageId":"nzMAf1tbkfw"},
-{"youtubeId":"zvOyMIZtG6k","title":"Grip Like a Vice","artist":"The Go! Team","album":"Proof of Youth","trackNumber":1,"youtubeImageId":"YHD29tzk69A"},
-{"youtubeId":"A2rtlWWahnU","title":"Doing It Right","artist":"The Go! Team","album":"Proof of Youth","trackNumber":2,"youtubeImageId":"YHD29tzk69A"},
-{"youtubeId":"-o8FOGC_Puc","title":"My World","artist":"The Go! Team","album":"Proof of Youth","trackNumber":3,"youtubeImageId":"YHD29tzk69A"},
-{"youtubeId":"BvkkHgLzM_k","title":"Titanic Vandalism","artist":"The Go! Team","album":"Proof of Youth","trackNumber":4,"youtubeImageId":"YHD29tzk69A"},
-{"youtubeId":"RBeHNdqmlec","title":"Fake Id","artist":"The Go! Team","album":"Proof of Youth","trackNumber":5,"youtubeImageId":"YHD29tzk69A"},
-{"youtubeId":"C9c7JVyx7_A","title":"Universal Speech","artist":"The Go! Team","album":"Proof of Youth","trackNumber":6,"youtubeImageId":"YHD29tzk69A"},
-{"youtubeId":"rHXMiomGNyo","title":"Keys to the City","artist":"The Go! Team","album":"Proof of Youth","trackNumber":7,"youtubeImageId":"YHD29tzk69A"},
-{"youtubeId":"aWvgPzfReMY","title":"The Wrath of Marcie","artist":"The Go! Team","album":"Proof of Youth","trackNumber":8,"youtubeImageId":"YHD29tzk69A"},
-{"youtubeId":"JP7HmXncbuE","title":"I Never Needed It Now So Much","artist":"The Go! Team","album":"Proof of Youth","trackNumber":9,"youtubeImageId":"YHD29tzk69A"},
-{"youtubeId":"B5nFifecFhw","title":"Flashlight Fight","artist":"The Go! Team","album":"Proof of Youth","trackNumber":10,"youtubeImageId":"YHD29tzk69A"},
-{"youtubeId":"YHD29tzk69A","title":"Patricia's Moving Picture","artist":"The Go! Team","album":"Proof of Youth","trackNumber":11,"youtubeImageId":"YHD29tzk69A"}]
-
   $scope.searchQueryChars = function() {
     if (!$scope.searchQuery) return []
     return $scope.searchQuery.split('')
@@ -198,13 +172,16 @@ app.controller('AppController', function($scope) {
   }
 
   $scope.importFrom = function(text) {
-    $scope.library = parseLibrary(text)
+    $scope.library = parseLibrary(text || '')
+    localStorage['oath-structure-library'] = text
     $scope.importing = false
   }
 
   $scope.cancelImport = function() {
     $scope.importing = false
   }
+
+  $scope.importFrom(localStorage['oath-structure-library'])
 })
 
 app.controller('QueueController', function($scope) {

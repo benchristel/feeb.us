@@ -80,7 +80,7 @@
     </div>
 </div>
 
-<div class="import-modal" ng-show="importing">
+<div class="import-modal" ng-show="importing" ng-cloak>
   <div>
     <textarea ng-model="importText"></textarea>
     <div class="button-container">
@@ -195,7 +195,6 @@ app.controller('QueueController', function($scope) {
   message.on('add-to-queue', function(song) {
     $scope.queue.push(song)
   })
-
 
   function current() {
     return songAt(currentlyPlayingIndex())

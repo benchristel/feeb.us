@@ -9,13 +9,13 @@
 <div id="player-chrome" ng-controller="PlayerController">
     <div class="scrubber-fill"></div>
 
-    <div class="song-info">
+    <div class="song-info" ng-show="currentSong">
         <div class="cover-image"
-             style="background-image: url('https://i.ytimg.com/vi_webp/YHD29tzk69A/default.webp')">
+             style="background-image: url('https://i.ytimg.com/vi/{{currentSong.youtubeImageId}}/mqdefault.jpg')">
         </div>
-        <div class="song-title text">Patricia's Moving Picture</div>
-        <div class="artist-name text">The Go! Team</div>
-        <div class="album-name text">Proof of Youth</div>
+        <div class="song-title text">{{currentSong.title}}</div>
+        <div class="artist-name text">{{currentSong.artist}}</div>
+        <div class="album-name text">{{currentSong.album}}</div>
     </div>
 
     <div class="player-controls">
@@ -185,6 +185,11 @@ app.controller('PlayerController', function($scope) {
   $scope.forward = function(){
     message.send('forward')
   }
+
+  message.on('play-now', function(song) {
+    $scope.currentSong = song
+  })
+
   message.on('song-playing', function(progress) {
     $scope.playing = true;
     updateProgress(progress)

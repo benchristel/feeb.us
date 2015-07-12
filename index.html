@@ -52,7 +52,7 @@
     </div>
 
     <div class="library-container" ng-controller="LibraryController">
-        <input type="text" class="search" placeholder="Search {{library.length}} songs">
+        <input type="text" class="search" placeholder="Search {{library.length}} songs" ng-model="searchQuery">
 
         <div class="library">
             <div class="header">
@@ -63,8 +63,7 @@
             </div>
             <perfect-scrollbar class="body">
               <div>
-                <div class="song"
-                     ng-repeat="song in library">
+                <div class="song" ng-repeat="song in library | filter:searchQuery">
                     <span class="track-number">{{ song.trackNumber }}</span>
                     <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
                     <span class="title">{{ song.title }}</span>

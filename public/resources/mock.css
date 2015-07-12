@@ -5,6 +5,10 @@
     font-family: 'Lucida Grande', Helvetica, sans-serif;
 }
 
+input:focus {
+    outline: 0;
+}
+
 #player-chrome {
     height: 80px;
     width: 100%;

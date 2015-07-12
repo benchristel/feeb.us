@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href="resources/perfect-scrollbar.min.css" rel="stylesheet">
 </head>
-<body ng-app="OathStructure">
+<body ng-app="OathStructure" ng-controller="AppController">
 
 <div id="player-chrome" ng-controller="PlayerController">
     <div class="scrubber-fill"></div>
@@ -61,7 +61,7 @@
                 <span class="artist">Artist</span>
                 <span class="album">Album</span>
             </div>
-            <perfect-scrollbar class="body">
+            <perfect-scrollbar class="body" wheel-propagation="false" wheel-speed="20" refresh-on-change="searchedLibrary()">
               <div>
                 <div class="song" ng-repeat="song in library | filter:searchQuery">
                     <span class="track-number">{{ song.trackNumber }}</span>
@@ -73,11 +73,21 @@
               </div>
 
               <div class="import">
-                Can't find what you're looking for? <div class="button">Import a Library</div>.
+                Can't find what you're looking for? <div class="button" ng-click="startImport()">Import a Library</div>.
               </div>
             </perfect-scrollbar>
         </div>
     </div>
+</div>
+
+<div class="import-modal" ng-show="importing">
+  <div>
+    <textarea ng-model="importText"></textarea>
+    <div class="button-container">
+      <div class="button" ng-click="importFrom(importText)">Import</div>
+      <div class="button" ng-click="cancelImport()">Cancel</div>
+    </div>
+  </div>
 </div>
 
 <script src="//cdn.jsdelivr.net/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
@@ -94,6 +104,51 @@
 <script type="text/javascript">
 "use strict";
 
+function parseLibrary(text) {
+  text = removeComments(text)
+
+  var album, artist, art, songs = []
+  var anyWhitespaceContainingAtLeastTwoNewlines = /\n\s*\n\s*/
+  var anythingFollowingAHashSymbol = /#[^\n]\n/g
+
+  var sections = text.split(anyWhitespaceContainingAtLeastTwoNewlines)
+  sections = sections.map(function(s) { return s.split(/\n/) })
+
+  for (var section of sections) {
+    if (section.length === 1) {
+      artist = textFrom(section[0])
+    } else {
+      album = textFrom(section[0])
+      art = youtubeIdFrom(section[0])
+
+      for (var i = 1; i < section.length; i++) {
+        songs.push({
+          title: textFrom(section[i]),
+          artist: artist,
+          album: album,
+          trackNumber: i,
+          youtubeId: youtubeIdFrom(section[i]),
+          youtubeImageId: art
+        })
+      }
+    }
+  }
+
+  return songs
+
+  function removeComments() {
+    return text.replace(anythingFollowingAHashSymbol, "\n")
+  }
+
+  function textFrom(line) {
+    return line.substring(11, line.length).trim()
+  }
+
+  function youtubeIdFrom(line) {
+    return line.substring(0, 11)
+  }
+}
+
 function onYouTubeIframeAPIReady() {
   var deejay = new Deejay()
 }
@@ -101,6 +156,12 @@ function onYouTubeIframeAPIReady() {
 var app = angular.module('OathStructure', ['perfect_scrollbar'])
 
 app.controller('LibraryController', function($scope) {
+  $scope.addToQueue = function(song) {
+    message.send('add-to-queue', song)
+  }
+})
+
+app.controller('AppController', function($scope) {
   $scope.library = [{"youtubeId":"ISgwLkgrdCQ","title":"Heartbreaking Bravery","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":1,"youtubeImageId":"usmZtzeoK4g"},
 {"youtubeId":"lXb0cmewl2s","title":"Yesterday's Fire","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":2,"youtubeImageId":"usmZtzeoK4g"},
 {"youtubeId":"jFKiLyh3FwQ","title":"Shitty City","artist":"Moonface","album":"With Siinai: Heartbreaking Bravery","trackNumber":3,"youtubeImageId":"usmZtzeoK4g"},
@@ -127,9 +188,22 @@ app.controller('LibraryController', function($scope) {
 {"youtubeId":"B5nFifecFhw","title":"Flashlight Fight","artist":"The Go! Team","album":"Proof of Youth","trackNumber":10,"youtubeImageId":"YHD29tzk69A"},
 {"youtubeId":"YHD29tzk69A","title":"Patricia's Moving Picture","artist":"The Go! Team","album":"Proof of Youth","trackNumber":11,"youtubeImageId":"YHD29tzk69A"}]
 
+  $scope.searchQueryChars = function() {
+    if (!$scope.searchQuery) return []
+    return $scope.searchQuery.split('')
+  }
 
-  $scope.addToQueue = function(song) {
-    message.send('add-to-queue', song)
+  $scope.startImport = function() {
+    $scope.importing = true
+  }
+
+  $scope.importFrom = function(text) {
+    $scope.library = parseLibrary(text)
+    $scope.importing = false
+  }
+
+  $scope.cancelImport = function() {
+    $scope.importing = false
   }
 })
 

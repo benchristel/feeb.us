@@ -1,5 +1,7 @@
 This project is a music player that plays songs from Youtube. Its aim is to provide an easy way to access a curated library of media on any device.
 
+It's up and running at [http://benchristel.github.com/oath-structure](http://benchristel.github.com/oath-structure).
+
 ![a screenshot of the application](https://raw.githubusercontent.com/benchristel/oath-structure/gh-pages/screenshot-2015-07-12.png)
 
 ## Library File Format

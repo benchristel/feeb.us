@@ -72,8 +72,12 @@
                 </div>
               </div>
 
-              <div class="import">
+              <div class="import" ng-show="library.length > 0">
                 Can't find what you're looking for? <div class="button" ng-click="startImport()">Import a Library</div>.
+              </div>
+
+              <div class="import" ng-show="library.length == 0">
+                You don't have any songs in your library yet! <div class="button" ng-click="startImport()">Import a Library</div>.
               </div>
             </perfect-scrollbar>
         </div>

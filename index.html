@@ -64,7 +64,7 @@
             <div class="song"
                  ng-repeat="song in library">
                 <span class="track-number">{{ song.trackNumber }}</span>
-                <span class="add-button fa fa-plus"></span>
+                <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
                 <span class="title">{{ song.title }}</span>
                 <span class="artist">{{ song.artist }}</span>
                 <span class="album">{{ song.album }}</span>
@@ -102,24 +102,22 @@ app.controller('LibraryController', function($scope) {
     {youtubeId: '-o8FOGC_Puc', title: 'My World', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 3, youtubeImageId: 'YHD29tzk69A'},
     {youtubeId: 'BvkkHgLzM_k', title: 'Titanic Vandalism', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 4, youtubeImageId: 'YHD29tzk69A'},
   ]
+
+  $scope.addToQueue = function(song) {
+    message.send('add-to-queue', song)
+  }
 })
 
 app.controller('QueueController', function($scope) {
-  $scope.queue = [
-    {youtubeId: 'UiyDmqO59QE', title: 'Missing', artist: '5 Second Films', album: 'Unknown', trackNumber: 2, youtubeImageId: 'UiyDmqO59QE'},
-    {youtubeId: 'au3-hk-pXsM', title: 'Magical Trevor 1', artist: 'Mr Weebl', album: 'Weebl\'s Stuff', trackNumber: 2, youtubeImageId: 'au3-hk-pXsM'},
-    {youtubeId: 'HsUgZANvAbU', title: 'Magical Trevor 2', artist: 'Mr Weebl', album: 'Weebl\'s Stuff', trackNumber: 3, youtubeImageId: 'HsUgZANvAbU'},
-    {youtubeId: 'zvOyMIZtG6k', title: 'Grip Like a Vice', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 1, youtubeImageId: 'YHD29tzk69A'},
-    {youtubeId: 'A2rtlWWahnU', title: 'Doing it Right', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 1, youtubeImageId: 'YHD29tzk69A'},
-    {youtubeId: '-o8FOGC_Puc', title: 'My World', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 1, youtubeImageId: 'YHD29tzk69A'},
-    {youtubeId: 'BvkkHgLzM_k', title: 'Titanic Vandalism', artist: 'The Go! Team', album: 'Proof of Youth', trackNumber: 1, youtubeImageId: 'YHD29tzk69A'},
-    {youtubeId: 'au3-hk-pXsM', title: 'Magical Trevor 1', artist: 'Mr Weebl', album: 'Weebl\'s Stuff', trackNumber: 2, youtubeImageId: 'au3-hk-pXsM'},
-    {youtubeId: 'HsUgZANvAbU', title: 'Magical Trevor 2', artist: 'Mr Weebl', album: 'Weebl\'s Stuff', trackNumber: 3, youtubeImageId: 'HsUgZANvAbU'}
-  ]
+  $scope.queue = []
 
   message.on('deejay-needs-a-song', function() {
     advance()
     message.send('play-now', current())
+  })
+
+  message.on('add-to-queue', function(song) {
+    $scope.queue.push(song)
   })
 
 

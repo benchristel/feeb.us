@@ -37,11 +37,11 @@
             <div class="action-button fa fa-random left"></div>
             <div class="action-button fa fa-repeat left"></div>
             <div class="action-button fa fa-trash right"></div>
-            <div class="action-button fa fa-upload right"></div>
+            <div class="action-button fa fa-upload right" ng-click = "importLibrary()"></div>
             <div class="action-button fa fa-save right"></div>
         </div>
         <perfect-scrollbar class="queue" wheel-propagation="false" wheel-speed="20" refresh-on-change="queue" ng-cloak>
-            <div class="song" ng-repeat="song in queue" ng-class="{playing: song.playing}">
+            <div class="song" ng-repeat="song in queue track by $index" ng-class="{playing: song.playing}">
                 <div class="cover-image"
                      style="background-image: url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/mqdefault.jpg')">
                 </div>
@@ -172,6 +172,11 @@ app.controller('AppController', function($scope) {
     return $scope.searchQuery.split('')
   }
 
+
+  message.on('import-library', function(song) {
+    $scope.startImport()
+  })
+
   $scope.startImport = function() {
     $scope.importing = true
   }
@@ -196,6 +201,10 @@ app.controller('QueueController', function($scope) {
     advance()
     message.send('play-now', current())
   })
+
+  $scope.importLibrary = function(){
+    message.send("import-library")
+  }
 
   message.on('add-to-queue', function(song) {
     $scope.queue.push(song)

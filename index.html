@@ -162,7 +162,7 @@ var app = angular.module('OathStructure', ['perfect_scrollbar'])
 
 app.controller('LibraryController', function($scope) {
   $scope.addToQueue = function(song) {
-    message.send('add-to-queue', song)
+    message.send('add-to-queue', angular.copy(song))
   }
 })
 

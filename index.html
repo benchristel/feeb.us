@@ -7,8 +7,8 @@
 </head>
 <body ng-app="OathStructure" ng-controller="AppController" ng-keypress="keypress($event)">
 
-<div id="player-chrome" ng-controller="PlayerController">
-    <div class="scrubber-fill"></div>
+<div id="player-chrome" ng-controller="PlayerController" >
+    <div class="scrubber-fill" ></div>
 
     <div class="song-info" ng-show="currentSong" ng-cloak>
         <div class="cover-image"
@@ -19,12 +19,12 @@
         <div class="album-name text">{{currentSong().album}}</div>
     </div>
 
-    <div class="player-controls">
+    <div class="player-controls" ng-click = "seekTo($event)">
         <div class="replay button fa fa-backward"></div>
-        <div class="play button fa fa-play" ng-click="play()" ng-hide="playing()"></div>
-        <div class="pause button fa fa-pause" ng-click="pause()" ng-show="playing()"></div>
-        <div class="stop button fa fa-stop" ng-click="stop()"></div>
-        <div class="skip button fa fa-forward" ng-click="forward()"></div>
+        <div class="play button fa fa-play" ng-click="play($event)" ng-hide="playing()"></div>
+        <div class="pause button fa fa-pause" ng-click="pause($event)" ng-show="playing()"></div>
+        <div class="stop button fa fa-stop" ng-click="stop($event)"></div>
+        <div class="skip button fa fa-forward" ng-click="forward($event)"></div>
     </div>
 </div>
 
@@ -279,21 +279,29 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
   }
 }])
 
-app.controller('PlayerController',  ['$scope','Deejay', function ($scope, Deejay) {
-  $scope.play = function() {
+app.controller('PlayerController',  ['$scope','$window', 'Deejay', function ($scope, $window, Deejay) {
+  $scope.play = function(event) {
+    event.stopPropagation();
     Deejay.playSong()
   }
 
-  $scope.pause = function() {
+  $scope.pause = function(event) {
+    event.stopPropagation();
     Deejay.pauseSong()
   }
 
-  $scope.forward = function(){
+  $scope.forward = function(event){
+    event.stopPropagation();
     Deejay.skipSong()
   }
 
-  $scope.stop = function(){
+  $scope.stop = function(event){
+    event.stopPropagation();
     Deejay.stopSong()
+  }
+
+  $scope.seekTo = function(event){
+    Deejay.seekTo(event.offsetX/angular.element($window).width())
   }
 
   $scope.playing = Deejay.getIsPlaying

@@ -39,6 +39,11 @@ angular.module('OathStructure').service('Deejay', function() {
     message.send('deejay-needs-a-song')
   }
 
+  this.seekTo = function(percent){
+    var seconds = Math.round(player.getDuration() * percent)
+    player.seekTo(seconds, true)
+  }
+
   function playVideo() {
     if (currentSongChanged()) {
       player.cueVideoById(currentSong.youtubeId)

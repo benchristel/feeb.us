@@ -53,7 +53,7 @@
     </div>
 
     <div class="library-container" ng-controller="LibraryController" ng-cloak>
-        <input type="text" class="search" placeholder="Search {{library.length}} songs" ng-model="searchQuery">
+        <input id = "searchbar" type="text" class="search" placeholder="Search {{library.length}} songs" ng-model="searchQuery">
 
         <div class="library">
             <div class="header">
@@ -167,15 +167,22 @@ app.controller('LibraryController', function($scope) {
   }
 })
 
-app.controller('AppController', function($scope) {
+app.controller('AppController', ['$scope','Deejay', function ($scope, Deejay) {
   $scope.searchQueryChars = function() {
     if (!$scope.searchQuery) return []
     return $scope.searchQuery.split('')
   }
 
   $scope.keypress = function(event){
-    if (event.which == 32){
-      console.log("spacebar")
+    if ( document.activeElement !== null && document.activeElement.id !== "searchbar"){
+      if (event.which == 32){
+        if (Deejay.getIsPlaying()){
+          Deejay.pauseSong()
+        }
+        else{
+          Deejay.playSong()
+        }
+      }
     }
   }
 
@@ -198,7 +205,7 @@ app.controller('AppController', function($scope) {
   }
 
   $scope.importFrom(localStorage['oath-structure-library'])
-})
+}])
 
 app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) {
   $scope.queue = []
@@ -223,6 +230,7 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
     if (!newSong) {
     }else{
       Deejay.setCurrentSong(newSong)
+      $scope.$apply() // queue won't update properly otherwise...
     }
   })
 
@@ -250,7 +258,6 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
     if (indexInQueue(currentlyPlaying + 1)) {
       songAt(currentlyPlaying + 1).playing = true
     }
-
     return songAt(currentlyPlayingIndex())
   }
 
@@ -293,34 +300,12 @@ app.controller('PlayerController',  ['$scope','Deejay', function ($scope, Deejay
 
   $scope.currentSong = Deejay.getCurrentSong
 
-  message.on('play-now', function(song) {
-    $scope.currentSong = song
-  })
-
-  message.on('song-playing', function(progress) {
-    $scope.playing = true;
-    updateProgress(progress)
-  })
-
-  message.on('song-paused', function(progress) {
-    $scope.playing = false;
-    updateProgress(progress)
-  })
-
-  message.on('song-ended', function() {
-    updateProgress({position: 0, total: 1})
-  })
-
   message.on('song-paused-from-youtube-player', function() {
-    $scope.$apply(function() {
-      $scope.playing = false
-    })
+    $scope.$apply() // only way to invoke update that I can think of at the moment.
   })
 
   message.on('song-played-from-youtube-player', function() {
-    $scope.$apply(function() {
-      $scope.playing = true
-    })
+    $scope.$apply() //ditto
   })
 
   message.on('song-progress', function(progress) {

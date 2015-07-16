@@ -105,8 +105,10 @@ angular.module('OathStructure').service('Deejay', function() {
       message.send('deejay-needs-a-song')
     } else if (event.data === YT.PlayerState.PLAYING) {
       playing = true
+      message.send('song-played-from-youtube-player')
     } else if (event.data === YT.PlayerState.PAUSED) {
       playing = false
+      message.send('song-paused-from-youtube-player')
     }
   }
 })

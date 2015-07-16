@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href="resources/perfect-scrollbar.min.css" rel="stylesheet">
 </head>
-<body ng-app="OathStructure" ng-controller="AppController">
+<body ng-app="OathStructure" ng-controller="AppController" ng-keypress="keypress($event)">
 
 <div id="player-chrome" ng-controller="PlayerController">
     <div class="scrubber-fill"></div>
@@ -155,7 +155,7 @@ function parseLibrary(text) {
 }
 
 function onYouTubeIframeAPIReady() {
-  var deejay = new Deejay()
+  message.send('youtube-iframe-api-ready')
 }
 
 var app = angular.module('OathStructure', ['perfect_scrollbar'])
@@ -172,6 +172,11 @@ app.controller('AppController', function($scope) {
     return $scope.searchQuery.split('')
   }
 
+  $scope.keypress = function(event){
+    if (event.which == 32){
+      console.log("spacebar")
+    }
+  }
 
   message.on('import-library', function(song) {
     $scope.startImport()
@@ -194,7 +199,7 @@ app.controller('AppController', function($scope) {
   $scope.importFrom(localStorage['oath-structure-library'])
 })
 
-app.controller('QueueController', function($scope) {
+app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) {
   $scope.queue = []
 
   message.on('deejay-needs-a-song', function() {
@@ -260,7 +265,7 @@ app.controller('QueueController', function($scope) {
   }
 })
 
-app.controller('PlayerController', function($scope) {
+app.controller('PlayerController',  ['$scope','Deejay', function ($scope, Deejay) {
   $scope.play = function() {
     message.send('play')
   }
@@ -313,7 +318,36 @@ app.controller('PlayerController', function($scope) {
     $('.scrubber-fill').css('transition', animate ? '1s linear' : '0s')
     $('.scrubber-fill').css('transform', 'scaleX('+fraction+')')
   }
+
+}])
+
+app.service('Deejay', function(){
+  var playing = false;
+  var currentSong = null;
+
+  this.setCurrentSong = function(song){
+    this.currentSong = song
+    this.playSong()
+  }
+
+  this.playSong = function(){
+
+
+
+    this.playing = true;
+  }
+
+  this.pauseSong = function(){
+
+
+    this.playing = false;
+  }
+
+
+
 })
+
+
 </script>
 </body>
 </html>

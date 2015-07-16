@@ -12,18 +12,18 @@
 
     <div class="song-info" ng-show="currentSong" ng-cloak>
         <div class="cover-image"
-             style="background-image: url('https://i.ytimg.com/vi/{{currentSong.youtubeImageId}}/mqdefault.jpg')">
+             style="background-image: url('https://i.ytimg.com/vi/{{currentSong().youtubeImageId}}/mqdefault.jpg')">
         </div>
-        <div class="song-title text">{{currentSong.title}}</div>
-        <div class="artist-name text">{{currentSong.artist}}</div>
-        <div class="album-name text">{{currentSong.album}}</div>
+        <div class="song-title text">{{currentSong().title}}</div>
+        <div class="artist-name text">{{currentSong().artist}}</div>
+        <div class="album-name text">{{currentSong().album}}</div>
     </div>
 
     <div class="player-controls">
         <div class="replay button fa fa-backward"></div>
-        <div class="play button fa fa-play" ng-click="play()" ng-hide="playing"></div>
-        <div class="pause button fa fa-pause" ng-click="pause()" ng-show="playing"></div>
-        <div class="stop button fa fa-stop"></div>
+        <div class="play button fa fa-play" ng-click="play()" ng-hide="playing()"></div>
+        <div class="pause button fa fa-pause" ng-click="pause()" ng-show="playing()"></div>
+        <div class="stop button fa fa-stop" ng-click="stop()"></div>
         <div class="skip button fa fa-forward" ng-click="forward()"></div>
     </div>
 </div>
@@ -103,7 +103,8 @@
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="resources/message.js"></script>
 <script src="resources/library_importer.js"></script>
-<script src="resources/deejay.js"></script>
+<script src="resources/app.js"></script>
+<script src="resources/deejay-service.js"></script>
 <script src="resources/linked_list.js"></script>
 
 <script type="text/javascript">
@@ -158,7 +159,7 @@ function onYouTubeIframeAPIReady() {
   message.send('youtube-iframe-api-ready')
 }
 
-var app = angular.module('OathStructure', ['perfect_scrollbar'])
+var app = angular.module('OathStructure')
 
 app.controller('LibraryController', function($scope) {
   $scope.addToQueue = function(song) {
@@ -202,16 +203,31 @@ app.controller('AppController', function($scope) {
 app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) {
   $scope.queue = []
 
-  message.on('deejay-needs-a-song', function() {
-    advance()
-    message.send('play-now', current())
-  })
-
   $scope.importLibrary = function(){
     message.send("import-library")
   }
 
+  $scope.jumpTo = function(song) {
+    var currentlyPlaying = currentlyPlayingIndex()
+    if (currentlyPlaying !== null) {
+      songAt(currentlyPlaying).playing = false
+    }
+
+    song.playing = true
+
+    Deejay.setCurrentSong(song)
+  }
+
+  message.on('deejay-needs-a-song', function() {
+    var newSong = advance()
+    if (!newSong) {
+    }else{
+      Deejay.setCurrentSong(newSong)
+    }
+  })
+
   message.on('add-to-queue', function(song) {
+
     $scope.queue.push(song)
   })
 
@@ -224,7 +240,7 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
 
     if (currentlyPlaying === null && indexInQueue(0)) {
       songAt(0).playing = true
-      return
+      return songAt(0)
     }
 
     if (currentlyPlaying !== null) {
@@ -234,17 +250,8 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
     if (indexInQueue(currentlyPlaying + 1)) {
       songAt(currentlyPlaying + 1).playing = true
     }
-  }
 
-  $scope.jumpTo = function(song) {
-    var currentlyPlaying = currentlyPlayingIndex()
-    if (currentlyPlaying !== null) {
-      songAt(currentlyPlaying).playing = false
-    }
-
-    song.playing = true
-
-    message.send('play-now', song)
+    return songAt(currentlyPlayingIndex())
   }
 
   function indexInQueue(i) {
@@ -263,20 +270,28 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
     }
     return null
   }
-})
+}])
 
 app.controller('PlayerController',  ['$scope','Deejay', function ($scope, Deejay) {
   $scope.play = function() {
-    message.send('play')
+    Deejay.playSong()
   }
 
   $scope.pause = function() {
-    message.send('pause')
+    Deejay.pauseSong()
   }
 
   $scope.forward = function(){
-    message.send('forward')
+    Deejay.skipSong()
   }
+
+  $scope.stop = function(){
+    Deejay.stopSong()
+  }
+
+  $scope.playing = Deejay.getIsPlaying
+
+  $scope.currentSong = Deejay.getCurrentSong
 
   message.on('play-now', function(song) {
     $scope.currentSong = song
@@ -318,35 +333,7 @@ app.controller('PlayerController',  ['$scope','Deejay', function ($scope, Deejay
     $('.scrubber-fill').css('transition', animate ? '1s linear' : '0s')
     $('.scrubber-fill').css('transform', 'scaleX('+fraction+')')
   }
-
 }])
-
-app.service('Deejay', function(){
-  var playing = false;
-  var currentSong = null;
-
-  this.setCurrentSong = function(song){
-    this.currentSong = song
-    this.playSong()
-  }
-
-  this.playSong = function(){
-
-
-
-    this.playing = true;
-  }
-
-  this.pauseSong = function(){
-
-
-    this.playing = false;
-  }
-
-
-
-})
-
 
 </script>
 </body>

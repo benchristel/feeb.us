@@ -36,8 +36,8 @@
         <div class="video-player inactive" id="youtube-player-2"></div>
 
         <div class="queue-actions">
-            <div class="action-button fa fa-random left"></div>
-            <div class="action-button fa fa-repeat left"></div>
+            <div class="action-button fa fa-random left" ng-click = "shuffle()" ng-class="{active: shuffled}"></div>
+            <div class="action-button fa fa-repeat left" ng-click = "repeat()" ng-class="{active: repeatQueue}" ></div>
             <div class="action-button fa fa-trash right"></div>
             <div class="action-button fa fa-upload right" ng-click = "importLibrary()"></div>
             <div class="action-button fa fa-save right"></div>
@@ -211,6 +211,29 @@ app.controller('AppController', ['$scope','Deejay', function ($scope, Deejay) {
 
 app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) {
   $scope.queue = []
+  $scope.shuffled = false;
+  $scope.repeatQueue = false;
+  $scope.normalQueue = []
+  // $scope.shuffledQueue = []
+
+  $scope.shuffle = function(){
+    if ($scope.shuffled){
+      $scope.queue = $scope.normalQueue
+      $scope.shuffled = false
+    }else{
+      $scope.shuffled = true
+      $scope.normalQueue = $scope.queue
+      $scope.queue = _.shuffle($scope.queue)
+    }
+  }
+
+  $scope.repeat = function(){
+    if($scope.repeatQueue){
+      $scope.repeatQueue = false
+    } else{
+      $scope.repeatQueue = true
+    }
+  }
 
   $scope.importLibrary = function(){
     message.send("import-library")
@@ -227,6 +250,12 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
     Deejay.setCurrentSong(song)
   }
 
+  // $scope.replay = function(){
+  //   var song = Deejay.getCurrentSong()
+  //   Deejay.stopSong()
+  //   Deejay.setCurrentSong(song)
+  // }
+
   message.on('deejay-needs-a-song', function() {
     var newSong = advance()
     if (!newSong) {
@@ -237,8 +266,19 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
   })
 
   message.on('add-to-queue', function(song) {
+    if ($scope.shuffled){
+      $scope.normalQueue.push(song)
+      var currentlyPlaying = currentlyPlayingIndex()
+      // if (currentlyPlaying == $scope.queue.length-1){
+      //   $scope.queue.push(song)
+      // }else{
+      var index = _.random(currentlyPlaying+1, $scope.queue.length)
+      $scope.queue.splice(index, 0, song)
+      // }
 
-    $scope.queue.push(song)
+    }else{
+      $scope.queue.push(song)
+    }
   })
 
   function current() {
@@ -259,6 +299,9 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
 
     if (indexInQueue(currentlyPlaying + 1)) {
       songAt(currentlyPlaying + 1).playing = true
+    }else if ($scope.repeatQueue) {
+      songAt(0).playing = true
+      return songAt(0)
     }
     return songAt(currentlyPlayingIndex())
   }

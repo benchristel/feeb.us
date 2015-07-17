@@ -38,12 +38,13 @@
         <div class="queue-actions">
             <div class="action-button fa fa-random left" ng-click = "shuffle()" ng-class="{active: shuffled}"></div>
             <div class="action-button fa fa-repeat left" ng-click = "repeat()" ng-class="{active: repeatQueue}" ></div>
-            <div class="action-button fa fa-trash right"></div>
+            <div class="action-button fa fa-trash right" ng-click = "deleteSelected()"></div>
+            <!-- I know trash might be used for something else, but it's just for now. Not sure how you'll delete in the current UI -->
             <div class="action-button fa fa-upload right" ng-click = "importLibrary()"></div>
             <div class="action-button fa fa-save right"></div>
         </div>
         <perfect-scrollbar class="queue" wheel-propagation="false" wheel-speed="20" refresh-on-change="queue" ng-cloak>
-            <div class="song" ng-repeat="song in queue track by $index" ng-class="{playing: song.playing}">
+            <div class="song" ng-repeat="song in queue track by $index" ng-class="{playing: song.playing, selected: song.selected}" ng-click = "toggleSelect(song)">
                 <div class="cover-image"
                      style="background-image: url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/mqdefault.jpg')">
                 </div>
@@ -136,7 +137,9 @@ function parseLibrary(text) {
           album: album,
           trackNumber: i,
           youtubeId: youtubeIdFrom(section[i]),
-          youtubeImageId: art
+          youtubeImageId: art,
+          selected: false,
+          playing: false
         })
       }
     }
@@ -176,7 +179,7 @@ app.controller('AppController', ['$scope','Deejay', function ($scope, Deejay) {
   }
 
   $scope.keypress = function(event){
-    if ( document.activeElement !== null && document.activeElement.id !== "searchbar"){
+    if (( document.activeElement !== null && document.activeElement.id !== "searchbar") || document.activeElement === null){
       if (event.which == 32){
         if (Deejay.getIsPlaying()){
           Deejay.pauseSong()
@@ -248,6 +251,22 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
     song.playing = true
 
     Deejay.setCurrentSong(song)
+  }
+
+  $scope.toggleSelect = function(song){
+    if (song.selected){
+      song.selected = false
+    }else{
+      song.selected = true
+    }
+  }
+
+  $scope.deleteSelected = function(){
+    _.each($scope.queue, function(song){
+      if (song.selected){
+        $scope.queue = _.without($scope.queue, _.findWhere($scope.queue, song));
+      }
+    })
   }
 
   // $scope.replay = function(){

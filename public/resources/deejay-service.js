@@ -1,11 +1,10 @@
 angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootScope) {
-  var PAUSED = 0
-  var PLAYING = 1
-  var BETWEEN_SONGS = 2
+  var OFF_AIR = 0
+  var PAUSED = 1
+  var PLAYING = 2
+  var BETWEEN_SONGS = 3
 
-  var onAir = false;
-  var paused = false;
-  var betweenSongs = false;
+  var state = OFF_AIR
   var currentSong = null;
   var deejay = this
 
@@ -20,14 +19,14 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
   }
 
   this.goOnAir = function() {
-    if (!onAir) {
-      onAir = true
+    if (this.isOffAir()) {
+      state = BETWEEN_SONGS
       notify()
     }
   }
 
   this.goOffAir = function() {
-    onAir = false
+    state = OFF_AIR
     currentSong = null
     stopVideo()
     notify()
@@ -46,23 +45,31 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
   }
 
   this.needsSong = function() {
-    return onAir && !currentSong
+    return this.isOnAir() && !currentSong
   }
 
   this.isPlaying = function() {
-    return onAir && !paused
+    return state === PLAYING
+  }
+
+  this.isDoingStuff = function() {
+    return state === PLAYING || state === BETWEEN_SONGS
   }
 
   this.isPaused = function() {
-    return onAir && paused
+    return state === PAUSED
   }
 
   this.isOnAir = function() {
-    return onAir
+    return state !== OFF_AIR
+  }
+
+  this.isOffAir = function() {
+    return state === OFF_AIR
   }
 
   this.isBetweenSongs = function() {
-    return onAir && betweenSongs
+    return state === BETWEEN_SONGS
   }
 
   this.getCurrentSong = function() {
@@ -108,41 +115,22 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
   }
   message.on('youtube-iframe-api-ready', youtubeIsReady)
 
-  //function sendProgressUpdate() {
-  //  if (betweenSongs) return
-  //  if (player && player.getCurrentTime && player.getDuration) {
-  //    message.send('song-progress', {position: player.getCurrentTime(), total: player.getDuration()})
-  //  }
-  //}
-  //window.setInterval(sendProgressUpdate, 1000)
-
   function playerStateChanged(event) {
-    switch(event.data) {
-      case YT.PlayerState.UNSTARTED:
-        console.debug("YT unstarted")
-        betweenSongs = true
-        paused = false
-        break
-      case YT.PlayerState.BUFFERING:
-        console.debug("YT buffering")
-        paused = false
-        break
-      case YT.PlayerState.PLAYING:
-        console.debug("YT playing")
-        paused = false
-        betweenSongs = false
-        break
-      case YT.PlayerState.PAUSED:
-        console.debug("YT paused")
-        paused = true
-        break
-      case YT.PlayerState.ENDED:
-        console.debug("YT ended")
-        paused = false
-        betweenSongs = true
-        currentSong = null
-        break
+    if (event.data === YT.PlayerState.ENDED) {
+      currentSong = null
     }
+
+    var states = {}
+    states[YT.PlayerState.UNSTARTED] = BETWEEN_SONGS
+    states[YT.PlayerState.BUFFERING] = PLAYING
+    states[YT.PlayerState.PLAYING]   = PLAYING
+    states[YT.PlayerState.PAUSED]    = PAUSED
+    states[YT.PlayerState.ENDED]     = BETWEEN_SONGS
+    states[YT.PlayerState.CUED]      = BETWEEN_SONGS
+
+    state = states[event.data]
+    console.debug('updated state: ' + state)
+
     $rootScope.$apply(notify)
   }
 }])

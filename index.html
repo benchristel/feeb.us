@@ -261,47 +261,27 @@ app.controller('PlayerController',  ['$scope','$window', '$interval', 'Deejay', 
   }
 
   $scope.playing = function() {
-    return Deejay.isPlaying()
+    return Deejay.isDoingStuff()
   }
 
   $scope.currentSong = function() {
     return Deejay.getCurrentSong()
   }
 
-  //message.on('song-paused-from-youtube-player', function() {
-  //  $scope.$apply() // only way to invoke update that I can think of at the moment.
-  //})
-  //
-  //message.on('song-played-from-youtube-player', function() {
-  //  $scope.$apply() //ditto
-  //})
-
-  message.on('song-progress', function(progress) {
-    console.debug('song-progress: '+ progress.position+'/'+progress.total)
-    if ($scope.playing()) updateProgress(progress, true)
-  })
-
   message.on('deejay-updated', function(deejay) {
     console.debug('deejay-updated: between songs = ' + deejay.isBetweenSongs())
     if (deejay.isBetweenSongs()) {
       updateProgress({position: 0, total: 1}, false)
-    }
-
-    if (!deejay.isOnAir()) {
-      updateProgress({position: 1, total: 1}, false)
-    }
-
-    if (deejay.isPlaying() && !Deejay.isBetweenSongs()) {
+    } else if (deejay.isPlaying()) {
       updateProgress({position: deejay.currentPlaybackPosition(), total: deejay.duration()}, true)
-    }
-
-    if (deejay.isPaused()) {
+    } else if (deejay.isOffAir()) {
+      updateProgress({position: 1, total: 1}, false)
+    } else if (deejay.isPaused()) {
       updateProgress({position: deejay.currentPlaybackPosition(), total: deejay.duration()}, false)
     }
   })
 
   $interval(function() {
-    console.debug("update progress: "+Deejay.isPlaying()+Deejay.isBetweenSongs())
     if (Deejay.isPlaying() && !Deejay.isBetweenSongs()) {
       updateProgress({position: Deejay.currentPlaybackPosition(), total: Deejay.duration()}, true)
     }

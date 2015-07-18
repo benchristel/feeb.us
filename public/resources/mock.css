@@ -28,11 +28,6 @@ input:focus {
     width: 210px;
 }
 
-.video-player.inactive {
-    visibility: hidden;
-    position: absolute;
-}
-
 .song-info .text {
     position: absolute;
     left: 75px;
@@ -132,12 +127,42 @@ input:focus {
     overflow: hidden;
 }
 
+.video-player-container {
+    height: 0px;
+    overflow: hidden;
+}
+
+.with-video .video-player-container {
+    height: 195px;
+}
+
+.album-art {
+    display: none;
+    width: 100%;
+    height: 320px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.with-album-art .album-art {
+    display: block;
+}
+
 .queue {
     position: absolute;
     overflow-y: hidden;
     bottom: 0;
-    top: 225px;
+    top: 50px;
     width: 320px;
+}
+
+.with-video .queue {
+    top: 255px;
+}
+
+.with-album-art .queue {
+    top: 380px;
 }
 
 .queue .song {
@@ -246,15 +271,38 @@ input:focus {
     animation-duration: 0.2s;
     animation-name: pop-in;
     overflow: hidden;
-    /*animation-timing-function: linear;*/
 }
 
-.queue-actions {
+.queue-actions,
+.view-options {
     height: 30px;
     width: 100%;
 }
 
-.queue-actions .action-button {
+.view-options {
+    display: none;
+    position: absolute;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.visual-container:hover .view-options,
+.no-visuals .view-options {
+    display: block;
+}
+
+.spacer {
+    height: 30px;
+}
+
+.queue-actions .left {
+    float: left;
+}
+
+.queue-actions .right {
+    float: right;
+}
+
+.action-button.fa {
     height: 100%;
     min-width: 40px;
     cursor: pointer;
@@ -270,13 +318,6 @@ input:focus {
     color: #fff;
 }
 
-.queue-actions .left {
-    float: left;
-}
-
-.queue-actions .right {
-    float: right;
-}
 
 .library-container {
     left: 320px;

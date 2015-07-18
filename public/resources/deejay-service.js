@@ -104,10 +104,8 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
       {
         height: '195',
         width: '320',
-        // videoId: 'au3-hk-pXsM',
         playerVars: { rel: 0, controls: 0 },
         events: {
-          // 'onReady': readyPlayer1,
           'onStateChange': playerStateChanged
         }
       }

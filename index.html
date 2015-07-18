@@ -26,20 +26,33 @@
         <div class="pause button fa fa-pause" ng-click="pause()" ng-show="playing()"></div>
         <div class="stop button fa fa-stop" ng-click="stop()"></div>
         <div class="skip button fa fa-forward" ng-click="forward()"></div>
-
     </div>
 </div>
 
 <div id="playlist-manager">
-    <div id="queue-container" ng-controller="QueueController">
-        <div class="video-player" id="youtube-player-1"></div>
-        <div class="video-player inactive" id="youtube-player-2"></div>
+    <div id="queue-container" ng-controller="QueueController" ng-class="{'with-video': show == 'video', 'with-album-art': show == 'album-art', 'no-visuals': show == 'none'}">
+        <div class="visual-container" ng-cloak>
+          <div class="view-options">
+            <div class="action-button left fa fa-film" title="Show video" ng-click="show = 'video'"></div>
+            <div class="action-button left fa fa-picture-o" title="Show album art" ng-click="show = 'album-art'"></div>
+            <div class="action-button left fa fa-minus" title="Hide" ng-click="show = 'none'"></div>
+          </div>
+          <div class="video-player-container">
+            <div class="video-player" id="youtube-player-1"></div>
+          </div>
+          <div class="album-art"
+               ng-show="albumArt()"
+               style="background-image: url('https://i.ytimg.com/vi/{{ albumArt() }}/mqdefault.jpg')">
+          </div>
+          <div class="spacer"
+               ng-show="show == 'none'">
+        </div>
 
-        <div class="queue-actions">
+        <div class="queue-actions" ng-cloak>
             <div class="action-button fa fa-random left"></div>
             <div class="action-button fa fa-repeat left"></div>
             <div class="action-button fa fa-trash right"></div>
-            <div class="action-button fa fa-upload right" ng-click = "importLibrary()"></div>
+            <div class="action-button fa fa-upload right" ng-click="importLibrary()"></div>
             <div class="action-button fa fa-save right"></div>
         </div>
         <perfect-scrollbar class="queue" wheel-propagation="false" wheel-speed="20" refresh-on-change="queue" ng-cloak>
@@ -55,7 +68,7 @@
     </div>
 
     <div class="library-container" ng-controller="LibraryController" ng-cloak>
-        <input id = "searchbar" type="text" class="search" placeholder="Search {{library.length}} songs" ng-model="searchQuery">
+        <input id="searchbar" type="text" class="search" placeholder="Search {{library.length}} songs" ng-model="searchQuery">
 
         <div class="library">
             <div class="header">
@@ -167,6 +180,13 @@ app.controller('AppController', ['$scope','Deejay', function ($scope, Deejay) {
 app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) {
   $scope.queue = []
 
+  $scope.show = 'video'
+
+  $scope.albumArt = function() {
+    var song = songAt(currentlyPlayingIndex())
+    return song ? song.youtubeImageId : null
+  }
+
   $scope.importLibrary = function(){
     message.send("import-library")
   }
@@ -187,7 +207,6 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
       var newSong = advance()
       if (newSong) {
         deejay.fromTheTop(newSong)
-        //$scope.$apply() // queue won't update properly otherwise...
       } else {
         deejay.goOffAir()
       }

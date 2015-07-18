@@ -10,7 +10,7 @@
 <div id="player-chrome" ng-controller="PlayerController" >
     <div class="scrubber-fill" ></div>
 
-    <div class="song-info" ng-show="currentSong" ng-cloak>
+    <div class="song-info" ng-show="currentSong()" ng-cloak>
         <div class="cover-image"
              style="background-image: url('https://i.ytimg.com/vi/{{currentSong().youtubeImageId}}/mqdefault.jpg')">
         </div>

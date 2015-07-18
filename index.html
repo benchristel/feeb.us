@@ -342,6 +342,7 @@ app.controller('PlayerController',  ['$scope','$window', '$interval', 'Deejay', 
 
   $scope.seekTo = function(event){
     Deejay.seekTo(event.offsetX/angular.element($window).width())
+    updateProgress({position: event.offsetX, total: angular.element($window).width()}, false)
   }
 
   $scope.playing = function() {

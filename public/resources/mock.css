@@ -318,6 +318,9 @@ input:focus {
     color: #fff;
 }
 
+.action-button.active {
+    color: #458B00;
+}
 
 .library-container {
     left: 320px;

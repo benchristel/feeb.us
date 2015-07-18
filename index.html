@@ -48,15 +48,16 @@
                ng-show="show == 'none'"></div>
         </div>
 
-        <div class="queue-actions" ng-cloak>
-            <div class="action-button fa fa-random left"></div>
-            <div class="action-button fa fa-repeat left"></div>
-            <div class="action-button fa fa-trash right"></div>
-            <div class="action-button fa fa-upload right" ng-click="importLibrary()"></div>
+        <div class="queue-actions">
+            <div class="action-button fa fa-random left" ng-click = "shuffle()" ng-class="{active: shuffled}"></div>
+            <div class="action-button fa fa-repeat left" ng-click = "repeat()" ng-class="{active: repeatQueue}" ></div>
+            <div class="action-button fa fa-trash right" ng-click = "deleteSelected()"></div>
+            <!-- I know trash might be used for something else, but it's just for now. Not sure how you'll delete in the current UI -->
+            <div class="action-button fa fa-upload right" ng-click = "importLibrary()"></div>
             <div class="action-button fa fa-save right"></div>
         </div>
         <perfect-scrollbar class="queue" wheel-propagation="false" wheel-speed="20" refresh-on-change="queue" ng-cloak>
-            <div class="song" ng-repeat="song in queue track by $index" ng-class="{playing: song.playing}">
+            <div class="song" ng-repeat="song in queue track by $index" ng-class="{playing: song.playing, selected: song.selected}" ng-click = "toggleSelect(song)">
                 <div class="cover-image"
                      style="background-image: url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/mqdefault.jpg')">
                 </div>
@@ -125,6 +126,7 @@
 <script type="text/javascript">
 "use strict";
 
+
 function onYouTubeIframeAPIReady() {
   message.send('youtube-iframe-api-ready')
 }
@@ -144,7 +146,7 @@ app.controller('AppController', ['$scope','Deejay', function ($scope, Deejay) {
   }
 
   $scope.keypress = function(event){
-    if ( document.activeElement !== null && document.activeElement.id !== "searchbar"){
+    if (( document.activeElement !== null && document.activeElement.id !== "searchbar") || document.activeElement === null){
       if (event.which == 32){
         if (Deejay.isPlaying()){
           Deejay.pause()
@@ -179,6 +181,29 @@ app.controller('AppController', ['$scope','Deejay', function ($scope, Deejay) {
 
 app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) {
   $scope.queue = []
+  $scope.shuffled = false;
+  $scope.repeatQueue = false;
+  $scope.normalQueue = []
+  // $scope.shuffledQueue = []
+
+  $scope.shuffle = function(){
+    if ($scope.shuffled){
+      $scope.queue = $scope.normalQueue
+      $scope.shuffled = false
+    }else{
+      $scope.shuffled = true
+      $scope.normalQueue = $scope.queue
+      $scope.queue = _.shuffle($scope.queue)
+    }
+  }
+
+  $scope.repeat = function(){
+    if($scope.repeatQueue){
+      $scope.repeatQueue = false
+    } else{
+      $scope.repeatQueue = true
+    }
+  }
 
   $scope.show = 'video'
 
@@ -213,8 +238,36 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
     }
   })
 
+  $scope.toggleSelect = function(song){
+    if (song.selected){
+      song.selected = false
+    }else{
+      song.selected = true
+    }
+  }
+
+  $scope.deleteSelected = function(){
+    _.each($scope.queue, function(song){
+      if (song.selected){
+        $scope.queue = _.without($scope.queue, _.findWhere($scope.queue, song));
+      }
+    })
+  }
+
   message.on('add-to-queue', function(song) {
-    $scope.queue.push(song)
+    if ($scope.shuffled){
+      $scope.normalQueue.push(song)
+      var currentlyPlaying = currentlyPlayingIndex()
+      // if (currentlyPlaying == $scope.queue.length-1){
+      //   $scope.queue.push(song)
+      // }else{
+      var index = _.random(currentlyPlaying+1, $scope.queue.length)
+      $scope.queue.splice(index, 0, song)
+      // }
+
+    }else{
+      $scope.queue.push(song)
+    }
   })
 
   function current() {
@@ -235,6 +288,9 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
 
     if (indexInQueue(currentlyPlaying + 1)) {
       songAt(currentlyPlaying + 1).playing = true
+    }else if ($scope.repeatQueue) {
+      songAt(0).playing = true
+      return songAt(0)
     }
     return songAt(currentlyPlayingIndex())
   }

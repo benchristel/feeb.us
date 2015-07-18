@@ -91,7 +91,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
 
   function stopVideo() {
     player.pauseVideo()
-    player.cueVideoById('')
+    player.cueVideoById(null)
   }
 
   function notify() {
@@ -114,6 +114,8 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
   message.on('youtube-iframe-api-ready', youtubeIsReady)
 
   function playerStateChanged(event) {
+    if (deejay.isOffAir()) return
+
     if (event.data === YT.PlayerState.ENDED) {
       currentSong = null
     }

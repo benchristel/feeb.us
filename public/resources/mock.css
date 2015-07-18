@@ -136,17 +136,22 @@ input:focus {
     height: 195px;
 }
 
+.album-art-container {
+  display: none;
+  width: 100%;
+  height: 320px;
+}
+
+.with-album-art .album-art-container {
+    display: block;
+}
+
 .album-art {
-    display: none;
-    width: 100%;
-    height: 320px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.with-album-art .album-art {
-    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .queue {

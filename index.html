@@ -12,7 +12,7 @@
 
     <div class="song-info" ng-show="currentSong()" ng-cloak>
         <div class="cover-image"
-             style="background-image: url('https://i.ytimg.com/vi/{{currentSong().youtubeImageId}}/mqdefault.jpg')">
+             style="background-image: url('https://i.ytimg.com/vi/{{currentSong().youtubeImageId}}/hqdefault.jpg')">
         </div>
         <div class="song-title text">{{currentSong().title}}</div>
         <div class="artist-name text">{{currentSong().artist}}</div>
@@ -40,9 +40,9 @@
           <div class="video-player-container">
             <div class="video-player" id="youtube-player-1"></div>
           </div>
-          <div class="album-art"
-               ng-show="albumArt()"
-               style="background-image: url('https://i.ytimg.com/vi/{{ albumArt() }}/mqdefault.jpg')">
+          <div class="album-art-container">
+               <div class="album-art" ng-show="albumArt()" style="background-image: url('https://i.ytimg.com/vi/{{ albumArt() }}/hqdefault.jpg')">
+               </div>
           </div>
           <div class="spacer"
                ng-show="show == 'none'"></div>
@@ -59,7 +59,7 @@
         <perfect-scrollbar class="queue" wheel-propagation="false" wheel-speed="20" refresh-on-change="queue" ng-cloak>
             <div class="song" ng-repeat="song in queue track by $index" ng-class="{playing: song.playing, selected: song.selected}" ng-click = "toggleSelect(song)">
                 <div class="cover-image"
-                     style="background-image: url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/mqdefault.jpg')">
+                     style="background-image: url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/hqdefault.jpg')">
                 </div>
                 <div class="fa fa-play-circle-o play-button" ng-click="jumpTo(song)"></div>
                 <div class="song-title text">{{ song.title }}</div>
@@ -247,11 +247,13 @@ app.controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) 
   }
 
   $scope.deleteSelected = function(){
-    _.each($scope.queue, function(song){
-      if (song.selected){
-        $scope.queue = _.without($scope.queue, _.findWhere($scope.queue, song));
-      }
-    })
+    if ($scope.shuffled){
+      $scope.normalQueue = _.reject($scope.queue, function(song){ return song.selected })
+    }
+    $scope.queue = _.reject($scope.queue, function(song){ return song.selected })
+    if (currentlyPlayingIndex() === null){
+      Deejay.goOffAir()
+    }
   }
 
   message.on('add-to-queue', function(song) {

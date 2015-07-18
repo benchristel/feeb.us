@@ -104,7 +104,7 @@
 <script src="resources/angular-perfect-scrollbar.js" type="text/javascript"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="resources/message.js"></script>
-<script src="resources/library_importer.js"></script>
+<script src="resources/library_parser.js"></script>
 <script src="resources/app.js"></script>
 <script src="resources/deejay-service.js"></script>
 <script src="resources/linked_list.js"></script>
@@ -112,50 +112,50 @@
 <script type="text/javascript">
 "use strict";
 
-function parseLibrary(text) {
-  text = removeComments(text)
-
-  var album, artist, art, songs = []
-  var anyWhitespaceContainingAtLeastTwoNewlines = /\n\s*\n\s*/
-  var anythingFollowingAHashSymbol = /#[^\n]\n/g
-
-  var sections = text.split(anyWhitespaceContainingAtLeastTwoNewlines)
-  sections = sections.map(function(s) { return s.split(/\n/) })
-
-  for (var section of sections) {
-    if (section.length === 1) {
-      artist = textFrom(section[0])
-    } else {
-      album = textFrom(section[0])
-      art = youtubeIdFrom(section[0])
-
-      for (var i = 1; i < section.length; i++) {
-        songs.push({
-          title: textFrom(section[i]),
-          artist: artist,
-          album: album,
-          trackNumber: i,
-          youtubeId: youtubeIdFrom(section[i]),
-          youtubeImageId: art
-        })
-      }
-    }
-  }
-
-  return songs
-
-  function removeComments() {
-    return text.replace(anythingFollowingAHashSymbol, "\n")
-  }
-
-  function textFrom(line) {
-    return line.substring(11, line.length).trim()
-  }
-
-  function youtubeIdFrom(line) {
-    return line.substring(0, 11)
-  }
-}
+//function parseLibrary(text) {
+//  text = removeComments(text)
+//
+//  var album, artist, art, songs = []
+//  var anyWhitespaceContainingAtLeastTwoNewlines = /\n\s*\n\s*/
+//  var anythingFollowingAHashSymbol = /#[^\n]\n/g
+//
+//  var sections = text.split(anyWhitespaceContainingAtLeastTwoNewlines)
+//  sections = sections.map(function(s) { return s.split(/\n/) })
+//
+//  for (var section of sections) {
+//    if (section.length === 1) {
+//      artist = textFrom(section[0])
+//    } else {
+//      album = textFrom(section[0])
+//      art = youtubeIdFrom(section[0])
+//
+//      for (var i = 1; i < section.length; i++) {
+//        songs.push({
+//          title: textFrom(section[i]),
+//          artist: artist,
+//          album: album,
+//          trackNumber: i,
+//          youtubeId: youtubeIdFrom(section[i]),
+//          youtubeImageId: art
+//        })
+//      }
+//    }
+//  }
+//
+//  return songs
+//
+//  function removeComments() {
+//    return text.replace(anythingFollowingAHashSymbol, "\n")
+//  }
+//
+//  function textFrom(line) {
+//    return line.substring(11, line.length).trim()
+//  }
+//
+//  function youtubeIdFrom(line) {
+//    return line.substring(0, 11)
+//  }
+//}
 
 function onYouTubeIframeAPIReady() {
   message.send('youtube-iframe-api-ready')

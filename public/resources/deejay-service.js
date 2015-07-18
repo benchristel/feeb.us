@@ -15,6 +15,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
   }
 
   this.play = function() {
+    this.goOnAir()
     player.playVideo()
   }
 

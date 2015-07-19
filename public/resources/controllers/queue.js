@@ -1,4 +1,4 @@
-angular.module('OathStructure').controller('QueueController', ['$scope','Deejay', function ($scope, Deejay) {
+angular.module('OathStructure').controller('QueueController', ['$anchorScroll','$location','$scope','Deejay', function ($anchorScroll, $location, $scope, Deejay) {
   $scope.queue = []
   $scope.shuffled = false;
   $scope.repeatQueue = false;
@@ -13,6 +13,19 @@ angular.module('OathStructure').controller('QueueController', ['$scope','Deejay'
       $scope.shuffled = true
       $scope.normalQueue = $scope.queue
       $scope.queue = _.shuffle($scope.queue)
+    }
+  }
+
+  $scope.gotoAnchor = function(x) {
+    var newHash = 'anchor' + x;
+    if ($location.hash() !== newHash) {
+      // set the $location.hash to `newHash` and
+      // $anchorScroll will automatically scroll to it
+      $location.hash('anchor' + x);
+    } else {
+      // call $anchorScroll() explicitly,
+      // since $location.hash hasn't changed
+      $anchorScroll();
     }
   }
 
@@ -42,7 +55,6 @@ angular.module('OathStructure').controller('QueueController', ['$scope','Deejay'
     }
 
     song.playing = true
-
     Deejay.fromTheTop(song)
   }
 
@@ -136,6 +148,8 @@ angular.module('OathStructure').controller('QueueController', ['$scope','Deejay'
       songAt(0).playing = true
       return songAt(0)
     }
+    $scope.gotoAnchor(currentlyPlayingIndex())
+
     return songAt(currentlyPlayingIndex())
   }
 

@@ -1,1 +1,1 @@
-angular.module('OathStructure', ['perfect_scrollbar'])
+angular.module('OathStructure', ['perfect_scrollbar', 'ui.sortable'])

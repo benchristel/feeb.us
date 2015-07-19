@@ -300,11 +300,11 @@ input:focus {
     height: 30px;
 }
 
-.queue-actions .left {
+.action-button.left {
     float: left;
 }
 
-.queue-actions .right {
+.action-button.right {
     float: right;
 }
 

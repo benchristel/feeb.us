@@ -32,7 +32,7 @@
     <div id="queue-container" ng-controller="QueueController" ng-class="{'with-video': show == 'video', 'with-album-art': show == 'album-art', 'no-visuals': show == 'none'}">
         <div class="visual-container" ng-cloak>
           <div class="view-options">
-            <div class="action-button left fa fa-film" title="Show video" ng-click="show = 'video'"></div>
+            <div class="action-button left fa fa-youtube-play" title="Show video" ng-click="show = 'video'"></div>
             <div class="action-button left fa fa-picture-o" title="Show album art" ng-click="show = 'album-art'"></div>
             <div class="action-button left fa fa-minus" title="Hide" ng-click="show = 'none'"></div>
           </div>
@@ -51,7 +51,7 @@
 
         <div class="queue-actions">
             <div class="action-button fa fa-random left" ng-click = "shuffle()" ng-class="{active: shuffled}"></div>
-            <div class="action-button fa fa-repeat left" ng-click = "repeat()" ng-class="{active: repeatQueue}" ></div>
+            <div class="action-button fa fa-refresh left" ng-click = "repeat()" ng-class="{active: repeatQueue}" ></div>
             <div class="action-button fa fa-trash right" ng-click = "deleteSelected()"></div>
             <!-- I know trash might be used for something else, but it's just for now. Not sure how you'll delete in the current UI -->
             <div class="action-button fa fa-upload right" ng-click = "importLibrary()"></div>

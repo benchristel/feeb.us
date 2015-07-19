@@ -158,16 +158,16 @@ input:focus {
     position: absolute;
     overflow-y: hidden;
     bottom: 0;
-    top: 50px;
+    top: 60px;
     width: 320px;
 }
 
 .with-video .queue {
-    top: 255px;
+    top: 225px;
 }
 
 .with-album-art .queue {
-    top: 380px;
+    top: 350px;
 }
 
 .queue .song {

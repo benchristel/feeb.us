@@ -42,6 +42,8 @@
           <div class="album-art-container">
                <div class="album-art" ng-show="albumArt()" style="background-image: url('https://i.ytimg.com/vi/{{ albumArt() }}/hqdefault.jpg')">
                </div>
+               <div class="album-art placeholder" ng-show="!albumArt()" style="background-image: url('resources/default_album.png')">
+               </div>
           </div>
           <div class="spacer"
                ng-show="show == 'none'"></div>

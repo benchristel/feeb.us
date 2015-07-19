@@ -83,7 +83,7 @@
             </div>
             <perfect-scrollbar class="body" wheel-propagation="false" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
               <div>
-                <div class="song" ng-repeat="song in library | filter:searchQuery">
+                <div class="song" ng-repeat="song in library | filter:searchQuery | limitTo:100 track by song.youtubeId ">
                     <span class="track-number">{{ song.trackNumber }}</span>
                     <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
                     <span class="title">{{ song.title }}</span>

@@ -55,9 +55,9 @@
             <div class="action-button fa fa-upload right" ng-click = "importLibrary()"></div>
             <div class="action-button fa fa-save right"></div>
         </div>
-        <perfect-scrollbar class="queue" wheel-propagation="false" wheel-speed="20" refresh-on-change="queue" use-keyboard="false" ng-cloak>
-          <div  ui-sortable ng-model="queue" >
-            <div class="song" ng-repeat="song in queue track by $index" ng-class="{playing: song.playing, selected: song.selected}>
+        <perfect-scrollbar class="queue" wheel-propagation="false"  suppressScrollX = "true" wheel-speed="20" refresh-on-change="queue" use-keyboard="false" ng-cloak>
+          <div ui-sortable="{axis: 'y'}" ng-model="queue">
+            <div class="song" ng-repeat="song in queue track by $index" ng-class="{playing: song.playing, selected: song.selected}">
                 <div class="cover-image"
                      style="background-image: url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/hqdefault.jpg')">
                 </div>

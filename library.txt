@@ -137,6 +137,12 @@ u4jJOk5MpFM Animal Collective
 
 albums
 u4jJOk5MpFM Sung Tongs (Full Album)
+goOFD04FjGk Strawberry Jam (Full Album)
+jfpIAu7Fymg Feels (Full Album)
+DEu_lFMJ0eg Fall Be Kind (Full Album)
+0YaGd0S9jcQ Danse Manatee (Full Album)
+BiOffek-bo8 Water Curses (Full Album)
+N3oM8W4sf50 Spirit They're Gone, Spirit They've Vanished (Full Album)
 
 L99wAbddt4Y Merriweather Post Pavilion
 L99wAbddt4Y In the Flowers
@@ -152,12 +158,14 @@ i_42Sighttk Lion in a Coma
 3S1Zgwj-sOI Brother Sport
 
 
-T5agtqh4IO8 Weezer
+=========== Weezer
 
 albums
 T5agtqh4IO8 The Blue Album (Full Album)
 aSvrlM9CVAs The Green Album (Full Album)
+AKaMz3pDJIw The Red Album (Full Album)
 I__o6BmwtDA Pinkerton (Full Album)
+EPWWYAsD5Sw Raditude (Full Album)
 
 MqZBAq2AdNc Everything Will Be Alright In The End
 1Bp_hRVyr14 Lonely Girl
@@ -182,13 +190,13 @@ hkDXNSWJLuo Water
 
 i0djHJBAP3U Huun-Huur-Tu
 
-i0djHJBAP3U Live
+live
 i0djHJBAP3U Fantasy Studios, Berkeley, California
 
 
 x0a7Mu_KfB4 Balkan Fanatik
 
-x0a7Mu_KfB4 Ha te tudnád
+singles
 x0a7Mu_KfB4 Ha te tudnád
 
 
@@ -218,7 +226,7 @@ n90wjj6QoJw Én Scak Azt Csodálom
 QZrjQFXhkWU Elment A Madarka
 
 
-Qlb57uzn1zE Scooter
+=========== Scooter
 
 Qlb57uzn1zE Jumping All Over the World
 Qlb57uzn1zE How Much Is the Fish?
@@ -226,3 +234,404 @@ Qlb57uzn1zE How Much Is the Fish?
 singles
 4YxTa1AUqps The Logical Song
 8i1FTCxf7Bk Nessaja
+
+
+=========== Radiohead
+
+albums
+om8invGWkeo The Best Of (Full Album)
+F5FSzoC4vII Amnesiac (Full Album)
+i6XKgvKZy10 Kid A (Full Album)
+WnFHw3vF92U In Rainbows (Full Album)
+d5_r4ORI6j8 The Bends (Full Album)
+YMwLgZz7BMs OK Computer (Full Album)
+L86NesX5pQs Hail to the Thief (Full Album)
+u6lOYzbIrdc Pablo Honey (Full Album)
+bGDWymtJDig Polyfauna (Full Album)
+
+=========== Pink Floyd
+
+albums
+rQbOoUmhSPo The Wall (Full Album)
+1f8R8rYHZ_Q Wish You Were Here (Full Album)
+1jN8M_sSSxw Labyrinth (Full Album)
+nmwF7cy-L8Q Dark Side of the Moon (Full Album)
+vTAN5SDok7w Animals (Full Album)
+nRNL5GupHzE The Division Bell (Full Album)
+B26KbyEeOoo Meddle (Full Album)
+gw745F2NEh0 The Piper at the Gates of Dawn (Full Album)
+
+=========== Led Zeppelin
+
+albums
+YFE_tC5Ei1I Led Zeppelin I (Full Album)
+PZWjp6sP93s Led Zeppelin II (Full Album)
+XRlqts1oAS0 Led Zeppelin IV (Full Album)
+6JErE8RnoL4 The Song Remains the Same (Full Album)
+CZh6eCc7uDo Houses of the Holy (Full Album)
+e8mchsVeZfA Don't Mess With Texas (Full Album)
+Z-RuAOi-Ue4 Final Stand (Full Album)
+
+=========== R.E.M.
+
+albums
+C2sFSbn7ZIw The Best Of (Full Album)
+ilvKyeA3T6A Out of Time (Full Album)
+TB9HA2tRGLg Automatic for the People (Full Album)
+PBS2t0DOso4 Green (Full Album)
+e5szbeAFue8 Monster (Full Album)
+B8FbkyyuqG0 Murmur (Full Album)
+DI6ch4OYgy8 Reckoning (Full Album)
+WQOI_suf3SI Up (Full Album)
+ozdrFAnPrZ4 Fables of the Reconstruction (Full Album)
+IKAjNQEUZlw Reveal (Full Album)
+79iQ2Xwjf5c Life's Rich Pageant (Full Album)
+e73nDaEiNYU Document (Full Album)
+a44CGGqZ3Vs Collapse into Now (Full Album)
+E8qgkpQKDoU Around the Sun (Full Album)
+dnYd6caLNMk Eponymous (Full Album)
+bUgnzMPm5xs Accelerate (Full Album)
+6NtHflxKYn8 Chronic Town (Full Album)
+
+=========== Pearl Jam
+
+albums
+7xXp_XJzgC4 Ten (Full Album)
+ws8fUX_UUTc Vitalogy (Full Album)
+VoLL6R48NoM Vs. (Full Album)
+uo1zf0m2QfQ Yield (Full Album)
+vor7ZQQghK4 Pearl Jam (Full Album)
+s_L6WZ7YCC8 No Code (Full Album)
+sd7huaytsRI Lightning Bolt (Full Album)
+5cizGiP6hY0 Binaural (Full Album)
+
+=========== The Black Keys
+
+albums
+yiMEiJnY8dI El Camino (Full Album)
+yRfIYph_K4k Attack and Release (Full Album)
+b22V_A66db4 Brothers (Full Album)
+KQ6Xy4btiO4 Magic Potion (Full Album)
+j4mFPU7EGkE Rubber Factory (Full Album)
+iPh17-jZbqs The Big Come Up (Full Album)
+agSPyX4N1Ak Chulahoma (Full Album)
+GmpSLRDC_K0 The Moan (Full Album)
+
+=========== The Beatles
+
+albums
+4ez99s0862c Black Album (Full Album)
+
+=========== Moby
+
+albums
+WxIgzvygURs 18 (Full Album)
+yXjy72SXywI Last Night (Full Album)
+JMKmfO0SHJg Innocents (Full Album)
+sMpR1t4hsoE Play (Full Album)
+
+=========== The Doors
+
+albums
+ONqBDz_3wBQ Greatest Hits (Full Album)
+x9S-v32GTNA The Best Of (Full Album)
+7Scc3w4jkp8 Strange Days (Full Album)
+dWXNte4lGaA Morrison Hotel (Full Album)
+NWgB1P5ZlEM The Soft Parade (Full Album)
+WRPyFGR0x8E LA Woman (Full Album)
+ZIr6XZgz_48 Waiting for the Sun (Full Album)
+
+=========== Neil Young
+
+albums
+UlHf8rjkK5Q Greatest Hits (Full Album)
+
+=========== Birdy
+
+albums
+obYCnrhibX4 Fire Within (Full Album)
+
+=========== Cake
+
+albums
+-eTsncrxhQo The Best Of (Full Album)
+
+=========== Leona Lewis
+
+albums
+ehZopuo2w1A Spirit (Full Album)
+
+=========== The Clash
+
+albums
+KonmIMQelwM London Calling (Full Album)
+
+=========== Red Hot Chili Peppers
+
+albums
+7sXNOCQqzHs Californication (Full Album)
+
+=========== Green Day
+
+albums
+jHwEqM5oTcU American Idiot (Full Album)
+GkTWqYSSgBc 21st Century Breakdown (Full Album)
+9ZGMkGTBrfY Nimrod (Full Album)
+thHizKnv6Vo ¡Dos! (Full Album)
+6qore8iSBZo Uno (Full Album)
+lnjaqq5d55g Dookie (Full Album)
+35HQqCSj6Ls Insomniac (Full Album)
+
+=========== Depeche Mode
+
+albums
+g_b7gM89jnI Violator (Full Album)
+rH01cDNjpzk Songs of Faith and Devotion (Full Album)
+uCuBi7_A8hc Delta Machine
+ezE-1bZ7mY4 Black Celebration
+
+=========== Tycho
+
+albums
+Z6ih1aKeETk Dive (Full Album)
+qEI1_oGPQr0 Awake (Full Album)
+M5sSUJoYnbk Past is Prologue (Full Album)
+9OOWVH0ts8Y The Science of Patterns
+QX5XKFn7Ngo Montana
+
+=========== Westlife
+
+albums
+Ar-npYey9yA Westlife (Full Album)
+
+=========== Madonna
+
+albums
+p822J7TIf54 Rebel Heart (Full Album)
+
+=========== One Direction
+
+albums
+JxwiGAVtE7k Four (Full Album)
+
+=========== Yelawolf
+
+albums
+Ido5byJBAd4 Love Story (Full Album)
+
+=========== Funkadelic
+
+albums
+21sP7orRS3c Maggot Brain (Full Album)
+
+=========== Jack White
+
+albums
+NCuQHqMRKwU Blunderbuss (Full Album)
+
+=========== Akon
+
+albums
+EkpKGHDVlZ4 Freedom (Full Album)
+
+=========== Snoop Dogg
+
+albums
+kX39_NZnd4M Bush (Full Album)
+
+=========== Royal Blood
+
+albums
+dBmgY2hV9pM Royal Blood (Full Album)
+
+=========== Jamiroquai
+
+albums
+BlJmkVgXG8I Travelling Without Moving (Full Album)
+
+=========== Seal
+
+albums
+MU36uzr_ggo Soul (Full Album)
+
+=========== Beck
+
+albums
+nz6hDX1w0P0 Sea Change (Full Album)
+7yFYYVoJpyI Midnite Vultures (Full Album)
+VTDibv6bhmY Mellow Gold (Full Album)
+IT967fUFuYw One Foot in the Grave (Full Album)
+
+=========== Coeur de Pirate
+
+albums
+skZcBiNaN_c Blonde (Full Album)
+
+=========== Kodaline
+
+albums
+pfx8l0XlcnI In a Perfect World (Full Album)
+
+=========== Incubus
+
+albums
+_b9A54abRaE Morning View (Full Album)
+4uHKqgw8F7w Make Yourself (Full Album)
+
+=========== Paramore
+
+albums
+mjReotUoVdE Paramore (Full Album)
+kC4VQ0f7zZU Brand New Eyes (Full Album)
+
+=========== Tool
+
+albums
+7Ajx-ABtbVM 10,000 Days (Full Album)
+
+=========== Usher
+
+albums
+zta1m_3SxcQ Confessions (Full Album)
+
+=========== Manu Chao
+
+albums
+bnaTLcFpQnE Clandestino (Full Album)
+pxdIOmNuNTk Próxima Estación: Esperanza (Full Album)
+kdtXdJF_qMk La Radiolina (Full Album)
+
+=========== Bob Marley
+
+albums
+XdYR8Og0NWc Uprising 1980
+
+=========== Panic! At the Disco
+
+albums
+3VE6LuQ4VoY A Fever You Can't Sweat Out! (Full Album)
+
+=========== Chance
+
+albums
+e3WFkfME_Q0 SURF (Full Album)
+
+=========== Sade
+
+albums
+qUrafiUQiuI Love Deluxe (Full Album)
+
+=========== George Harrison
+
+albums
+9Dnbw9V4soA All Things Must Pass (Full Album)
+
+=========== Passion Pit
+
+albums
+b6gAAdHMKyI Kindred (Full Album)
+
+=========== Avenged Sevenfold
+
+albums
+1SyUwksTcMM City of Evil (Full Album)
+
+========== Ludacris
+
+albums
+Qbz4A13uoVg Ludaversal (Deluxe Edition) (Full Album)
+
+========== Halestorm
+
+albums
+20_UJzcukCk Halestorm (Full Album)
+
+========== The Strokes
+
+albums
+_bX4zV8YtZs Angles (Full Album)
+
+========== 10cm
+
+albums
+FHprzUNPeck 3.0 (Full Album)
+
+========== Jessie Ware
+
+albums
+HNDslAj3uB8 Tough Love (Full Album)
+
+========== The Travelling Wilburys
+
+albums
+Oy-9rHmXCmw Vol. 1 (Full Album)
+
+========== Pendulum
+
+albums
+WFyRH8_LynQ In Silico (Full Album)
+
+========== Rudimental
+
+albums
+ivcOUKuo8pg Home (Full Album)
+
+========== Lord Huron
+
+albums
+WiwWgN5O3WQ Strange Trails (Full Album)
+
+========== Israel Kamakawiwo'ole
+
+albums
+VoxlhZ7juqQ Over the Rainbow (Full Album)
+
+========== Dido
+
+albums
+MN5OrcyR1Ts Life For Rent (Full Album)
+
+========== Corinne Bailey Rae
+
+albums
+mRgwFPT86n4 Like a Star (Full Album)
+
+========== Currensy
+
+albums
+eQMqCjtag7o Pilot Talk 3 (Full Album)
+
+========== Bodyslam
+
+albums
+r9aRgPHU_b8 Save My Life (Full Album)
+
+========== The Fugees
+
+albums
+meg3pUUm0Gs The Score (Full Album)
+
+========== Alborosie
+
+albums
+Ecml2jnPhb8 Escape from Babylon to the Kingdom of Zion (Full Album)
+
+========== Grimes
+
+albums
+BXE8s8xLJKs Halfaxa (Full Album)
+
+========== Alt-J
+
+albums
+1MhrJoVjMfE This Is All Yours (Full Album)
+
+========== Kasabian
+
+albums
+CVGmAFZVw2A Velociraptor! (Full Album)
+
+========== Slipknot
+
+albums
+6o1IkiS-S4w Iowa (Full Album)

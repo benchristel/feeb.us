@@ -1,4 +1,6 @@
-angular.module('OathStructure').controller('AppController', ['$scope','Deejay', function ($scope, Deejay) {
+angular.module('OathStructure').
+  controller('AppController', ['$scope', '$http', 'Deejay',
+                      function ($scope,   $http,   Deejay) {
   $scope.searchQueryChars = function() {
     if (!$scope.searchQuery) return []
     return $scope.searchQuery.split('')
@@ -35,5 +37,7 @@ angular.module('OathStructure').controller('AppController', ['$scope','Deejay', 
     $scope.importing = false
   }
 
-  $scope.importFrom(localStorage['oath-structure-library'])
+  $http.get('resources/library.txt').success(function(data) {
+    $scope.importFrom(data)
+  })
 }])

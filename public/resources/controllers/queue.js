@@ -18,16 +18,13 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
 
   $scope.gotoAnchor = function(x) {
     var newHash = 'anchor' + x;
-    if ($location.hash() !== newHash) {
-      // set the $location.hash to `newHash` and
-      // $anchorScroll will automatically scroll to it
-      $location.hash('anchor' + x);
-    } else {
-      // call $anchorScroll() explicitly,
-      // since $location.hash hasn't changed
-      $anchorScroll();
-    }
+    $location.hash('anchor' + x);
+    $anchorScroll();
   }
+
+  $scope.$on('$locationChangeStart', function(ev) {
+    ev.preventDefault();
+  });
 
   $scope.repeat = function(){
     if($scope.repeatQueue){

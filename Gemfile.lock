@@ -28,6 +28,7 @@ GEM
     tilt (2.0.1)
     typhoeus (0.7.1)
       ethon (>= 0.7.1)
+    youtube_search (0.2.0)
 
 PLATFORMS
   ruby
@@ -36,3 +37,7 @@ DEPENDENCIES
   rspec
   sinatra
   typhoeus
+  youtube_search
+
+BUNDLED WITH
+   1.10.0

@@ -181,7 +181,6 @@ input:focus {
     font-family: 'Lucida Grande', Helvetica, sans-serif;
     font-size: 13px;
     color: #d0d0d0;
-    text-shadow: 0px -1px 0 #000;
     border-top: 1px solid #555;
     overflow: hidden;
 }
@@ -230,7 +229,6 @@ input:focus {
     content: '\f00d'; /* close */
     line-height: 20px;
     color: #ddd;
-    cursor: pointer;
     text-align: center;
     font-family: 'FontAwesome';
     overflow: hidden;

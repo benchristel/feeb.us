@@ -52,7 +52,7 @@
         <div class="queue-actions">
             <div class="action-button fa fa-random left" ng-click = "shuffle()" ng-class="{active: shuffled}"></div>
             <div class="action-button fa fa-refresh left" ng-click = "repeat()" ng-class="{active: repeatQueue}" ></div>
-            <div class="action-button fa fa-trash right" ng-click = "deleteSelected()"></div>
+            <div class="action-button fa fa-trash right" ng-click = "removeAll()"></div>
             <!-- I know trash might be used for something else, but it's just for now. Not sure how you'll delete in the current UI -->
             <div class="action-button fa fa-upload right" ng-click = "importLibrary()"></div>
             <div class="action-button fa fa-save right"></div>

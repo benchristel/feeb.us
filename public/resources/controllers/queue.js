@@ -59,8 +59,18 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     if (song.playing) {
       playNextSong()
     }
-
+    if ($scope.shuffled){
+      $scope.normalQueue =_($scope.normalQueue).without(song)
+    }
     $scope.queue = _($scope.queue).without(song)
+  }
+
+  $scope.removeAll = function(){
+    if ($scope.shuffled){
+      $scope.normalQueue = []
+    }
+    $scope.queue = []
+    Deejay.goOffAir()
   }
 
   message.on('deejay-updated', function(deejay) {

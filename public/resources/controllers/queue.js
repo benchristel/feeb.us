@@ -55,6 +55,10 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     Deejay.fromTheTop(song)
   }
 
+  $scope.remove = function(song) {
+    $scope.queue = _($scope.queue).without(song)
+  }
+
   message.on('deejay-updated', function(deejay) {
     if (deejay.needsSong()) {
       var newSong = advance()
@@ -65,14 +69,6 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
       }
     }
   })
-
-  $scope.toggleSelect = function(song){
-    if (song.selected){
-      song.selected = false
-    }else{
-      song.selected = true
-    }
-  }
 
   $scope.deleteSelected = function(){
     if ($scope.shuffled){

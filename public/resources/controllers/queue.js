@@ -1,4 +1,4 @@
-angular.module('OathStructure').controller('QueueController', ['$anchorScroll','$location','$scope','Deejay', function ($anchorScroll, $location, $scope, Deejay) {
+angular.module('OathStructure').controller('QueueController', ['$anchorScroll','$location','$scope','Deejay', '$http', 'YoutubeService', function ($anchorScroll, $location, $scope, Deejay, $http, YoutubeService) {
   $scope.queue = []
   $scope.shuffled = false;
   $scope.repeatQueue = false;
@@ -16,6 +16,7 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     }
   }
 
+
   $scope.gotoAnchor = function(x) {
     var newHash = 'anchor' + x;
     $location.hash('anchor' + x);
@@ -32,6 +33,10 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     } else{
       $scope.repeatQueue = true
     }
+    YoutubeService.getYoutubeId("weezer", "eulogy for a rock band").then(function(videoId){
+      console.log(videoId)
+    })
+
   }
 
   $scope.show = 'video'
@@ -50,8 +55,6 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     if (currentlyPlaying !== null) {
       songAt(currentlyPlaying).playing = false
     }
-
-    song.playing = true
     Deejay.fromTheTop(song)
   }
 

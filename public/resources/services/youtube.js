@@ -61,8 +61,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
         q: q,
         part: 'snippet',
         type: 'video'
-      });
-    }
+    });
 
     request.execute(function(response) {
         defer.resolve(response)
@@ -82,9 +81,8 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
 }])
 
 
-var apiKey = 'AIzaSyAVL6e_1RMEKzvAli0cUsUzQYPVJJgA3dc'
+var apiKey = 'AIzaSyAVL6e_1RMEKzvAli0cUsUzQYPVJJgA3dc' // Limited to accepted domains 
 function googleApiClientReady() {
-  console.log("was called")
   gapi.client.setApiKey(apiKey);
   gapi.client.load('youtube', 'v3').then(function(){
     message.send('google-api-loaded')

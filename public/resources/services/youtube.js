@@ -1,5 +1,6 @@
 angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', function($rootScope, $q) {
   var loaded = false
+  var ip = null
 
   message.on('google-api-loaded', function(){
     loaded = true
@@ -38,7 +39,6 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   }
 
   function searchYoutube(query, song){
-    console.log("got called")
     var q = query
     var request = gapi.client.youtube.search.list({
       q: q,
@@ -56,13 +56,13 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
 
   function searchYoutubePromise(query){
     var defer=$q.defer();
-    console.log("got called")
     var q = query
     var request = gapi.client.youtube.search.list({
-      q: q,
-      part: 'snippet',
-      type: 'video'
-    });
+        q: q,
+        part: 'snippet',
+        type: 'video'
+      });
+    }
 
     request.execute(function(response) {
         defer.resolve(response)

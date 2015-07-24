@@ -11,7 +11,7 @@ angular.module('OathStructure').service('SpotifyService', ['$rootScope' , '$http
         limit: limit
       }
     }).then(function(response){
-      return .response.data.artists.items
+      return response.data.artists.items
     })
     return promise
   }
@@ -24,7 +24,7 @@ angular.module('OathStructure').service('SpotifyService', ['$rootScope' , '$http
         limit: limit
       }
     }).then(function(response){
-      return .response.data.albums.items
+      return response.data.albums.items
     })
     return promise
   }

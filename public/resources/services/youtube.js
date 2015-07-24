@@ -77,11 +77,10 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     return artist + " " + song + " lyrics"
   }
 
-
 }])
 
 
-var apiKey = 'AIzaSyAVL6e_1RMEKzvAli0cUsUzQYPVJJgA3dc' // Limited to accepted domains 
+var apiKey = 'AIzaSyAVL6e_1RMEKzvAli0cUsUzQYPVJJgA3dc' // Limited to accepted domains
 function googleApiClientReady() {
   gapi.client.setApiKey(apiKey);
   gapi.client.load('youtube', 'v3').then(function(){

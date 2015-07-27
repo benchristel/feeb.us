@@ -141,6 +141,12 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
   })
 
   $scope.savePlaylist = function(name){
+    var playlists_json = localStorage.getItem("playlists")
+    if (playlists_json == null){
+      playlists_json == "[]"
+    }
+    var playlists = JSON.parse(playlists_json)
+    localStorage.setItem("playlists", JSON.stringify(playlists.append()))
     localStorage.setItem(name, JSON.stringify($scope.queue))
   }
 

@@ -140,6 +140,15 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     }
   })
 
+  window.onbeforeunload = function(event){
+    localStorage.setItem("queue", JSON.stringify($scope.queue))
+  }
+
+  window.onload = function() {
+    $scope.queue = JSON.parse(localStorage.getItem("queue"))
+  }
+
+
   function current() {
     return songAt(currentlyPlayingIndex())
   }

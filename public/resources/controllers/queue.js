@@ -140,6 +140,10 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     }
   })
 
+  $scope.savePlaylist = function(name){
+    localStorage.setItem(name, JSON.stringify($scope.queue))
+  }
+
   window.onbeforeunload = function(event){
     localStorage.setItem("queue", JSON.stringify($scope.queue))
   }

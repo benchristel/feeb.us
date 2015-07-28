@@ -21,10 +21,10 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', 'Yout
   $scope.searchSpotify = function(){
     SpotifyService.trackSearch($scope.searchQuery, 1).then(function(result){
       console.log(result[0].artists[0].name)
-      console.log(result[0])
+      console.log(result[0].name)
       YoutubeService.getYoutubeId(result[0].artists[0].name , result[0].name).then(function(youtubeId){
-        console.log(result)
-        $scope.addToQueue({
+        console.log(youtubeId)
+        $scope.library.push({
           title:  result[0].name,
           artist: result[0].artists[0].name,
           album: result[0].album.name,

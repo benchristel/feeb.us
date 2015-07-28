@@ -11,11 +11,14 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   this.getYoutubeId = function(artist, song){
     if (loaded == true) {
       var query = hashTagQuery(artist, song)
+      console.log(query)
       return searchYoutubePromise(query).then(function(result){
         if (result.items.length == 0 || result.items[0].snippet.title != song){
           query = lyricQuery(artist, song)
+          console.log(query)
           return searchYoutubePromise(query).then(function(result){
             if (result.items.length == 0){
+              console.log("Couldn't find anything")
               return null
             }else{
               return result.items[0].id.videoId

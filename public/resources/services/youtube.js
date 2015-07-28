@@ -20,6 +20,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
             }
           })
         }else{
+          console.log("from hash")
           return result.items[0].id.videoId
         }
       })

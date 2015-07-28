@@ -47,7 +47,6 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
   }
 
   this.needsSong = function() {
-    console.log(currentSong)
     return this.isOnAir() && !currentSong
   }
 

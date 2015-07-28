@@ -14,22 +14,32 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
       console.log(query)
       return searchYoutubePromise(query).then(function(resultOne){
         if (resultOne.items.length == 0 || resultOne.items[0].snippet.title != song){
-          query = vevoQuery(artist, song)
+          query = artist + " " + song
           console.log(query)
-          return searchYoutubePromise(query).then(function(resultTwo){
-            if (resultTwo.items.length == 0 ){
-              query = lyricQuery(artist, song)
+          return searchYoutubePromise(query).then(function(resultOnePointFive){
+            console.log(resultOnePointFive)
+            if (resultOnePointFive.items.length == 0 || resultOnePointFive.items[0].snippet.channelTitle.toLowerCase() !== artist.toLowerCase()){
+              console.log(resultOnePointFive.items[0].snippet.channelTitle)
+              query = vevoQuery(artist, song)
               console.log(query)
-              return prom_two = searchYoutubePromise(query).then(function(resultThree){
-                if (resultThree.items.length == 0){
-                  console.log("Couldn't find anything")
-                  return null
+              return searchYoutubePromise(query).then(function(resultTwo){
+                if (resultTwo.items.length == 0 || resultTwo.items[0].snippet.title.toLowerCase().indexOf(song.toLowerCase()) == -1 ){
+                  query = lyricQuery(artist, song)
+                  console.log(query)
+                  return prom_two = searchYoutubePromise(query).then(function(resultThree){
+                    if (resultThree.items.length == 0){
+                      console.log("Couldn't find anything")
+                      return null
+                    }else{
+                      return resultThree.items[0].id.videoId
+                    }
+                  })
                 }else{
-                  return resultThree.items[0].id.videoId
+                  return resultTwo.items[0].id.videoId
                 }
               })
             }else{
-              return resultTwo.items[0].id.videoId
+              return resultOnePointFive.items[0].id.videoId
             }
           })
         }else{

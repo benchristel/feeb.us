@@ -16,7 +16,6 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     }
   }
 
-
   $scope.gotoAnchor = function(x) {
     var newHash = 'anchor' + x;
     $location.hash('anchor' + x);
@@ -33,10 +32,6 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     } else{
       $scope.repeatQueue = true
     }
-    YoutubeService.getYoutubeId("weezer", "eulogy for a rock band").then(function(videoId){
-      console.log(videoId)
-    })
-
   }
 
   $scope.show = 'video'
@@ -157,6 +152,7 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
 
   window.onload = function() {
     $scope.queue = JSON.parse(localStorage.getItem("queue"))
+    Deejay.setCurrentSong(current())
   }
 
 

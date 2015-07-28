@@ -47,6 +47,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
   }
 
   this.needsSong = function() {
+    console.log(currentSong)
     return this.isOnAir() && !currentSong
   }
 
@@ -76,6 +77,12 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
 
   this.getCurrentSong = function() {
     return currentSong
+  }
+
+  this.setCurrentSong = function(song){
+    currentSong = song
+    player.cueVideoById(song.youtubeId)
+
   }
 
   this.currentPlaybackPosition = function() {
@@ -124,7 +131,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
 
     var states = {}
     states[YT.PlayerState.UNSTARTED] = BETWEEN_SONGS
-    states[YT.PlayerState.BUFFERING] = PAUSED 
+    states[YT.PlayerState.BUFFERING] = PAUSED
     states[YT.PlayerState.PLAYING]   = PLAYING
     states[YT.PlayerState.PAUSED]    = PAUSED
     states[YT.PlayerState.ENDED]     = BETWEEN_SONGS

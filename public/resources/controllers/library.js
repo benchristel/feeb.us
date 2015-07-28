@@ -24,14 +24,16 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', 'Yout
       console.log(result[0].name)
       YoutubeService.getYoutubeId(result[0].artists[0].name , result[0].name).then(function(youtubeId){
         console.log(youtubeId)
-        $scope.library.push({
+        song = {
           title:  result[0].name,
           artist: result[0].artists[0].name,
           album: result[0].album.name,
           trackNumber: result[0].track_number,
           youtubeId: youtubeId,
           youtubeImageId: youtubeId
-        })
+        }
+        $scope.library.push(song)
+        $scope.addToQueue(song)
       })
     })
   }

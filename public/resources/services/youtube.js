@@ -12,20 +12,28 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     if (loaded == true) {
       var query = hashTagQuery(artist, song)
       console.log(query)
-      return searchYoutubePromise(query).then(function(result){
-        if (result.items.length == 0 || result.items[0].snippet.title != song){
-          query = lyricQuery(artist, song)
+      return searchYoutubePromise(query).then(function(resultOne){
+        if (resultOne.items.length == 0 || resultOne.items[0].snippet.title != song){
+          query = vevoQuery(artist, song)
           console.log(query)
-          return searchYoutubePromise(query).then(function(result){
-            if (result.items.length == 0){
-              console.log("Couldn't find anything")
-              return null
+          return searchYoutubePromise(query).then(function(resultTwo){
+            if (resultTwo.items.length == 0 ){
+              query = lyricQuery(artist, song)
+              console.log(query)
+              return prom_two = searchYoutubePromise(query).then(function(resultThree){
+                if (resultThree.items.length == 0){
+                  console.log("Couldn't find anything")
+                  return null
+                }else{
+                  return resultThree.items[0].id.videoId
+                }
+              })
             }else{
-              return result.items[0].id.videoId
+              return resultTwo.items[0].id.videoId
             }
           })
         }else{
-          return result.items[0].id.videoId
+          return resultOne.items[0].id.videoId
         }
       })
     }else{
@@ -48,6 +56,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     var request = gapi.client.youtube.search.list({
       q: q,
       part: 'snippet',
+      videoEmbeddable: "true",
       type: 'video'
     });
 
@@ -65,6 +74,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     var request = gapi.client.youtube.search.list({
         q: q,
         part: 'snippet',
+        videoEmbeddable: "true",
         // fields: 'items(id),items(snippet(channelId)),items(snippet(channelTitle)),items(snippet(title)),items(snippet(thumbnails(default)))',
         type: 'video'
     });
@@ -99,6 +109,10 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
 
   function lyricQuery(artist, song){
     return artist + " " + song + " lyrics"
+  }
+
+  function vevoQuery(artist, song){
+    return  "\"" +artist.replace(/\W/g, '') + "VEVO\" " + song
   }
 
 }])

@@ -16,7 +16,7 @@ angular.module('OathStructure').service('SpotifyService', ['$rootScope' , '$http
     return promise
   }
 
-  this.albumSearch = function(method, query, limit){
+  this.albumSearch = function(query, limit){
     var promise = $http.get(url + "search", {
       params: {
         q: query,
@@ -29,7 +29,7 @@ angular.module('OathStructure').service('SpotifyService', ['$rootScope' , '$http
     return promise
   }
 
-  this.trackSearch = function(method, query, limit){
+  this.trackSearch = function(query, limit){
     var method = 'track.search'
     var promise = $http.get(url + "search", {
       params: {

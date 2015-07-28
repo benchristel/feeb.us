@@ -6,11 +6,13 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     loaded = true
   })
 
+
+  //Auto searching could use some improvement. Possibly verify channelId by channel.list
   this.getYoutubeId = function(artist, song){
     if (loaded == true) {
       var query = hashTagQuery(artist, song)
       return searchYoutubePromise(query).then(function(result){
-        if (result.items.length == 0){
+        if (result.items.length == 0 || result.items[0].snippet.title != song){
           query = lyricQuery(artist, song)
           return searchYoutubePromise(query).then(function(result){
             if (result.items.length == 0){
@@ -20,7 +22,6 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
             }
           })
         }else{
-          console.log("from hash")
           return result.items[0].id.videoId
         }
       })
@@ -61,11 +62,30 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     var request = gapi.client.youtube.search.list({
         q: q,
         part: 'snippet',
+        // fields: 'items(id),items(snippet(channelId)),items(snippet(channelTitle)),items(snippet(title)),items(snippet(thumbnails(default)))',
         type: 'video'
     });
 
     request.execute(function(response) {
         defer.resolve(response)
+    });
+    return defer.promise;
+  }
+
+  function verifyChannelId(channelId, artist){
+    var defer=$q.defer();
+
+    var request = gapi.client.youtube.search.list({
+      id: channelId,
+      part: 'snippet'
+    })
+
+    request.execute(function(response) {
+      if (response.items[0].title == "#" + artist.replace(/\W/g, '') ){
+        defer.resolve(true)
+      }else{
+        defer.resolve(false)
+      }
     });
     return defer.promise;
   }

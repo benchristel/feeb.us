@@ -38,6 +38,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
     this.goOnAir()
     player.cueVideoById(song.youtubeId)
     player.playVideo()
+    //Is there supposed to be a notify here?
   }
 
   this.skipThisSong = function() {
@@ -123,7 +124,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
 
     var states = {}
     states[YT.PlayerState.UNSTARTED] = BETWEEN_SONGS
-    states[YT.PlayerState.BUFFERING] = PLAYING
+    // states[YT.PlayerState.BUFFERING] = PLAYING This line is problematic, it causes the player to swtich to "playing" when seeking while paused. It doesn't switch back.
     states[YT.PlayerState.PLAYING]   = PLAYING
     states[YT.PlayerState.PAUSED]    = PAUSED
     states[YT.PlayerState.ENDED]     = BETWEEN_SONGS

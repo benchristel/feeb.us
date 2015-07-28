@@ -63,7 +63,7 @@
                 <div class="cover-image"
                      style="background-image: url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/hqdefault.jpg')">
                 </div>
-                <div class="fa fa-play-circle-o play-button" ng-click="jumpTo(song); $event.stopPropagation();"></div>
+                <div class="fa fa-play-circle-o play-button" ng-click="jumpTo(song);"></div>
                 <div class="song-title text">{{ song.title }}</div>
                 <div class="artist-name text">{{ song.artist }}</div>
                 <div class="close button fa-close fa" ng-click="remove(song)"></div>

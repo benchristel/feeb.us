@@ -55,6 +55,7 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     if (currentlyPlaying !== null) {
       songAt(currentlyPlaying).playing = false
     }
+    song.playing = true
     Deejay.fromTheTop(song)
   }
 

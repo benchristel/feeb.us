@@ -13,12 +13,13 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
       var query = hashTagQuery(artist, song)
       console.log(query)
       return searchYoutubePromise(query).then(function(resultOne){
-        if (resultOne.items.length == 0 || resultOne.items[0].snippet.title != song){
+        if (resultOne.items.length == 0 || resultOne.items[0].snippet.title.toLowerCase() != song.toLowerCase()){
           query = artist + " " + song
           console.log(query)
           return searchYoutubePromise(query).then(function(resultOnePointFive){
             console.log(resultOnePointFive)
-            if (resultOnePointFive.items.length == 0 || resultOnePointFive.items[0].snippet.channelTitle.toLowerCase() !== artist.toLowerCase()){
+            var title = resultOnePointFive.items[0].snippet.channelTitle.toLowerCase()
+            if (resultOnePointFive.items.length == 0 || (title !== artist.toLowerCase() && title !== (artist.replace(/\W/g, '') + "VEVO").toLowerCase())){
               console.log(resultOnePointFive.items[0].snippet.channelTitle)
               query = vevoQuery(artist, song)
               console.log(query)

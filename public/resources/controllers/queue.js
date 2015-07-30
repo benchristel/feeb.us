@@ -108,6 +108,7 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
         Deejay.fromTheTop(songAt(currentIndex-1))
         songAt(currentIndex).playing = false
         songAt(currentIndex-1).playing = true
+        $scope.gotoAnchor(currentlyPlayingIndex())
       }
     }
   })
@@ -165,6 +166,7 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
 
     if (currentlyPlaying === null && indexInQueue(0)) {
       songAt(0).playing = true
+      $scope.gotoAnchor(0)
       return songAt(0)
     }
 
@@ -176,6 +178,7 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
       songAt(currentlyPlaying + 1).playing = true
     }else if ($scope.repeatQueue) {
       songAt(0).playing = true
+      $scope.gotoAnchor(0)
       return songAt(0)
     }
     $scope.gotoAnchor(currentlyPlayingIndex())

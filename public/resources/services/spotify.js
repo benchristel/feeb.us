@@ -1,4 +1,7 @@
-
+//Issues:
+//Spotify doesn't have some famous artists and doesn't return anything relalvant for them :( e.g. Taylor Swift
+//Potentially use last.fm instead or hybrid....
+//Last.Fm only has "popular" albums. Possible workaround: Last.fm for search but Discogs for listing albums. (would need to create artist-to-id mapping)
 angular.module('OathStructure').service('SpotifyService', ['$rootScope' , '$http', function($rootScope, $http) {
 
   var url = "https://api.spotify.com/v1/"

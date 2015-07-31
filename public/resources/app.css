@@ -509,6 +509,17 @@ input:focus {
     font-family: Menlo, Monaco, monospace;
 }
 
+.import-modal input {
+    position: absolute;
+    top: 20px;
+    bottom: 100px;
+    left: 5%;
+    width: 90%;
+    font-family: Menlo, Monaco, monospace;
+}
+
+
+
 .import-modal .button-container {
     position: absolute;
     text-align: center;

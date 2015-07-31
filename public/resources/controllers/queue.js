@@ -16,6 +16,10 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     }
   }
 
+  $scope.savingPlaylist = function(){
+    message.send('saving-playlist', $scope.queue)
+  }
+
   $scope.gotoAnchor = function(x) {
     var newHash = 'anchor' + x;
     $location.hash('anchor' + x);
@@ -137,15 +141,15 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     }
   })
 
-  $scope.savePlaylist = function(name){
-    var playlists_json = localStorage.getItem("playlists")
-    if (playlists_json == null){
-      playlists_json == "[]"
-    }
-    var playlists = JSON.parse(playlists_json)
-    localStorage.setItem("playlists", JSON.stringify(playlists.append()))
-    localStorage.setItem(name, JSON.stringify($scope.queue))
-  }
+  // $scope.savePlaylist = function(name){
+  //   var playlists_json = localStorage.getItem("playlists")
+  //   if (playlists_json == null){
+  //     playlists_json == "[]"
+  //   }
+  //   var playlists = JSON.parse(playlists_json)
+  //   localStorage.setItem("playlists", JSON.stringify(playlists.append()))
+  //   localStorage.setItem(name, JSON.stringify($scope.queue))
+  // }
 
   window.onbeforeunload = function(event){
     localStorage.setItem("queue", JSON.stringify($scope.queue))

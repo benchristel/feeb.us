@@ -55,7 +55,7 @@
             <div class="action-button fa fa-trash right" ng-click = "removeAll()"></div>
             <!-- I know trash might be used for something else, but it's just for now. Not sure how you'll delete in the current UI -->
             <div class="action-button fa fa-upload right" ng-click = "importLibrary()"></div>
-            <div class="action-button fa fa-save right"></div>
+            <div class="action-button fa fa-save right" ng-click = "savingPlaylist()"></div>
         </div>
         <perfect-scrollbar class="queue" wheel-propagation="false"  suppressScrollX = "true" wheel-speed="20" refresh-on-change="queue" use-keyboard="false" ng-cloak>
           <div ui-sortable="{axis: 'y'}" ng-model="queue">
@@ -143,10 +143,20 @@
 
 <div class="import-modal" ng-show="importing" ng-cloak>
   <div>
-    <textarea ng-model="importText"></textarea>
+    <textarea id= "model" ng-model="importText"></textarea>
     <div class="button-container">
       <div class="button" ng-click="importFrom(importText)">Import</div>
       <div class="button" ng-click="cancelImport()">Cancel</div>
+    </div>
+  </div>
+</div>
+
+<div class="import-modal" ng-show="savingPlaylist" ng-cloak>
+  <div>
+    <input type ="text"  id= "model" ng-model="playlistName"></input>
+    <div class="button-container">
+      <div class="button" ng-click="savePlaylist(playlistName)">Save</div>
+      <div class="button" ng-click="cancelSavePlaylist()">Cancel</div>
     </div>
   </div>
 </div>

@@ -1,10 +1,13 @@
 angular.module('OathStructure').controller('LibraryController', ['$scope', 'YoutubeService', 'SpotifyService', function($scope, YoutubeService, SpotifyService) {
 
   $scope.tab = 'library'
-  $scope.playlists = [{'name': 'THe best', 'tracks': [{'title':'subbydobydo' }, {'title':'malcom'},{'title': 'taken by surprise in the early eve' }]}, {'name': 'Worst', 'tracks': [{'title':'death is inexorable'}, {'title':'Smart money is on the other guy'}]} ]
+  // $scope.playlists = [{'name': 'THe best', 'tracks': [{'title':'subbydobydo' }, {'title':'malcom'},{'title': 'taken by surprise in the early eve' }]}, {'name': 'Worst', 'tracks': [{'title':'death is inexorable'}, {'title':'Smart money is on the other guy'}]} ]
+  // $scope.playlists = []
   $scope.selectTab = function(tab){
     $scope.tab = tab
   }
+
+
 
   $scope.selectedPlaylist = {}
 

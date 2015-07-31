@@ -108,7 +108,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
 
   function youtubeIsReady() {
     player = new YT.Player(
-      'youtube-player-1',
+      'youtube-player',
       {
         height: '195',
         width: '320',

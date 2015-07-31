@@ -355,10 +355,27 @@ input:focus {
 
 }
 
+::-webkit-input-placeholder {
+   color: #666;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #666;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #666;
+}
+
+:-ms-input-placeholder {
+   color: #666;
+}
+
 .library-container .search {
-    width: 200px;
+    width: 230px;
     font-size: 16px;
-    border: 2px solid #ccc;
+    /*border: 2px solid #ccc;*/
+    border: 0px;
     border-radius: 100px;
     /*margin-top: 10px;*/
     padding: 5px;

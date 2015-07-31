@@ -37,7 +37,7 @@
             <div class="action-button left fa fa-minus" title="Hide" ng-click="show = 'none'"></div>
           </div>
           <div class="video-player-container">
-            <div class="video-player" id="youtube-player-1"></div>
+            <div class="video-player" id="youtube-player"></div>
           </div>
           <div class="album-art-container">
                <div class="album-art" ng-show="albumArt()" style="background-image: url('https://i.ytimg.com/vi/{{ albumArt() }}/hqdefault.jpg')">
@@ -74,15 +74,15 @@
 
     <div class="library-container" ng-controller="LibraryController" ng-cloak>
         <div class="tabs">
-            <div class="tab">Playlists</div>
-            <div class="tab selected">Library</div>
-            <div class="tab">Catalog</div>
-            <input id="searchbar" type="text" class="search" placeholder="Search {{library.length}} songs" ng-model="searchQuery">
+            <div class="tab" ng-class="{selected: (tab == 'playlists')}" ng-click = "selectTab('playlists')">Playlists</div>
+            <div class="tab "  ng-class="{selected: (tab == 'library')}" ng-click = "selectTab('library')">Library</div>
+            <div class="tab"  ng-class="{selected: (tab == 'catalog')}" ng-click = "selectTab('catalog')">Catalog</div>
+            <input id="searchbar" type="text" class="search" placeholder="Search {{tab}}" ng-model="searchQuery">
             <div class="clear"></div>
         </div>
 
 
-        <div class="library">
+        <div class="library" ng-show = "tab == 'library'">
             <div class="header">
                 <span class="track-number">&nbsp;</span>
                 <span class="title">Title</span>
@@ -101,13 +101,34 @@
               </div>
 
               <div class="import" ng-show="library.length > 0">
-                Can't find what you're looking for? <div class="button" ng-click="searchSpotify()">Search Youtube</div>.
+                Can't find what you're looking for? <div class="button" ng-click="selectTab('catalog')">Search Catalog</div>.
               </div>
 
               <div class="import" ng-show="library.length == 0">
                 You don't have any songs in your library yet! <div class="button" ng-click="startImport()">Import a Library</div>.
               </div>
             </perfect-scrollbar>
+        </div>
+
+        <div class= "playlists" ng-show = "tab == 'playlists'">
+          <perfect-scrollbar class="body" wheel-propagation="false" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
+            <div>
+              <div class="list" ng-repeat="list in playlists | filter:searchQuery">
+                  <span class="title"  ng-click = "selectPlaylist(list)">{{ list.name}}</span>
+              </div>
+            </div>
+          </perfect-scrollbar>
+          <perfect-scrollbar class="body" wheel-propagation="false" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
+            <div>
+              <div class="song" ng-repeat="song in selectedPlaylist.tracks | filter:searchQuery">
+                <span class="track-number">{{ $index}}</span>
+                <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
+                <span class="title">{{ song.title }}</span>
+                <span class="artist">{{ song.artist }}</span>
+                <span class="album">{{ song.album }}</span>
+              </div>
+            </div>
+          </perfect-scrollbar>
         </div>
     </div>
 </div>
@@ -129,7 +150,8 @@
 <script src="resources/perfect-scrollbar.with-mousewheel.min.js" type="text/javascript"></script>
 <script src="resources/angular-perfect-scrollbar.js" type="text/javascript"></script>
 <script src="resources/sortable.js"></script>
-<script src="https://www.youtube.com/iframe_api"></script>
+<script src="http://www.youtube.com/iframe_api"></script>
+<!-- was https seems to work better as http -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="resources/message.js"></script>
 <script src="resources/app.js"></script>

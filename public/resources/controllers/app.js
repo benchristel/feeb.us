@@ -57,18 +57,16 @@ angular.module('OathStructure').
   getPlaylists()
 
   message.on('saving-playlist', function(playlist){
-    console.log(playlist)
     $scope.savingPlaylist = true;
     $scope.playlistToBeSaved = playlist
   })
 
   $scope.savePlaylist = function(name){
-    console.log($scope.playlistToBeSaved);
     var playlistName = 'playlist-' + name.replace(/\W/g, '')
     // if (localStorage[playlistName]){
     //   playlistName += '' //need to do something to ensure no accidental dublicates...
     // }
-    var playlist = {'name': name, 'tracks': $scope.playlistToBeSaved}
+    var playlist = {'filename': playlistName, 'name': name, 'tracks': $scope.playlistToBeSaved}
     localStorage[playlistName] = JSON.stringify(playlist)
     updatePlaylists(playlist)
     $scope.savingPlaylist = false

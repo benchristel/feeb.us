@@ -111,17 +111,24 @@
         </div>
 
         <div class= "playlists" ng-show = "tab == 'playlists'">
-          <perfect-scrollbar class="body" wheel-propagation="false" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
+          <perfect-scrollbar class="names" wheel-propagation="false" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
             <div>
-              <div class="list" ng-repeat="list in playlists | filter:searchQuery">
-                  <span class="title"  ng-click = "selectPlaylist(list)">{{ list.name}}</span>
+              <div class="list-name" ng-repeat="list in playlists | filter:searchQuery">
+                  <span class="name"  ng-click = "selectPlaylist(list)" ng-class= "{selected: list.selected}">{{ list.name}}</span>
               </div>
             </div>
           </perfect-scrollbar>
-          <perfect-scrollbar class="body" wheel-propagation="false" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
+          <perfect-scrollbar class="tracks" wheel-propagation="false" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
             <div>
+              <div class="playlist-title"> {{selectedPlaylist.name}} </div>
+              <div class="header">
+                  <span class="track-number">&nbsp;</span>
+                  <span class="title">Title</span>
+                  <span class="artist">Artist</span>
+                  <span class="album">Album</span>
+              </div>
               <div class="song" ng-repeat="song in selectedPlaylist.tracks | filter:searchQuery">
-                <span class="track-number">{{ $index}}</span>
+                <span class="track-number">{{ $index +1 }}</span>
                 <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
                 <span class="title">{{ song.title }}</span>
                 <span class="artist">{{ song.artist }}</span>

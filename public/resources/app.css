@@ -551,8 +551,8 @@ input:focus {
 }
 
 .playlists .selected.name {
-    background-color: #aaa;
-    opacity: 0.5;
+    background-color: rgba(4,4, 4, 0.1);;
+
 }
 
 .playlists .name {
@@ -570,6 +570,10 @@ input:focus {
 .playlists .playlist-title {
     font-size: 30px;
     padding-bottom: 10px;
+    padding-left: 20px;
+    display: block;
+    float: left;
+    width: 80%;
 }
 
 .playlists .song {
@@ -628,4 +632,14 @@ input:focus {
 
 .playlists .artist {
     width: 20%;
+}
+
+.playlists .header span {
+    color: #888;
+    /*font-weight: bold;*/
+    font-size: 14px;
+    padding-top: 20px;
+    padding-bottom: 2px;
+    padding-left: 20px;
+    border-bottom: 1px solid #888;
 }

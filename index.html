@@ -117,10 +117,11 @@
                   <span class="name"  ng-click = "selectPlaylist(list)" ng-class= "{selected: list.selected}">{{ list.name}}</span>
               </div>
             </div>
+
           </perfect-scrollbar>
+          <div class="playlist-title"> {{selectedPlaylist.name}} </div>
           <perfect-scrollbar class="tracks" wheel-propagation="false" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
             <div>
-              <div class="playlist-title"> {{selectedPlaylist.name}} </div>
               <div class="header">
                   <span class="track-number">&nbsp;</span>
                   <span class="title">Title</span>

@@ -1,7 +1,7 @@
 angular.module('OathStructure').controller('LibraryController', ['$scope', 'YoutubeService', 'SpotifyService', function($scope, YoutubeService, SpotifyService) {
 
   $scope.tab = 'library'
-  $scope.playlists = [{'name': 'THe best', 'tracks': [{'title':'subbydobydo' }, {'title':'malcom'},{'title': 'taken by surprise in the early eve' }]}, {'name': 'Worst', 'tracks': [{'title':'death is inexerable'}, {'title':'Smart money is on the other guy'}]} ]
+  $scope.playlists = [{'name': 'THe best', 'tracks': [{'title':'subbydobydo' }, {'title':'malcom'},{'title': 'taken by surprise in the early eve' }]}, {'name': 'Worst', 'tracks': [{'title':'death is inexorable'}, {'title':'Smart money is on the other guy'}]} ]
   $scope.selectTab = function(tab){
     $scope.tab = tab
   }
@@ -14,8 +14,16 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', 'Yout
     $scope.selectedPlaylist = playlist
   }
 
+
+
   $scope.addToQueue = function(song) {
     message.send('add-to-queue', angular.copy(song))
+  }
+
+  $scope.addAllToQueue = function(list){
+    for (var song in list){
+      $scope.addToQueue(song)
+    }
   }
 
   $scope.searchYoutube = function(){

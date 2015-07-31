@@ -323,13 +323,47 @@ input:focus {
     padding: 20px;
 }
 
+.library-container .tabs {
+    /*padding-top: 10px;*/
+}
+
+.library-container .tab {
+    display: block;
+    float: left;
+}
+
+.library-container .clear {
+    clear: both;
+}
+
+.library-container .tab {
+    padding: 5px;
+    color: #666;
+    width: 100px;
+    font-size: 18px;
+    text-align: center;
+    font-variant: small-caps;
+    text-transform: lowercase;
+}
+
+.library-container .selected.tab {
+    border-bottom: 2px solid #f67f00;
+    color: #444;
+}
+
+.library-container .tab:hover {
+
+}
+
 .library-container .search {
-    width: 100%;
+    width: 200px;
     font-size: 16px;
     border: 2px solid #ccc;
     border-radius: 100px;
+    /*margin-top: 10px;*/
     padding: 5px;
     padding-left: 15px;
+    float: right;
 }
 
 .library .header span {
@@ -343,7 +377,7 @@ input:focus {
 
 .library {
     position: absolute;
-    top: 50px;
+    top: 100px;
     bottom: 25px;
     left: 25px;
     right: 25px;

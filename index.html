@@ -73,7 +73,14 @@
     </div>
 
     <div class="library-container" ng-controller="LibraryController" ng-cloak>
-        <input id="searchbar" type="text" class="search" placeholder="Search {{library.length}} songs" ng-model="searchQuery">
+        <div class="tabs">
+            <div class="tab">Playlists</div>
+            <div class="tab selected">Library</div>
+            <div class="tab">Catalog</div>
+            <input id="searchbar" type="text" class="search" placeholder="Search {{library.length}} songs" ng-model="searchQuery">
+            <div class="clear"></div>
+        </div>
+
 
         <div class="library">
             <div class="header">

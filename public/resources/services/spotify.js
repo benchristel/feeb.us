@@ -67,6 +67,4 @@ angular.module('OathStructure').service('SpotifyService', ['$rootScope' , '$http
       return response.data.items
     })
   }
-
-
 }])

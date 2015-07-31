@@ -13,6 +13,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   //2. some names have weird characters like BØRNS -- avoid? replace (with O)? Still works for the most part...
   //3. Possibly try VEVO first?
   //4. Investigate songs/bands with non-distinct names to see if just artist + song is good enough instead of adding "lyrics".
+  //5. Check for length....
   this.getYoutubeId = function(artist, song){
     if (loaded == true) {
       var query = hashTagQuery(artist, song)

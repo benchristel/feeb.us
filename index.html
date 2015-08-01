@@ -120,6 +120,9 @@
 
           </perfect-scrollbar>
           <div class="playlist-title"> {{selectedPlaylist.name}} </div>
+          <div class= "button-container">
+            <button class="add-playlist" ng-click = "addAllToQueue(selectedPlaylist.tracks)"> Add To Queue </button>
+          </div>
           <perfect-scrollbar class="tracks" wheel-propagation="false" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
             <div>
               <div class="header">
@@ -168,8 +171,7 @@
 <script src="resources/perfect-scrollbar.with-mousewheel.min.js" type="text/javascript"></script>
 <script src="resources/angular-perfect-scrollbar.js" type="text/javascript"></script>
 <script src="resources/sortable.js"></script>
-<script src="http://www.youtube.com/iframe_api"></script>
-<!-- was https seems to work better as http -->
+<script src="https://www.youtube.com/iframe_api"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="resources/message.js"></script>
 <script src="resources/app.js"></script>
@@ -177,7 +179,6 @@
 <script src="resources/services/deejay.js"></script>
 <script src="resources/services/youtube.js"></script>
 <script src="resources/services/spotify.js"></script>
-<script src="resources/linked_list.js"></script>
 <script src="resources/controllers/app.js"></script>
 <script src="resources/controllers/library.js"></script>
 <script src="resources/controllers/player.js"></script>

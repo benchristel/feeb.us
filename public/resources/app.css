@@ -371,7 +371,7 @@ input:focus {
    color: #666;
 }
 
-.library-container .search {
+.library-container . {
     width: 230px;
     font-size: 16px;
     /*border: 2px solid #ccc;*/
@@ -653,4 +653,26 @@ input:focus {
     padding-bottom: 2px;
     padding-left: 20px;
     border-bottom: 1px solid #888;
+}
+
+.playlists .button-container{
+  padding-left: 20px;
+  float:left;
+  display: block;
+  width: 80%;
+}
+
+.playlists .add-playlist {
+  font-size: 20px;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  background-color: #f67f00;
+  color: white;
+  text-shadow: 0px 1px 0 #333;
+  width: 150px;
+  height: 25px;
+  border-radius: 100px;
+  border: 0px;
+  padding-bottom: 5px;
+
 }

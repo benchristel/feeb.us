@@ -66,7 +66,9 @@ angular.module('OathStructure').
     // if (localStorage[playlistName]){
     //   playlistName += '' //need to do something to ensure no accidental dublicates...
     // }
-    var playlist = {'filename': playlistName, 'name': name, 'tracks': $scope.playlistToBeSaved}
+    var playlistCopy = angular.copy($scope.playlistToBeSaved)
+    setPlayingToFalse(playlistCopy)
+    var playlist = {'filename': playlistName, 'name': name, 'tracks': playlistCopy}
     localStorage[playlistName] = JSON.stringify(playlist)
     updatePlaylists(playlist)
     $scope.savingPlaylist = false
@@ -76,6 +78,12 @@ angular.module('OathStructure').
   $scope.cancelSavePlaylist = function() {
     $scope.savingPlaylist = false
     $scope.playlistToBeSaved = []
+  }
+
+  function setPlayingToFalse(playlist){
+    _.each(playlist, function(song){
+      song.playing = false
+    })
   }
 
   function updatePlaylists(playlist){

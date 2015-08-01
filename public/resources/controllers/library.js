@@ -24,9 +24,9 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', 'Yout
   }
 
   $scope.addAllToQueue = function(list){
-    for (var song in list){
+    _.each(list, function(song){
       $scope.addToQueue(song)
-    }
+    })
   }
 
   $scope.searchYoutube = function(){

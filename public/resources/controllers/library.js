@@ -63,4 +63,51 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', 'Yout
       })
     })
   }
+
+  $scope.albumResults = []
+  $scope.artistResults = []
+  $scope.trackResults = []
+
+  $scope.search = function(){
+    SpotifyService.albumSearch($scope.searchQuery, 4).then(function(result){
+      $scope.albumResults = result
+    })
+    SpotifyService.artistSearch($scope.searchQuery, 4).then(function(result){
+      $scope.artistResults = result
+    })
+    SpotifyService.trackSearch($scope.searchQuery, 4).then(function(result){
+      $scope.trackResults = result
+    })
+  }
+
+  $scope.artist = {}
+  $scope.albumList = []
+  $scope.trackList= []
+
+  $scope.getArtistAlbums = function(artist){
+    $scope.artist = artist
+    SpotifyService.getArtistAlbums(artist.id).then(function(result){
+      $scope.albumList = result
+    })
+  }
+
+  $scope.getAlbumTracks = function(album){
+    SpotifyService.getAlbumTracks(album.id).then(function(result){
+      _.each(result, function(track){
+        YoutubeService.getYoutubeId(track.artists[0].name , track.name).then(function(youtubeId){
+          song = {
+            title:  track.name,
+            artist: track.artists[0].name,
+            album: album.name,
+            trackNumber: result[0].track_number,
+            youtubeId: youtubeId,
+            youtubeImageId: youtubeId,
+            albumArtUrls: album.images
+          }
+          $scope.trackList.push(song)
+        })
+      })
+    })
+  }
+
 }])

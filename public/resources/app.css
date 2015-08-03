@@ -323,6 +323,20 @@ input:focus {
     padding: 20px;
 }
 
+
+.library-container .search {
+    width: 230px;
+    font-size: 16px;
+    /*border: 2px solid #ccc;*/
+    border: 0px;
+    border-radius: 100px;
+    /*margin-top: 10px;*/
+    padding: 5px;
+    padding-left: 15px;
+    float: right;
+}
+
+
 .library-container .tabs {
     /*padding-top: 10px;*/
 }
@@ -570,21 +584,29 @@ input:focus {
     width: 100%;
 }
 
+.playlists .playlist-header{
+  display: block;
+  float: left;
+  width: 80%;
+  padding-left: 20px;
+}
+
 .playlists .tracks {
     display: block;
     float: left;
     width: 80%;
     padding-left: 20px;
+    overflow: hidden;
 }
 
 
 .playlists .playlist-title {
-    font-size: 30px;
-    padding-bottom: 10px;
-    padding-left: 20px;
+    font-size: 34px;
+    padding-bottom: 20px;
+    /*padding-left: 20px;*/
     display: block;
     float: left;
-    width: 80%;
+    width: 100%;
 }
 
 .playlists .song {
@@ -656,10 +678,10 @@ input:focus {
 }
 
 .playlists .button-container{
-  padding-left: 20px;
+  /*padding-left: 20px;*/
   float:left;
   display: block;
-  width: 80%;
+  width: 100%;
 }
 
 .playlists .add-playlist {
@@ -674,5 +696,6 @@ input:focus {
   border-radius: 100px;
   border: 0px;
   padding-bottom: 5px;
+  text-align: center;
 
 }

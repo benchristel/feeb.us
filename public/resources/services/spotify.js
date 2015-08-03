@@ -46,7 +46,7 @@ angular.module('OathStructure').service('SpotifyService', ['$rootScope' , '$http
     return promise
   }
 
-  this.getArtist =  function(artist_id){
+  this.getArtistAlbums =  function(artist_id){
     var promise = $http.get(url+'artists/'+artist_id+'/albums', {
       params: {
         limit: 50,
@@ -57,7 +57,7 @@ angular.module('OathStructure').service('SpotifyService', ['$rootScope' , '$http
     })
   }
 
-  this.getAlbum = function(album_id){
+  this.getAlbumTracks = function(album_id){
     var promise = $http.get(url+'albums/'+album_id+'/tracks', {
       params: {
         limit: 50,

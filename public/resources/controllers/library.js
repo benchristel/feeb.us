@@ -64,18 +64,33 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', 'Yout
     })
   }
 
+  $scope.$watch('searchQuery',function(){
+    if ($scope.tab == "catalog"){
+      $scope.search($scope.searchQuery, 4)
+    }
+  });
+
+  $scope.$watch('tab',function(){
+    if ($scope.tab == "catalog" && $scope.searchQuery){
+      $scope.search($scope.searchQuery, 4)
+    }
+  });
+
   $scope.albumResults = []
   $scope.artistResults = []
   $scope.trackResults = []
 
   $scope.search = function(){
     SpotifyService.albumSearch($scope.searchQuery, 4).then(function(result){
+      console.log(result)
       $scope.albumResults = result
     })
     SpotifyService.artistSearch($scope.searchQuery, 4).then(function(result){
+      console.log(result)
       $scope.artistResults = result
     })
     SpotifyService.trackSearch($scope.searchQuery, 4).then(function(result){
+      console.log(result)
       $scope.trackResults = result
     })
   }

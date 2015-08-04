@@ -385,17 +385,6 @@ input:focus {
    color: #666;
 }
 
-.library-container . {
-    width: 230px;
-    font-size: 16px;
-    /*border: 2px solid #ccc;*/
-    border: 0px;
-    border-radius: 100px;
-    /*margin-top: 10px;*/
-    padding: 5px;
-    padding-left: 15px;
-    float: right;
-}
 
 .library .header span {
     color: #888;
@@ -553,17 +542,36 @@ input:focus {
     bottom: 25px;
     left: 25px;
     right: 25px;
+    /*overflow: hidden;*/
+}
+
+.playlists .track-container{
+  position: absolute;
+  /*display: block;*/
+  /*float:left;*/
+  /*padding-left: 20px;*/
+  overflow: hidden;
 }
 
 
+.playlists .tracks {
+    position: absolute;
+    left: 20px;
+    top: 125px;
+    bottom: 0px;
+    right: 0;
+    overflow: hidden;
+}
 
-.playlists .names {
+.playlists .names-list {
     display: block;
     float: left;
     width: 20%;
     height: 100%;
     border-right: 1px solid #666;
 }
+
+
 
 .playlists .list-name {
     clear: both;
@@ -575,39 +583,92 @@ input:focus {
     line-height: 28px;
 }
 
+.playlists .name {
+    width: 100%;
+}
+
 .playlists .selected.name {
-    background-color: rgba(4,4, 4, 0.1);;
+    background-color: rgba(4,4, 4, 0.1);
 
 }
 
-.playlists .name {
-    width: 100%;
+
+
+.playlists .list-container{
+  display: block;
+  float: left;
+  position: relative;
+  width: 80%;
+  height: 100%;
+  padding-left: 20px;
+  overflow: hidden;
 }
 
 .playlists .playlist-header{
   display: block;
   float: left;
-  width: 80%;
-  padding-left: 20px;
+  width: 100%;
+  /*padding-left: 20px;*/
 }
 
-.playlists .tracks {
-    display: block;
-    float: left;
-    width: 80%;
-    padding-left: 20px;
-    overflow: hidden;
-}
 
 
 .playlists .playlist-title {
     font-size: 34px;
     padding-bottom: 20px;
     /*padding-left: 20px;*/
-    display: block;
-    float: left;
-    width: 100%;
+    /*display: block;
+    float: left;*/
+    /*width: 100%;*/
 }
+
+
+.playlists .header span {
+    color: #888;
+    /*font-weight: bold;*/
+    font-size: 14px;
+    padding-top: 20px;
+    padding-bottom: 2px;
+    padding-left: 20px;
+    border-bottom: 1px solid #888;
+}
+
+.playlists .button-container{
+  /*padding-left: 20px;*/
+  /*float:left;
+  display: block;
+  width: 100%;*/
+}
+
+.playlists .add-playlist {
+  font-size: 20px;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  background-color: #f67f00;
+  color: white;
+  text-shadow: 0px 1px 0 #333;
+  width: 150px;
+  height: 25px;
+  border-radius: 100px;
+  border: 0px;
+  padding-bottom: 5px;
+  text-align: center;
+
+}
+
+/*.list-container .tracks {*/
+    /*display: block;*/
+    /*overflow-y: hidden;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*position: relative;
+    overflow-y: hidden;
+    bottom: 0;
+    right: 0;
+    padding-left: 20px;*/
+    /*overflow: hidden;*/
+/*}*/
+
 
 .playlists .song {
     clear: both;
@@ -665,37 +726,4 @@ input:focus {
 
 .playlists .artist {
     width: 20%;
-}
-
-.playlists .header span {
-    color: #888;
-    /*font-weight: bold;*/
-    font-size: 14px;
-    padding-top: 20px;
-    padding-bottom: 2px;
-    padding-left: 20px;
-    border-bottom: 1px solid #888;
-}
-
-.playlists .button-container{
-  /*padding-left: 20px;*/
-  float:left;
-  display: block;
-  width: 100%;
-}
-
-.playlists .add-playlist {
-  font-size: 20px;
-  font-variant: small-caps;
-  text-transform: lowercase;
-  background-color: #f67f00;
-  color: white;
-  text-shadow: 0px 1px 0 #333;
-  width: 150px;
-  height: 25px;
-  border-radius: 100px;
-  border: 0px;
-  padding-bottom: 5px;
-  text-align: center;
-
 }

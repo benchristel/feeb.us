@@ -165,14 +165,17 @@
           </div>
         </div>
 
-        <div class = "catalog" ng-show=" tab = 'catalog'">
+        <div class = "catalog" ng-show="tab == 'catalog'">
           <div class="albums" ng-repeat="album in albumList">
-            <span > {{album.name}} </span>
+            <div class = "big-cover-image" ng-click = "getAlbumTracks(album)"
+                 style="background-image: url({{album.images[1].url}})">
+            </div>
           </div>
           <div class="tracks" ng-repeat="song in trackList">
             <span ng-click ="addToQueue(song)"> {{song.title}} </span>
           </div>
         </div>
+
     </div>
 </div>
 
@@ -203,7 +206,6 @@
 <script src="resources/perfect-scrollbar.with-mousewheel.min.js" type="text/javascript"></script>
 <script src="resources/angular-perfect-scrollbar.js" type="text/javascript"></script>
 <script src="resources/sortable.js"></script>
-<script src="https://www.youtube.com/iframe_api"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="resources/message.js"></script>
 <script src="resources/app.js"></script>
@@ -215,6 +217,8 @@
 <script src="resources/controllers/library.js"></script>
 <script src="resources/controllers/player.js"></script>
 <script src="resources/controllers/queue.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+
 
 
 

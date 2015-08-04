@@ -107,6 +107,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
   }
 
   function youtubeIsReady() {
+    console.log("I was called")
     player = new YT.Player(
       'youtube-player',
       {
@@ -118,8 +119,14 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
         }
       }
     )
+    if (!player){
+      console.log("player didn't load?")
+    }
   }
-  message.on('youtube-iframe-api-ready', youtubeIsReady)
+  message.on('youtube-iframe-api-ready', function(){
+    console.log("received message")
+    youtubeIsReady()
+  })
 
   function playerStateChanged(event) {
     if (deejay.isOffAir()) return

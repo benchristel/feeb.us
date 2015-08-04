@@ -26,7 +26,7 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     $anchorScroll();
   }
 
-  $scope.$on('$locationChangeStart', function(ev) {
+  $scope.$on('$locationChangeStart', function(ev, next, last, newState) {
     ev.preventDefault();
   });
 

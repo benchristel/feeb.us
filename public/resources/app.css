@@ -77,6 +77,18 @@ input:focus {
     background-repeat: no-repeat;
 }
 
+.big-cover-image {
+    display:block;
+    float:left;
+    height: 200px;
+    width: 200px;
+    background-color: #efefef;
+    border: 2px solid #efefef;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .scrubber-fill {
     background-color: #f67f00;
     height: 100%;

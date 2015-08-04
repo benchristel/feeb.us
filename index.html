@@ -77,23 +77,22 @@
             <div class="tab" ng-class="{selected: (tab == 'playlists')}" ng-click = "selectTab('playlists')">Playlists</div>
             <div class="tab "  ng-class="{selected: (tab == 'library')}" ng-click = "selectTab('library')">Library</div>
             <div class="tab"  ng-class="{selected: (tab == 'catalog')}" ng-click = "selectTab('catalog')">Catalog</div>
-            <input id="searchbar" type="text" class="search" placeholder="Search {{tab}}" ng-model="searchQuery" ng-model-options="{ debounce: 300 }">
-            <div class="searchResults">
-              <div class="songs"> Songs </div>
-                <div class="song-results" ng-repeat= "song in trackResults">
-                  <div class="song-title text">{{ song.name }}</div>
-                  <div class="artist-name text">{{ song.artists[0].name }}</div>
-                </div>
+            <input id="searchbar" type="text" class="search" placeholder="Search {{tab}}" ng-model="searchQuery" ng-model-options="{ debounce: 300 }" ng-focus="showResults=true">
+            <div class="searchResults" ng-show="showResults">
+              <div class="songs" ng-show = "trackResults.length > 0"> Songs </div>
+              <div class="song-results" ng-repeat= "song in trackResults" >
+                <div class="song-title text" ng-click="getAlbumTracks(song.album)">{{ song.name }}</div>
+                <div class="artist-name text">{{ song.artists[0].name }}</div>
               </div>
-                <div class="artists"> Artists </div>
-                  <div class="artist-results" ng-repeat= "artist in artistResults">
-                    <div class="artist-name text">{{ artist.name }}</div>
-                  </div>
-                <div class="albums"> Albums </div>
-                <div class="album-results" ng-repeat= "album in albumResults">
-                  <div class="artist-name text">{{ album.name }}</div>
-                </div>
-            <div>
+              <div class="artists" ng-show = "artistResults.length > 0"> Artists </div>
+              <div class="artist-results" ng-repeat= "artist in artistResults">
+                <div class="artist-name text"  ng-click="getArtistAlbums(artist)">{{ artist.name }}</div>
+              </div>
+              <div class="albums" ng-show = "albumResults.length > 0"> Albums </div>
+              <div class="album-results" ng-repeat= "album in albumResults" >
+                <div class="artist-name text" ng-click="getAlbumTracks(album)">{{ album.name }}</div>
+              </div>
+            </div>
             <div class="clear"></div>
         </div>
 
@@ -163,6 +162,15 @@
                 </div>
               </perfect-scrollbar>
             </div>
+          </div>
+        </div>
+
+        <div class = "catalog" ng-show=" tab = 'catalog'">
+          <div class="albums" ng-repeat="album in albumList">
+            <span > {{album.name}} </span>
+          </div>
+          <div class="tracks" ng-repeat="song in trackList">
+            <span ng-click ="addToQueue(song)"> {{song.title}} </span>
           </div>
         </div>
     </div>

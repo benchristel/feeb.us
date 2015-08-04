@@ -54,7 +54,10 @@ angular.module('OathStructure').service('SpotifyService', ['$rootScope' , '$http
       }
     }).then(function(response){
       return response.data.items
+    }).catch(function(err){
+      console.log(error)
     })
+    return promise
   }
 
   this.getAlbumTracks = function(album_id){
@@ -65,6 +68,9 @@ angular.module('OathStructure').service('SpotifyService', ['$rootScope' , '$http
       }
     }).then(function(response){
       return response.data.items
+    }).catch(function(err){
+      console.log(error)
     })
+    return promise
   }
 }])

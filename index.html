@@ -77,8 +77,8 @@
             <div class="tab" ng-class="{selected: (tab == 'playlists')}" ng-click = "selectTab('playlists')">Playlists</div>
             <div class="tab "  ng-class="{selected: (tab == 'library')}" ng-click = "selectTab('library')">Library</div>
             <div class="tab"  ng-class="{selected: (tab == 'catalog')}" ng-click = "selectTab('catalog')">Catalog</div>
-            <input id="searchbar" type="text" class="search" placeholder="Search {{tab}}" ng-model="searchQuery" ng-model-options="{ debounce: 300 }" ng-focus="showResults=true">
-            <div class="searchResults" ng-show="showResults">
+            <input id="searchbar" type="text" class="search" placeholder="Search {{tab}}" ng-model="searchQuery" ng-model-options="{ debounce: 300 }" ng-focus="true">
+            <div class="searchResults" ng-show="showResults && tab == 'catalog'">
               <div class="songs" ng-show = "trackResults.length > 0"> Songs </div>
               <div class="song-results" ng-repeat= "song in trackResults" >
                 <div class="song-title text" ng-click="getAlbumTracks(song.album)">{{ song.name }}</div>

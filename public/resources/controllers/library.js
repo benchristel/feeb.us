@@ -97,6 +97,17 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     })
   }
 
+  $scope.activeElement = document.activeElement
+
+  $scope.$watch(
+    function () { return document.activeElement; },
+    function (newValue, oldValue) {
+      if (newValue !== oldValue) {
+        console.log(document.activeElement)
+      }
+    }
+  );
+
   $scope.artist = {}
   $scope.albumList = []
   $scope.trackList= []

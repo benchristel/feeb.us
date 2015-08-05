@@ -77,17 +77,7 @@ input:focus {
     background-repeat: no-repeat;
 }
 
-.big-cover-image {
-    display:block;
-    float:left;
-    height: 200px;
-    width: 200px;
-    background-color: #efefef;
-    border: 2px solid #efefef;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
+
 
 .scrubber-fill {
     background-color: #f67f00;
@@ -434,7 +424,7 @@ input:focus {
     padding-left: 15px;
     position: relative;
     z-index: 2;
-    border: 4px solid #444;
+    border: 2px solid #444;
 }
 
 
@@ -469,7 +459,7 @@ input:focus {
 .catalog {
     position: absolute;
     overflow: hidden;
-    top: 80px;
+    top: 90px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -477,24 +467,49 @@ input:focus {
     padding-left: 20px;
 }
 
-.catalog .artist-header{
+.catalog .artist-header,
+.catalog .album-header {
   position: relative;
-  height: 300px;
+  height: 250px;
+  padding-left: 10px;
 }
 
-.catalog .artist-name{
+.catalog .artist-name,
+.catalog .album-name{
   font-size: 40px;
   float: left;
   padding: 50px;
 }
 
-.catalog .artist-image{
+.catalog .artist-image,
+.catalog .album-image {
   float: left;
-  height: 250px;
-  width: 250px;
-  background-size: cover;
-  border-radius: 150px;
+  height: 230px;
+  width: 230px;
+  padding-left: 200px;
+  padding-top: 20px;
 
+}
+.catalog .artist-image{
+  background-size: cover;
+  border-radius: 120px;
+
+}
+
+.catalog .album-image{
+  background-size: 230px 230px;
+}
+
+.catalog .big-cover-image {
+    display:block;
+    float:left;
+    height: 180px;
+    width: 180px;
+    background-color: #efefef;
+    border: 2px solid #efefef;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 ::-webkit-input-placeholder {
@@ -751,7 +766,8 @@ input:focus {
 }
 
 
-.playlists .header span {
+.playlists .header span,
+.catalog .header span {
     color: #888;
     /*font-weight: bold;*/
     font-size: 14px;
@@ -798,12 +814,14 @@ input:focus {
 /*}*/
 
 
-.playlists .song {
+.playlists .song,
+.catalog .song {
     clear: both;
     font-size: 14px;
 }
 
-.playlists span {
+.playlists span,
+.catalog span {
     display: block;
     float: left;
     padding-left: 5px;
@@ -812,46 +830,56 @@ input:focus {
     overflow: hidden;
 }
 
-.playlists .song span {
+.playlists .song span,
+.catalog .song span{
     height: 28px;
     line-height: 28px;
     border-bottom: 1px solid #ccc;
 }
 
-.playlists .song:hover span {
+.playlists .song:hover span,
+.catalog .song:hover span{
     background-color: #ccc;
 }
 
-.playlists .song:hover .add-button {
+.playlists .song:hover .add-button,
+.catalog .song:hover .add-button{
     display: block;
 }
 
-.playlists .song:hover .track-number {
+.playlists .song:hover .track-number,
+.catalog .song:hover .track-number {
     display: none;
 }
 
-.playlists .song .add-button {
+.playlists .song .add-button,
+.catalog .song .add-button {
     display: none;
     width: 5%;
     cursor: pointer;
 }
 
-.playlists .song .add-button:hover {
+.playlists .song .add-button:hover,
+.catalog .song .add-button:hover {
     color: #f67f00;
 }
 
-.playlists .track-number {
+.playlists .track-number,
+.catalog .track-number {
     width: 5%;
 }
 
-.playlists .title {
+.playlists .title,
+.catalog .title {
     width: 35%;
 }
 
-.playlists .album {
+.playlists .album,
+.catalog .album {
     width: 40%;
 }
 
-.playlists .artist {
+.playlists .artist,
+.catalog .artist {
     width: 20%;
 }

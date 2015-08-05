@@ -177,20 +177,37 @@
 
 
         <perfect-scrollbar class = "catalog" ng-show="tab == 'catalog'">
-          <div class = "artist-header">
+          <div class = "artist-header"  ng-hide="showAlbum">
             <div class="artist-image"
                  style="background-image: url({{artist.images[1].url}}), url('/resources/profile-icon.png')">
             </div>
             <span class="artist-name"> {{artist.name}} </span>
           </div>
-          <div style="clear: both;"></div>
-          <div class="albums" ng-repeat="album in albumList">
+          <div style="clear: both;" ng-hide="showAlbum"></div>
+          <div class="albums" ng-repeat="album in albumList" ng-hide="showAlbum">
             <div class = "big-cover-image" ng-click = "getAlbumTracks(album)"
                  style="background-image: url({{album.images[1].url}})">
             </div>
           </div>
-          <div class="tracks" ng-repeat="song in trackList">
-            <span ng-click ="addToQueue(song)"> {{song.title}} </span>
+          <div class = "album-header" ng-show="showAlbum">
+            <div class="album-image"
+                 style="background-image: url({{selectedAlbum.images[1].url}}), url('/resources/default-album.png')">
+            </div>
+            <span class="album-name"> {{selectedAlbum.name}} </span>
+          </div>
+          <div style="clear: both;" ng-show="showAlbum"></div>
+          <div class="header" ng-show="showAlbum">
+              <span class="track-number">&nbsp;</span>
+              <span class="title">Title</span>
+              <span class="artist">Artist</span>
+              <span class="album">Album</span>
+          </div>
+          <div class="song" ng-repeat="song in trackList | orderBy:'trackNumber'" ng-show="showAlbum">
+            <span class="track-number">{{ song.trackNumber }}</span>
+            <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
+            <span class="title">{{ song.title }}</span>
+            <span class="artist">{{ song.artist }}</span>
+            <span class="album">{{ song.album }}</span>
           </div>
         </perfect-scrollbar>
     </div>

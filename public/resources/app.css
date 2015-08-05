@@ -335,17 +335,106 @@ input:focus {
     padding: 20px;
 }
 
-
 .library-container .search {
+    position: relative;
+    float: right;
+}
+
+.library-container .search .search-results {
+    background-color: #444;
+    color: #eeeeee;
+    font-size: 13px;
+    line-height: 18px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    text-shadow: 0 1px 0 black;
+    position: absolute;
+    top: 16px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    border-radius: 0 0 16px 16px;
+}
+
+.library-container .search-results .header {
+    padding-top: 8px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    /*font-variant: small-caps;*/
+    text-transform: uppercase;
+}
+
+.library-container .search-results .song-results {
+    height: 50px;
+    width: 100%;
+    padding-top: 5px;
+    padding-left: 10px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    background-color: #222;
+    border: 1px solid #222;
+    position: relative;
+    font-family: 'Lucida Grande', Helvetica, sans-serif;
+    font-size: 13px;
+    color: #d0d0d0;
+    border-top: 1px solid #555;
+    overflow: hidden;
+}
+
+.library-container .search-results .artist-results,
+.library-container .search-results .album-results
+{
+    height: 50px;
+    width: 100%;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-left: 10px;
+    background-color: #222;
+    border: 1px solid #222;
+    position: relative;
+    font-family: 'Lucida Grande', Helvetica, sans-serif;
+    font-size: 13px;
+    color: #d0d0d0;
+    border-top: 1px solid #555;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.library-container .search-results .artist-results .artist-name,
+.library-container .search-results .album-results .artist-name,
+.library-container .search-results .album-results .album-name {
+    position: absolute;
+    left: 60px;
+    top: 0px;
+    line-height: 26px;
+}
+
+.library-container .search-results .artist-results .cover-image,
+.library-container .search-results .album-results .cover-image {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 48px;
+    width: 50px;
+}
+
+.library-container .search-results .artist-results .cover-image {
+    border-radius: 25px;
+}
+
+
+.library-container .searchbar {
     width: 230px;
     font-size: 16px;
-    /*border: 2px solid #ccc;*/
     border: 0px;
     border-radius: 100px;
-    /*margin-top: 10px;*/
     padding: 5px;
     padding-left: 15px;
-    float: right;
+    position: relative;
+    z-index: 2;
+    border: 4px solid #444;
 }
 
 
@@ -377,7 +466,34 @@ input:focus {
     color: #000;
 }
 
-.library-container .tab:hover {
+.catalog {
+    position: absolute;
+    overflow: hidden;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    padding-left: 20px;
+}
+
+.catalog .artist-header{
+  position: relative;
+  height: 300px;
+}
+
+.catalog .artist-name{
+  font-size: 40px;
+  float: left;
+  padding: 50px;
+}
+
+.catalog .artist-image{
+  float: left;
+  height: 250px;
+  width: 250px;
+  background-size: cover;
+  border-radius: 150px;
 
 }
 

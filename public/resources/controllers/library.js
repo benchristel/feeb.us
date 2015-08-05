@@ -83,15 +83,15 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
 
   $scope.search = function(){
     $scope.showResults=true;
-    SpotifyService.albumSearch($scope.searchQuery, 4).then(function(result){
+    SpotifyService.albumSearch($scope.searchQuery, 3).then(function(result){
       console.log(result)
       $scope.albumResults = result
     })
-    SpotifyService.artistSearch($scope.searchQuery, 4).then(function(result){
+    SpotifyService.artistSearch($scope.searchQuery, 3).then(function(result){
       console.log(result)
       $scope.artistResults = result
     })
-    SpotifyService.trackSearch($scope.searchQuery, 4).then(function(result){
+    SpotifyService.trackSearch($scope.searchQuery, 3).then(function(result){
       console.log(result)
       $scope.trackResults = result
     })
@@ -116,6 +116,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     console.log("called artist")
     // $location.hash("/artist/" + artist.id)
     console.log(artist)
+    $scope.showResults = false
     $scope.artist = artist
     SpotifyService.getArtistAlbums(artist.id).then(function(result){
       $scope.albumList = result
@@ -126,7 +127,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     console.log("called album")
     console.log(album)
     // $location.hash("/album/" + album.id)
-
+    $scope.showResults = false
     SpotifyService.getAlbumTracks(album.id).then(function(result){
       _.each(result, function(track){
         YoutubeService.getYoutubeId(track.artists[0].name , track.name).then(function(youtubeId){

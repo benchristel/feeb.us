@@ -12,7 +12,7 @@
 
     <div class="song-info" ng-show="currentSong()" ng-cloak>
         <div class="cover-image"
-             style="background-image: url('https://i.ytimg.com/vi/{{currentSong().youtubeImageId}}/hqdefault.jpg')">
+             style="background-image: url({{currentSong().albumArtUrls[2].url}}), url('https://i.ytimg.com/vi/{{currentSong().youtubeImageId}}/hqdefault.jpg')">
         </div>
         <div class="song-title text">{{currentSong().title}}</div>
         <div class="artist-name text">{{currentSong().artist}}</div>
@@ -40,7 +40,7 @@
             <div class="video-player" id="youtube-player"></div>
           </div>
           <div class="album-art-container">
-               <div class="album-art" ng-show="albumArt()" style="background-image: url('https://i.ytimg.com/vi/{{ albumArt() }}/hqdefault.jpg')">
+               <div class="album-art" ng-show="albumArt()" style="background-image: url({{albumArt()}}), url('https://i.ytimg.com/vi/{{ albumArt() }}/hqdefault.jpg')">
                </div>
                <div class="album-art placeholder" ng-show="!albumArt()" style="background-image: url('resources/default_album.png')">
                </div>
@@ -61,7 +61,7 @@
           <div ui-sortable="{axis: 'y'}" ng-model="queue">
             <div id= "anchor{{$index}}" class="song" ng-repeat="song in queue track by $index" ng-class="{playing: song.playing, selected: song.selected}">
                 <div class="cover-image"
-                     style="background-image: url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/hqdefault.jpg')">
+                     style="background-image: url({{song.albumArtUrls[2].url}}),  url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/hqdefault.jpg')">
                 </div>
                 <div class="fa fa-play-circle-o play-button" ng-click="jumpTo(song);"></div>
                 <div class="song-title text">{{ song.title }}</div>
@@ -77,9 +77,9 @@
             <div class="tab" ng-class="{selected: (tab == 'playlists')}" ng-click = "selectTab('playlists')">Playlists</div>
             <div class="tab "  ng-class="{selected: (tab == 'library')}" ng-click = "selectTab('library')">Library</div>
             <div class="tab"  ng-class="{selected: (tab == 'catalog')}" ng-click = "selectTab('catalog')">Catalog</div>
-            <div class="search" ng-blur = "showResults= false" ng-focus="showResults=true" >
-              <input id="searchbar" type="text" class="searchbar" placeholder="Search {{tab}}" ng-model="searchQuery" ng-model-options="{ debounce: 300 }" ng-focus="showResults=true">
-              <div class="search-results" ng-show="showResults && tab == 'catalog'">
+            <div class="search"  >
+              <input id="searchbar" type="text" class="searchbar" placeholder="Search {{tab}}" ng-model="searchQuery" ng-model-options="{ debounce: 300 }" ng-blur="blur()" ng-focus="showResults=true">
+              <div class="search-results" ng-show="showResults && tab == 'catalog'" ng-mousedown="onSearchResults=true" ng-mouseup="onSearchResults=false;">
                 <div class="header" ng-show = "trackResults.length > 0"> Songs </div>
                 <div class="song-results" ng-repeat= "song in trackResults"  ng-click="getAlbumTracks(song.album)" >
                   <div class="song-title text">{{ song.name }}</div>
@@ -176,7 +176,7 @@
         </div>
 
 
-        <perfect-scrollbar class = "catalog" ng-show="tab == 'catalog'">
+        <perfect-scrollbar class = "catalog" ng-show="tab == 'catalog'" suppressScrollX = "true" wheel-propagation="false" wheel-speed="20" scrollUp="true" use-keyboard="false">
           <div class = "artist-header"  ng-hide="showAlbum">
             <div class="artist-image"
                  style="background-image: url({{artist.images[1].url}}), url('/resources/profile-icon.png')">
@@ -189,14 +189,19 @@
                  style="background-image: url({{album.images[1].url}})">
             </div>
           </div>
-          <div class = "album-header" ng-show="showAlbum">
+          <div class = "album-header" ng-show="showAlbum && selectedAlbum.images">
             <div class="album-image"
-                 style="background-image: url({{selectedAlbum.images[1].url}}), url('/resources/default-album.png')">
+                 style="background-image: url({{selectedAlbum.images[1].url}}), url('/resources/default_album.png')">
             </div>
             <span class="album-name"> {{selectedAlbum.name}} </span>
+            <div class= "button-container" >
+              <div class="add-album" ng-click = "addAlbumToQueue(trackList)"> Add To Queue </div>
+              <div class="add-to-library" ng-click = "addAlbumToLibrary(trackList)"> Add To Library </div>
+            </div>
           </div>
-          <div style="clear: both;" ng-show="showAlbum"></div>
-          <div class="header" ng-show="showAlbum">
+
+          <div style="clear: both;" ng-show="showAlbum && selectedAlbum.images"></div>
+          <div class="header" ng-show="showAlbum && selectedAlbum.images">
               <span class="track-number">&nbsp;</span>
               <span class="title">Title</span>
               <span class="artist">Artist</span>

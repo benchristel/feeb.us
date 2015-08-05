@@ -42,7 +42,13 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
 
   $scope.albumArt = function() {
     var song = songAt(currentlyPlayingIndex())
-    return song ? song.youtubeImageId : null
+    if (song && !song.albumArtUrls[1].url){
+      return song ? song.youtubeImageId : null
+    }else{
+      if (song){
+        return song.albumArtUrls[1].url
+      }
+    }
   }
 
   $scope.importLibrary = function(){

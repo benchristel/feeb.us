@@ -14,11 +14,14 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   //3. Possibly try VEVO first?
   //4. Investigate songs/bands with non-distinct names to see if just artist + song is good enough instead of adding "lyrics".
   //5. Check for length....
+  //6. Check for live
+  //7. Check for "not available"
   this.getYoutubeId = function(artist, song){
     if (loaded == true) {
       var query = hashTagQuery(artist, song)
       console.log(query)
       return searchYoutubePromise(query).then(function(resultOne){
+        console.log(resultOne)
         if (resultOne.items.length == 0 || resultOne.items[0].snippet.title.toLowerCase() != song.toLowerCase()){
           query = artist + " " + song
           console.log(query)
@@ -75,6 +78,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
       q: q,
       part: 'snippet',
       videoEmbeddable: "true",
+      restriction: "US",
       type: 'video'
     });
 
@@ -93,6 +97,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
         q: q,
         part: 'snippet',
         videoEmbeddable: "true",
+        restriction: "US",
         // fields: 'items(id),items(snippet(channelId)),items(snippet(channelTitle)),items(snippet(title)),items(snippet(thumbnails(default)))',
         type: 'video'
     });

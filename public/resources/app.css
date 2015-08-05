@@ -236,6 +236,10 @@ input:focus {
     overflow: hidden;
 }
 
+.queue .song:hover{
+    background-color: #000;
+}
+
 .queue .song:hover .close {
     display: block;
 }
@@ -395,6 +399,13 @@ input:focus {
     overflow: hidden;
 }
 
+.library-container .search-results .song-results:hover,
+.library-container .search-results .artist-results:hover,
+.library-container .search-results .album-results:hover
+{
+  background-color: #000;
+}
+
 .library-container .search-results .artist-results .artist-name,
 .library-container .search-results .album-results .artist-name,
 .library-container .search-results .album-results .album-name {
@@ -463,9 +474,9 @@ input:focus {
     position: absolute;
     overflow: hidden;
     top: 90px;
-    bottom: 0;
+    bottom: 25px;
     left: 0;
-    right: 0;
+    right: 25px;
     z-index: 0;
     padding-left: 20px;
 }
@@ -473,15 +484,18 @@ input:focus {
 .catalog .artist-header,
 .catalog .album-header {
   position: relative;
-  height: 250px;
+  height: 230px;
   padding-left: 10px;
+  width: 100%;
 }
 
 .catalog .artist-name,
 .catalog .album-name{
   font-size: 40px;
   float: left;
-  padding: 50px;
+  padding-left: 50px;
+  padding-right: 25px;
+  padding-top: 50px;
 }
 
 .catalog .artist-image,
@@ -787,7 +801,15 @@ input:focus {
   width: 100%;*/
 }
 
-.playlists .add-playlist {
+
+.catalog .button-container{
+  /*padding-left: 20px;*/
+  position: absolute;
+  left: 280px;
+  bottom: 0px;
+}
+.playlists .add-playlist,
+.catalog .add-album {
   font-size: 20px;
   font-variant: small-caps;
   text-transform: lowercase;
@@ -800,9 +822,32 @@ input:focus {
   border: 0px;
   padding-bottom: 5px;
   text-align: center;
+  margin-right: 10px;
 
 }
 
+.catalog .add-album {
+  float: left;
+}
+
+
+.catalog .add-to-library {
+  font-size: 20px;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  background-color: #458B00;
+  color: white;
+  text-shadow: 0px 1px 0 #333;
+  width: 170px;
+  height: 25px;
+  border-radius: 100px;
+  border: 0px;
+  padding-bottom: 5px;
+  text-align: center;
+  margin-right: 10px;
+  float: left;
+
+}
 /*.list-container .tracks {*/
     /*display: block;*/
     /*overflow-y: hidden;*/

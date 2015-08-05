@@ -27,13 +27,29 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     })
   }
 
+  $scope.addAlbumToLibrary = function(list){
+    _.each(list, function(song){
+      $scope.library.push(song)
+    })
+  }
 
+  $scope.addAlbumToQueue = function(list){
+    $scope.addAlbumToLibrary(list)
+    _.each(list, function(song){
+      $scope.addToQueue(song)
+    })
+  }
+
+
+
+  var savedQuery = ""
   $scope.$watch('searchQuery',function(){
     if ($scope.tab == "catalog" && $scope.searchQuery != ""){
-      $scope.search($scope.searchQuery, 4)
+      savedQuery = $scope.searchQuery
+      $scope.search()
     }
   });
-  var savedQuery = ""
+
   $scope.$watch('tab',function(){
     if ($scope.tab == "catalog" && $scope.searchQuery != "" && savedQuery != $scope.searchQuery){
       savedQuery = $scope.searchQuery
@@ -45,6 +61,15 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
   $scope.albumResults = []
   $scope.artistResults = []
   $scope.trackResults = []
+
+
+  $scope.onSearchResults = false;
+  $scope.blur = function(){
+    if (!$scope.onSearchResults) {
+     $scope.showResults=false
+    }
+  }
+
 
   $scope.search = function(){
     $scope.showResults=true;

@@ -62,7 +62,7 @@ angular.module('OathStructure').
   })
 
   $scope.savePlaylist = function(name){
-    var playlistName = 'playlist-' + name.replace(/\W/g, '')
+    var playlistName = 'playlist-' + name
     // if (localStorage[playlistName]){
     //   playlistName += '' //need to do something to ensure no accidental dublicates...
     // }

@@ -370,6 +370,8 @@ input:focus {
     font-size: 13px;
     color: #d0d0d0;
     border-top: 1px solid #555;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 
@@ -389,6 +391,7 @@ input:focus {
     color: #d0d0d0;
     border-top: 1px solid #555;
     white-space: nowrap;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 

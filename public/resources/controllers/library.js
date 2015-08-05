@@ -7,8 +7,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     $scope.tab = tab
   }
 
-
-
+  $scope.searchQuery = ""
   $scope.selectedPlaylist = {}
 
   $scope.selectPlaylist = function(playlist){
@@ -16,7 +15,6 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     playlist.selected = true;
     $scope.selectedPlaylist = playlist
   }
-
 
 
   $scope.addToQueue = function(song) {
@@ -29,50 +27,17 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     })
   }
 
-  $scope.searchYoutube = function(){
-    YoutubeService.getYoutubeId($scope.searchQuery, "").then(function(result){
-      console.log(result)
-
-      $scope.addToQueue({
-        title: $scope.searchQuery,
-        artist: "",
-        album: "",
-        trackNumber: 0,
-        youtubeId: result,
-        youtubeImageId: result
-      })
-    })
-  }
-
-  $scope.searchSpotify = function(){
-    SpotifyService.trackSearch($scope.searchQuery, 1).then(function(result){
-      console.log(result[0].artists[0].name)
-      console.log(result[0].name)
-      YoutubeService.getYoutubeId(result[0].artists[0].name , result[0].name).then(function(youtubeId){
-        console.log(youtubeId)
-        song = {
-          title:  result[0].name,
-          artist: result[0].artists[0].name,
-          album: result[0].album.name,
-          trackNumber: result[0].track_number,
-          youtubeId: youtubeId,
-          youtubeImageId: youtubeId
-        }
-        $scope.library.push(song)
-        $scope.addToQueue(song)
-      })
-    })
-  }
 
   $scope.$watch('searchQuery',function(){
-    if ($scope.tab == "catalog"){
+    if ($scope.tab == "catalog" && $scope.searchQuery != ""){
       $scope.search($scope.searchQuery, 4)
     }
   });
-
+  var savedQuery = ""
   $scope.$watch('tab',function(){
-    if ($scope.tab == "catalog" && $scope.searchQuery){
-      $scope.search($scope.searchQuery, 4)
+    if ($scope.tab == "catalog" && $scope.searchQuery != "" && savedQuery != $scope.searchQuery){
+      savedQuery = $scope.searchQuery
+      $scope.search()
     }
   });
 
@@ -113,7 +78,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
   $scope.trackList= []
   $scope.showAlbum = true;
   $scope.selectedAlbum = {}
-  
+
   $scope.getArtistAlbums = function(artist){
     console.log("called artist")
     // $location.hash("/artist/" + artist.id)

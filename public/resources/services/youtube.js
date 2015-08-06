@@ -16,6 +16,8 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   //5. Check for length....
   //6. Check for live
   //7. Check for "not available"
+  //8. Grizzly bear Shields yeilds same song multiple times and live performances
+  //9. Filter by duration
   this.getYoutubeId = function(artist, song){
     if (loaded == true) {
       var query = hashTagQuery(artist, song)

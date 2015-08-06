@@ -135,7 +135,10 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
       // }
 
     }else{
+      console.log($scope.queue.length-1)
       $scope.queue.push(song)
+      console.log($scope.queue.length-1)
+      $scope.gotoAnchor($scope.queue.length-1)
     }
   })
 

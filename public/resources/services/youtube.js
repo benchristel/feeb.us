@@ -24,7 +24,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
       console.log(query)
       return searchYoutubePromise(query).then(function(resultOne){
         console.log(resultOne)
-        if (resultOne.items.length == 0 || resultOne.items[0].snippet.title.toLowerCase() != song.toLowerCase()){
+        if (!resultOne || !resultOne.items || resultOne.items.length == 0 || resultOne.items[0].snippet.title.toLowerCase() != song.toLowerCase()){
           query = artist + " " + song
           console.log(query)
           return searchYoutubePromise(query).then(function(resultOnePointFive){
@@ -39,11 +39,11 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
             query = vevoQuery(artist, song)
             console.log(query)
             return searchYoutubePromise(query).then(function(resultTwo){
-              if (resultTwo.items.length == 0 || resultTwo.items[0].snippet.title.toLowerCase().indexOf(song.toLowerCase()) == -1 ){
+              if (!resultTwo || !resultTwo.items || resultTwo.items.length == 0 || resultTwo.items[0].snippet.title.toLowerCase().indexOf(song.toLowerCase()) == -1 ){
                 query = lyricQuery(artist, song)
                 console.log(query)
                 return prom_two = searchYoutubePromise(query).then(function(resultThree){
-                  if (resultThree.items.length == 0){
+                  if (!resultThree || !resultThree.items || resultThree.items.length == 0){
                     console.log("Couldn't find anything")
                     return null
                   }else{

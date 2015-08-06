@@ -164,7 +164,7 @@
 
                   <div class="song" ng-repeat="song in selectedPlaylist.tracks | filter:searchQuery">
                     <span class="track-number">{{ $index +1 }}</span>
-                    <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
+                    <span class="add-button fa fa-plus" ng-click="addToQueueAndLibrary(song)"></span>
                     <span class="title">{{ song.title }}</span>
                     <span class="artist">{{ song.artist }}</span>
                     <span class="album">{{ song.album }}</span>

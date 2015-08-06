@@ -33,6 +33,11 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     })
   }
 
+  $scope.addToQueueAndLibrary = function(song){
+    $scope.library.push(song)
+    $scope.addToQueue(song)
+  }
+
   $scope.addAlbumToQueue = function(list){
     $scope.addAlbumToLibrary(list)
     _.each(list, function(song){

@@ -484,9 +484,12 @@ input:focus {
 .catalog .artist-header,
 .catalog .album-header {
   position: relative;
-  height: 230px;
+  height: 220px;
   padding-left: 10px;
   width: 100%;
+  font-family: 'Lucida Grande', Helvetica, sans-serif;
+  font-weight: 100;
+
 }
 
 .catalog .artist-name,
@@ -501,8 +504,8 @@ input:focus {
 .catalog .artist-image,
 .catalog .album-image {
   float: left;
-  height: 230px;
-  width: 230px;
+  height: 220px;
+  width: 220px;
   padding-left: 200px;
   padding-top: 20px;
 
@@ -514,7 +517,7 @@ input:focus {
 }
 
 .catalog .album-image{
-  background-size: 230px 230px;
+  background-size: 220px 220px;
 }
 
 .catalog .big-cover-image {

@@ -1,4 +1,4 @@
-angular.module('OathStructure').controller('QueueController', ['$anchorScroll','$location','$scope','Deejay', '$http', 'YoutubeService', function ($anchorScroll, $location, $scope, Deejay, $http, YoutubeService) {
+angular.module('OathStructure').controller('QueueController', ['$anchorScroll','$location', '$timeout','$scope','Deejay', '$http', 'YoutubeService', function ($anchorScroll, $location, $timeout, $scope, Deejay, $http, YoutubeService) {
   $scope.queue = []
   $scope.shuffled = false;
   $scope.repeatQueue = false;
@@ -21,9 +21,12 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
   }
 
   $scope.gotoAnchor = function(x) {
-    var newHash = 'anchor' + x;
-    $location.hash('anchor' + x);
-    $anchorScroll();
+    $timeout(function() {
+      console.log("Called with index: "+ x)
+      var newHash = 'anchor' + x;
+      $location.hash('anchor' + x);
+      $anchorScroll();
+    })
   }
 
   $scope.$on('$locationChangeStart', function(ev, next, last, newState) {
@@ -137,7 +140,6 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     }else{
       console.log($scope.queue.length-1)
       $scope.queue.push(song)
-      console.log($scope.queue.length-1)
       $scope.gotoAnchor($scope.queue.length-1)
     }
   })

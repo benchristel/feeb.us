@@ -181,7 +181,8 @@
             <div class="artist-image"
                  style="background-image: url({{artist.images[1].url}}), url('/resources/profile-icon.png')">
             </div>
-            <span class="artist-name"> {{artist.name}} </span>
+            <div class="artist-name"> {{artist.name}} </div>
+            <div id="clear" style="clear:both;"></div>
           </div>
           <div style="clear: both;" ng-hide="showAlbum"></div>
           <div class="albums" ng-repeat="album in albumList" ng-hide="showAlbum">
@@ -193,7 +194,8 @@
             <div class="album-image"
                  style="background-image: url({{selectedAlbum.images[1].url}}), url('/resources/default_album.png')">
             </div>
-            <span class="album-name"> {{selectedAlbum.name}} </span>
+            <div class="album-name"> {{selectedAlbum.name}} </div>
+            <div id="clear" style="clear:both;"></div>
             <div class= "button-container" >
               <div class="add-album" ng-click = "addAlbumToQueue(trackList)"> Add To Queue </div>
               <div class="add-to-library" ng-click = "addAlbumToLibrary(trackList)"> Add To Library </div>

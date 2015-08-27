@@ -472,40 +472,43 @@ input:focus {
 
 .catalog {
     position: absolute;
-    overflow: hidden;
+    overflow-y: hidden;
     top: 90px;
     bottom: 25px;
-    left: 0;
-    right: 25px;
+    left: 20px;
+    right: 20px;
     z-index: 0;
-    padding-left: 20px;
+    border-top: 1px solid #444;
 }
 
 .catalog .artist-header,
 .catalog .album-header {
   position: relative;
-  height: 220px;
+  height: auto;
   padding-left: 10px;
+  padding-top: 10px;
   width: 100%;
   font-family: 'Lucida Grande', Helvetica, sans-serif;
-  font-weight: 100;
+  clear: both;
 
 }
 
 .catalog .artist-name,
 .catalog .album-name{
   font-size: 40px;
+  word-wrap: break-word;
   float: left;
-  padding-left: 50px;
-  padding-right: 25px;
-  padding-top: 50px;
+  padding-left: 20px;
+  padding-bottom: 40px;
+  width: 100%;
+  color: #444;
 }
 
 .catalog .artist-image,
 .catalog .album-image {
   float: left;
-  height: 220px;
-  width: 220px;
+  height: 223px;
+  width: 223px;
   padding-left: 200px;
   padding-top: 20px;
 
@@ -517,7 +520,7 @@ input:focus {
 }
 
 .catalog .album-image{
-  background-size: 220px 220px;
+  background-size: 223px 223px;
 }
 
 .catalog .big-cover-image {
@@ -810,6 +813,7 @@ input:focus {
   position: absolute;
   left: 280px;
   bottom: 0px;
+  /*padding-top: 20px;*/
 }
 .playlists .add-playlist,
 .catalog .add-album {

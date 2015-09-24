@@ -31,11 +31,27 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     _.each(list, function(song){
       $scope.library.push(song)
     })
+    cleanUpLibrary()
   }
 
   $scope.addToQueueAndLibrary = function(song){
     $scope.library.push(song)
     $scope.addToQueue(song)
+  }
+
+  function cleanUpLibrary() {
+    $scope.library = _(_($scope.library).sortBy(artistAlbumAndTrack)).uniq(true, artistAlbumAndTrack)
+  }
+
+  function artistAlbumAndTrack(song) {
+    return song.artist + "\n" + song.album + "\n" + zeropad(song.trackNumber)
+  }
+
+  function zeropad(n) {
+    var s = ""+n
+    if (s.length === 2) return "0" + s
+    if (s.length === 1) return "00" + s
+    return s
   }
 
   $scope.addAlbumToQueue = function(list){
@@ -129,8 +145,8 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     $scope.selectedAlbum = album
     $scope.showAlbum = true;
     SpotifyService.getAlbumTracks(album.id).then(function(result){
+      $scope.trackList = []
       _.each(result, function(track){
-        $scope.trackList = []
         YoutubeService.getYoutubeId(track.artists[0].name , track.name).then(function(youtubeId){
           song = {
             title:  track.name,
@@ -142,6 +158,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
             albumArtUrls: album.images
           }
           $scope.trackList.push(song)
+          $scope.trackList = _($scope.trackList).sortBy(function(track) { return track.trackNumber })
         })
       })
     })

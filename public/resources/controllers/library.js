@@ -1,4 +1,5 @@
-angular.module('OathStructure').controller('LibraryController', ['$scope', '$location', 'YoutubeService', 'SpotifyService', function($scope, $location, YoutubeService, SpotifyService) {
+angular.module('OathStructure').controller('LibraryController', ['$scope', '$location', '$anchorScroll', '$timeout', 'YoutubeService', 'SpotifyService',
+                                                         function($scope, $location, $anchorScroll, $timeout, YoutubeService, SpotifyService) {
 
   $scope.tab = 'library'
   // $scope.playlists = [{'name': 'THe best', 'tracks': [{'title':'subbydobydo' }, {'title':'malcom'},{'title': 'taken by surprise in the early eve' }]}, {'name': 'Worst', 'tracks': [{'title':'death is inexorable'}, {'title':'Smart money is on the other guy'}]} ]
@@ -161,6 +162,11 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
           $scope.trackList = _($scope.trackList).sortBy(function(track) { return track.trackNumber })
         })
       })
+    })
+
+    $timeout(function() {
+      $location.hash('catalog-top');
+      $anchorScroll();
     })
   }
 

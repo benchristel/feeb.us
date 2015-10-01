@@ -839,7 +839,7 @@ input:focus {
   cursor: pointer;
 }
 
-.playlists .add-playlist,
+.playlists .add-playlist:hover,
 .catalog .add-album:hover {
   background-color: #dd7200;
 }

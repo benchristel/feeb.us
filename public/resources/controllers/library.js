@@ -22,7 +22,8 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     message.send('add-to-queue', angular.copy(song))
   }
 
-  $scope.addAllToQueue = function(list){
+  $scope.addAllToQueue = function(list, name){
+    $scope.setPlaylistName(name)
     _.each(list, function(song){
       $scope.addToQueue(song)
     })
@@ -38,6 +39,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
   $scope.addToQueueAndLibrary = function(song){
     $scope.library.push(song)
     $scope.addToQueue(song)
+    cleanUpLibrary()
   }
 
   function cleanUpLibrary() {

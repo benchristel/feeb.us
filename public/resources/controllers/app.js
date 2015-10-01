@@ -6,6 +6,8 @@ angular.module('OathStructure').
     return $scope.searchQuery.split('')
   }
 
+  $scope.playlistName = ""
+
   $scope.keypress = function(event){
     if (( document.activeElement !== null && document.activeElement.id !== "searchbar"  && document.activeElement.id !== "model") || document.activeElement === null){
       if (event.which == 32){
@@ -55,6 +57,10 @@ angular.module('OathStructure').
     $scope.savingPlaylist = true;
     $scope.playlistToBeSaved = playlist
   })
+
+  $scope.setPlaylistName = function(name){
+    $scope.playlistName = name
+  }
 
   $scope.savePlaylist = function(name){
     var playlistName = 'playlist-' + name

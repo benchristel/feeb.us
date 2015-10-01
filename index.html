@@ -149,7 +149,7 @@
             <div class = "playlist-header">
               <div class="playlist-title"> {{selectedPlaylist.name}} </div>
               <div class= "button-container">
-                <div class="add-playlist" ng-click = "addAllToQueue(selectedPlaylist.tracks)"> Add To Queue </div>
+                <div class="add-playlist" ng-click = "addAllToQueue(selectedPlaylist.tracks, selectedPlaylist.name)"> Add To Queue </div>
               </div>
               <div class="header">
                   <span class="track-number">&nbsp;</span>
@@ -164,7 +164,7 @@
 
                   <div class="song" ng-repeat="song in selectedPlaylist.tracks | filter:searchQuery">
                     <span class="track-number">{{ $index +1 }}</span>
-                    <span class="add-button fa fa-plus" ng-click="addToQueueAndLibrary(song)"></span>
+                    <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
                     <span class="title">{{ song.title }}</span>
                     <span class="artist">{{ song.artist }}</span>
                     <span class="album">{{ song.album }}</span>
@@ -212,7 +212,7 @@
           </div>
           <div class="song" ng-repeat="song in trackList | orderBy:'trackNumber'" ng-show="showAlbum">
             <span class="track-number">{{ song.trackNumber }}</span>
-            <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
+            <span class="add-button fa fa-plus" ng-click="addToQueueAndLibrary(song)"></span>
             <span class="title">{{ song.title }}</span>
             <span class="artist">{{ song.artist }}</span>
             <span class="album">{{ song.album }}</span>
@@ -221,19 +221,9 @@
     </div>
 </div>
 
-<div class="import-modal" ng-show="importing" ng-cloak>
+<div class="save-playlist-modal" ng-show="savingPlaylist" ng-cloak>
   <div>
-    <textarea id= "model" ng-model="importText"></textarea>
-    <div class="button-container">
-      <div class="button" ng-click="importFrom(importText)">Import</div>
-      <div class="button" ng-click="cancelImport()">Cancel</div>
-    </div>
-  </div>
-</div>
-
-<div class="import-modal" ng-show="savingPlaylist" ng-cloak>
-  <div>
-    <input type ="text"  id= "model" ng-model="playlistName"></input>
+    <input type ="text" id="model" ng-model="playlistName"></input>
     <div class="button-container">
       <div class="button" ng-click="savePlaylist(playlistName)">Save</div>
       <div class="button" ng-click="cancelSavePlaylist()">Cancel</div>

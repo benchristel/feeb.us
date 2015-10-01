@@ -237,7 +237,11 @@ input:focus {
 }
 
 .queue .song:hover{
-    background-color: #000;
+    background-color: #111;
+}
+
+.queue .song.playing:hover {
+    background-color: #f67f00;
 }
 
 .queue .song:hover .close {
@@ -403,7 +407,7 @@ input:focus {
 .library-container .search-results .artist-results:hover,
 .library-container .search-results .album-results:hover
 {
-  background-color: #000;
+  background-color: #111;
 }
 
 .library-container .search-results .artist-results .artist-name,
@@ -441,21 +445,14 @@ input:focus {
     border: 2px solid #444;
 }
 
-
-.library-container .tabs {
-    /*padding-top: 10px;*/
-}
-
-.library-container .tab {
-    display: block;
-    float: left;
-}
-
 .library-container .clear {
     clear: both;
 }
 
 .library-container .tab {
+    cursor: pointer;
+    display: block;
+    float: left;
     padding: 5px;
     color: #555;
     width: 100px;
@@ -497,22 +494,21 @@ input:focus {
 .catalog .album-name{
   font-size: 40px;
   word-wrap: break-word;
-  float: left;
+  position: absolute;
+  top: 20px;
+  left: 243px;
+  right: 20px;
   padding-left: 20px;
   padding-bottom: 40px;
-  width: 100%;
   color: #444;
 }
 
 .catalog .artist-image,
 .catalog .album-image {
-  float: left;
   height: 223px;
   width: 223px;
-  padding-left: 200px;
-  padding-top: 20px;
-
 }
+
 .catalog .artist-image{
   background-size: cover;
   border-radius: 120px;
@@ -817,6 +813,7 @@ input:focus {
 }
 .playlists .add-playlist,
 .catalog .add-album {
+  cursor: pointer;
   font-size: 20px;
   font-variant: small-caps;
   text-transform: lowercase;
@@ -839,6 +836,7 @@ input:focus {
 
 
 .catalog .add-to-library {
+  cursor: pointer;
   font-size: 20px;
   font-variant: small-caps;
   text-transform: lowercase;

@@ -19,27 +19,22 @@ angular.module('OathStructure').
     }
   }
 
-  message.on('import-library', function(song) {
-    $scope.startImport()
-  })
 
-  $scope.startImport = function() {
-    $scope.importing = true
+  function loadLibrary(){
+    try {
+      $scope.library = JSON.parse(localStorage['os-library'])
+    } catch (e) {
+      $scope.library = []
+    }
   }
 
-  $scope.importFrom = function(text) {
-    $scope.library = parseLibrary(text || '')
-    localStorage['oath-structure-library'] = text
-    $scope.importing = false
+  $scope.saveLibrary = function(){
+    localStorage['os-library'] = JSON.stringify($scope.library)
   }
 
-  $scope.cancelImport = function() {
-    $scope.importing = false
-  }
+  window.addEventListener("beforeunload", $scope.saveLibrary);
 
-  $http.get('resources/library.txt').success(function(data) {
-    $scope.importFrom(data)
-  })
+  loadLibrary()
 
   $scope.savingPlaylist = false
   $scope.playlistToBeSaved = []

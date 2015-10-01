@@ -321,7 +321,7 @@ input:focus {
 }
 
 .action-button.active {
-    color: #458B00;
+    color: #00b43d;
 }
 
 .library-container {
@@ -834,13 +834,32 @@ input:focus {
   float: left;
 }
 
+.catalog .add-album,
+.catalog .add-to-library {
+  cursor: pointer;
+}
+
+.playlists .add-playlist,
+.catalog .add-album:hover {
+  background-color: #dd7200;
+}
+
+.catalog .add-to-library:hover {
+  background-color: #00a237;
+}
+
+.catalog .add-to-library:active,
+.catalog .add-album:active {
+  box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
 
 .catalog .add-to-library {
   cursor: pointer;
   font-size: 20px;
   font-variant: small-caps;
   text-transform: lowercase;
-  background-color: #458B00;
+  background-color: #00b43d;
   color: white;
   text-shadow: 0px 1px 0 #333;
   width: 170px;

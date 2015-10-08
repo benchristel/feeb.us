@@ -15,6 +15,10 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     $scope.selectedPlaylist.selected = false;
     playlist.selected = true;
     $scope.selectedPlaylist = playlist
+    $timeout(function() {
+      $location.hash('playlist-top');
+      $anchorScroll();
+    })
   }
 
 

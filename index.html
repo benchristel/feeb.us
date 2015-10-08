@@ -160,7 +160,7 @@
             <div class"track-container">
               <perfect-scrollbar class = "tracks" suppress-scroll-x="true" wheel-propagation="false" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
                 <div>
-
+                  <a name="playlist-top"></a>
                   <div class="song" ng-repeat="song in selectedPlaylist.tracks | filter:searchQuery">
                     <span class="track-number">{{ $index +1 }}</span>
                     <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>

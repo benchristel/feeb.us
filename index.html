@@ -12,7 +12,7 @@
 
     <div class="song-info" ng-show="currentSong()" ng-cloak>
         <div class="cover-image"
-             style="background-image: url({{currentSong().albumArtUrls[2].url}}), url('https://i.ytimg.com/vi/{{currentSong().youtubeImageId}}/hqdefault.jpg')">
+             style="background-image: url({{currentSong().albumArtUrls[1].url}}), url('https://i.ytimg.com/vi/{{currentSong().youtubeImageId}}/hqdefault.jpg')">
         </div>
         <div class="song-title text">{{currentSong().title}}</div>
         <div class="artist-name text">{{currentSong().artist}}</div>
@@ -61,7 +61,7 @@
           <div ui-sortable="{axis: 'y'}" ng-model="queue">
             <div id= "anchor{{$index}}" class="song" ng-repeat="song in queue track by $index" ng-class="{playing: song.playing, selected: song.selected}">
                 <div class="cover-image"
-                     style="background-image: url({{song.albumArtUrls[2].url}}),  url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/hqdefault.jpg')">
+                     style="background-image: url({{song.albumArtUrls[1].url}}),  url('https://i.ytimg.com/vi/{{ song.youtubeImageId }}/hqdefault.jpg')">
                 </div>
                 <div class="fa fa-play-circle-o play-button" ng-click="jumpTo(song);"></div>
                 <div class="song-title text">{{ song.title }}</div>

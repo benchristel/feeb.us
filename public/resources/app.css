@@ -558,6 +558,7 @@ input:focus {
     font-size: 14px;
     padding-top: 20px;
     padding-bottom: 2px;
+    height: 40px;
     border-bottom: 1px solid #888;
 }
 
@@ -625,15 +626,37 @@ input:focus {
 }
 
 .library .title {
-    width: 35%;
+    width: 34%;
 }
 
 .library .album {
-    width: 40%;
+    width: 38%;
 }
 
 .library .artist {
     width: 20%;
+}
+
+.library .delete {
+    display: none;
+    cursor: pointer;
+    width: 3%;
+}
+
+.library .empty {
+    width: 3%;
+}
+
+.library .song:hover .delete {
+    display: block;
+}
+
+.library .song:hover .empty {
+    display: none;
+}
+
+.library .song .delete:hover {
+    color: #f67f00;
 }
 
 .library  .import {
@@ -698,8 +721,15 @@ input:focus {
 
 .playlists .delete{
   visibility: hidden;
+  cursor: pointer;
   display: inline;
 }
+
+
+.playlists .delete:hover {
+    color: #f67f00;
+}
+
 
 .playlists .track-container{
   position: absolute;
@@ -750,6 +780,7 @@ input:focus {
 .playlists .list-name span {
     height: 28px;
     line-height: 28px;
+    cursor: pointer;
 }
 
 .playlists .list-name:hover .delete{

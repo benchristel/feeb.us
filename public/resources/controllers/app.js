@@ -38,6 +38,10 @@ angular.module('OathStructure').
 
   loadLibrary()
 
+  $scope.deleteSongFromLibrary = function(song){
+    $scope.library = _.without($scope.library, song)
+  }
+
   $scope.savingPlaylist = false
   $scope.playlistToBeSaved = []
 

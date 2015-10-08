@@ -113,6 +113,7 @@
                 <span class="title">Title</span>
                 <span class="artist">Artist</span>
                 <span class="album">Album</span>
+                <span class="empty"> </span>
             </div>
             <perfect-scrollbar class="body" wheel-propagation="false" suppressScrollX = "true" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
               <div>
@@ -122,6 +123,9 @@
                     <span class="title">{{ song.title }}</span>
                     <span class="artist">{{ song.artist }}</span>
                     <span class="album">{{ song.album }}</span>
+                    <span class="empty"></span>
+                    <span class="delete fa-close fa" ng-click="deleteSongFromLibrary(song)"></span>
+
                 </div>
               </div>
 

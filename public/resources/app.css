@@ -730,14 +730,11 @@ input:focus {
 
 }
 
-/*.playlists .names-list-container {
-    position: absolute;
-    overflow: hidden;
-
-}*/
-
 .playlists .names-list {
-  /*position: absolute;*/
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  width: 100%;
   overflow: hidden;
 }
 

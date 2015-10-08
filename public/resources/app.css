@@ -467,6 +467,10 @@ input:focus {
     color: #000;
 }
 
+.library-container .tab:hover {
+  background-color: rgba(4,4, 4, 0.05);
+}
+
 .catalog {
     position: absolute;
     overflow-y: hidden;
@@ -692,6 +696,11 @@ input:focus {
     /*overflow: hidden;*/
 }
 
+.playlists .delete{
+  visibility: hidden;
+  display: inline;
+}
+
 .playlists .track-container{
   position: absolute;
   /*display: block;*/
@@ -710,19 +719,35 @@ input:focus {
     overflow: hidden;
 }
 
-.playlists .names-list {
+.playlists .names-list-container{
     display: block;
     float: left;
+    position: relative;
     width: 20%;
     height: 100%;
     border-right: 1px solid #666;
+    overflow: hidden;
+
 }
 
+/*.playlists .names-list-container {
+    position: absolute;
+    overflow: hidden;
+
+}*/
+
+.playlists .names-list {
+  /*position: absolute;*/
+  overflow: hidden;
+}
 
 
 .playlists .list-name {
     clear: both;
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .playlists .list-name span {
@@ -730,11 +755,15 @@ input:focus {
     line-height: 28px;
 }
 
+.playlists .list-name:hover .delete{
+  visibility: visible;
+}
+
 .playlists .name {
     width: 100%;
 }
 
-.playlists .selected.name {
+.playlists .selected.list-name {
     background-color: rgba(4,4, 4, 0.1);
 
 }
@@ -763,6 +792,9 @@ input:focus {
 .playlists .playlist-title {
     font-size: 34px;
     padding-bottom: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     /*padding-left: 20px;*/
     /*display: block;
     float: left;*/
@@ -876,8 +908,8 @@ input:focus {
     clear: both;
     font-size: 14px;
 }
-
-.playlists span,
+.playlists .header span,
+.playlists .tracks span,
 .catalog span {
     display: block;
     float: left;
@@ -885,6 +917,11 @@ input:focus {
     padding-right: 5px;
     white-space: nowrap;
     overflow: hidden;
+}
+
+.playlists span{
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .playlists .song span,

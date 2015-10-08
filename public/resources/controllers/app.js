@@ -81,6 +81,11 @@ angular.module('OathStructure').
     $scope.playlistToBeSaved = []
   }
 
+  $scope.deletePlaylist = function(playlist){
+    localStorage.removeItem(playlist.filename)
+    $scope.playlists = _.without($scope.playlists, playlist)
+  }
+
   function setPlayingToFalse(playlist){
     _.each(playlist, function(song){
       song.playing = false

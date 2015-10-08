@@ -136,15 +136,14 @@
         </div>
 
         <div class= "playlists" ng-show = "tab == 'playlists'">
-          <perfect-scrollbar class="names-list" wheel-propagation="false" wheel-speed="20" suppress-scroll-x = "true" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
-            <div>
-              <div class="list-name" ng-repeat="list in playlists | filter:searchQuery">
-                  <span class="name"  ng-click = "selectPlaylist(list)" ng-class= "{selected: list.selected}">{{ list.name}}</span>
-              </div>
-
-            </div>
-
-          </perfect-scrollbar>
+          <div class="names-list-container">
+            <perfect-scrollbar class="names-list" wheel-propagation="false" wheel-speed="20" suppress-scroll-x = "true" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
+                <div class="list-name" ng-repeat="list in playlists | filter:searchQuery"  ng-click = "selectPlaylist(list)" ng-class= "{selected: list.selected}">
+                    <span class="delete fa-close fa" ng-click="deletePlaylist(list)"></span>
+                    <span class="name">{{ list.name}}</span>
+                </div>
+            </perfect-scrollbar>
+          </div>
           <div class= 'list-container'>
             <div class = "playlist-header">
               <div class="playlist-title"> {{selectedPlaylist.name}} </div>

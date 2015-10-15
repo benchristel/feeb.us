@@ -150,6 +150,7 @@
           <div class= 'list-container'>
             <div class = "playlist-header">
               <div class="playlist-title"> {{selectedPlaylist.name}} </div>
+              <!-- <div class="play-now fa-play-circle-o fa" ng-click = "playListNow(addAllToQueue(selectedPlaylist.tracks)"></div> -->
               <div class= "button-container">
                 <div class="add-playlist" ng-click = "addAllToQueue(selectedPlaylist.tracks, selectedPlaylist.name)"> Add To Queue </div>
               </div>
@@ -191,6 +192,7 @@
           <div class="albums" ng-repeat="album in albumList" ng-hide="showAlbum">
             <div class = "big-cover-image" ng-click = "getAlbumTracks(album)"
                  style="background-image: url({{album.images[1].url}})">
+                 <div class="hover-name"> {{album.name}}</div>
             </div>
           </div>
           <div class = "album-header" ng-show="showAlbum && selectedAlbum.images">
@@ -200,9 +202,9 @@
             <div class="album-name"> {{selectedAlbum.name}} </div>
             <div id="clear" style="clear:both;"></div>
             <div class= "button-container" >
+              <div class="play-now fa-play-circle-o fa" ng-click = "playNow(trackList)"></div>
               <div class="add-album" ng-click = "addAlbumToQueue(trackList)"> Add To Queue </div>
               <div class="add-to-library" ng-click = "addAlbumToLibrary(trackList)"> Add To Library </div>
-              <div class="play-now fa-play-circle-o fa" ng-click = "playNow(trackList)"></div>
             </div>
           </div>
 

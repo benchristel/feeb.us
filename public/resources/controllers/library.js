@@ -21,9 +21,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     })
   }
 
-  $scope.playNow = function(list) {
-    message.send('play-now', _.map(list, function(song) { return angular.copy(song) }))
-  }
+
 
   $scope.addToQueue = function(song) {
     message.send('add-to-queue', angular.copy(song))
@@ -36,11 +34,21 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     })
   }
 
+
   $scope.addAlbumToLibrary = function(list){
     _.each(list, function(song){
       $scope.library.push(song)
     })
     cleanUpLibrary()
+  }
+
+  $scope.playNow = function(list) {
+    message.send('play-now', _.map(list, function(song) { return angular.copy(song) }))
+    $scope.addAlbumToLibrary(list)
+  }
+
+  $scope.playListNow = function(list){
+    message.send('play-now', _.map(list, function(song) { return angular.copy(song) }))
   }
 
   $scope.addToQueueAndLibrary = function(song){

@@ -880,7 +880,8 @@ input:focus {
 }
 
 .catalog .add-album,
-.catalog .add-to-library {
+.catalog .add-to-library,
+.catalog .play-now {
   cursor: pointer;
 }
 
@@ -917,6 +918,11 @@ input:focus {
   float: left;
 
 }
+
+.catalog .play-now {
+  font-size: 27px;
+}
+
 /*.list-container .tracks {*/
     /*display: block;*/
     /*overflow-y: hidden;*/

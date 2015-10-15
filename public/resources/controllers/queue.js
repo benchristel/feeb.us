@@ -126,6 +126,19 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
     }
   })
 
+  message.on('play-now', function(list){
+    var currentlyPlaying = currentlyPlayingIndex()
+    var index = currentlyPlaying == null ? 0 : currentlyPlaying+1
+
+    $scope.queue.splice.apply($scope.queue, [index, 0].concat(list));
+
+    if ($scope.shuffled){ 
+      $scope.normalQueue.splice.apply($scope.normalQueue, [$scope.normalQueue.length, 0].concat(list)); 
+    }
+
+    playNextSong()
+  })
+
   message.on('add-to-queue', function(song) {
     if ($scope.shuffled){
       $scope.normalQueue.push(song)

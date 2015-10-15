@@ -21,6 +21,9 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     })
   }
 
+  $scope.playNow = function(list) {
+    message.send('play-now', _.map(list, function(song) { return angular.copy(song) }))
+  }
 
   $scope.addToQueue = function(song) {
     message.send('add-to-queue', angular.copy(song))

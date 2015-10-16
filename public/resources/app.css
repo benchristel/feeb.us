@@ -629,7 +629,7 @@ input:focus {
 .library .song:hover span {
     background-color: #ccc;
 }
-
+.library .song:hover .play-now,
 .library .song:hover .add-button {
     display: block;
 }
@@ -637,13 +637,14 @@ input:focus {
 .library .song:hover .track-number {
     display: none;
 }
-
+.library .song .play-now,
 .library .song .add-button {
     display: none;
-    width: 5%;
+    width: 2.5%;
     cursor: pointer;
 }
 
+.library .song .play-now:hover,
 .library .song .add-button:hover {
     color: #f67f00;
 }
@@ -1009,6 +1010,7 @@ input:focus {
   padding-right: 5px;
 }
 
+
 .playlists .song span,
 .catalog .song span{
     height: 28px;
@@ -1021,6 +1023,8 @@ input:focus {
     background-color: #ccc;
 }
 
+.playlists .song:hover .play-button,
+.catalog .song:hover .play-button,
 .playlists .song:hover .add-button,
 .catalog .song:hover .add-button{
     display: block;
@@ -1030,14 +1034,18 @@ input:focus {
 .catalog .song:hover .track-number {
     display: none;
 }
-
+.playlists .song .play-button,
+.catalog .song .play-button,
 .playlists .song .add-button,
 .catalog .song .add-button {
+    font-size: 14px;
     display: none;
-    width: 5%;
+    width: 2.5%;
     cursor: pointer;
 }
 
+.catalog .song .play-button:hover,
+.playlists .song .play-button:hover,
 .playlists .song .add-button:hover,
 .catalog .song .add-button:hover {
     color: #f67f00;

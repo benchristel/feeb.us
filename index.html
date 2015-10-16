@@ -119,6 +119,7 @@
                 <div class="song" ng-repeat="song in library | filter:searchQuery | limitTo:100 track by $index">
                     <span class="track-number">{{ song.trackNumber }}</span>
                     <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
+                    <span class="play-now fa fa-play" ng-click="playNow([song])"></span>
                     <span class="title">{{ song.title }}</span>
                     <span class="artist">{{ song.artist }}</span>
                     <span class="album">{{ song.album }}</span>
@@ -168,6 +169,7 @@
                   <div class="song" ng-repeat="song in selectedPlaylist.tracks | filter:searchQuery">
                     <span class="track-number">{{ $index +1 }}</span>
                     <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
+                    <span class="play-button fa fa-play" ng-click="playNow([song])"></span>
                     <span class="title">{{ song.title }}</span>
                     <span class="artist">{{ song.artist }}</span>
                     <span class="album">{{ song.album }}</span>
@@ -218,6 +220,7 @@
           <div class="song" ng-repeat="song in trackList | orderBy:'trackNumber'" ng-show="showAlbum" ng-class= "{selected: song.selected}">
             <span class="track-number">{{ song.trackNumber }}</span>
             <span class="add-button fa fa-plus" ng-click="addToQueueAndLibrary(song)"></span>
+            <span class="play-button fa fa-play" ng-click="playNow([song])"></span>
             <span class="title">{{ song.title }}</span>
             <span class="artist">{{ song.artist }}</span>
             <span class="album">{{ song.album }}</span>

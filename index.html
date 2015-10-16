@@ -150,7 +150,7 @@
           <div class= 'list-container'>
             <div class = "playlist-header">
               <div class="playlist-title"> {{selectedPlaylist.name}} </div>
-              <!-- <div class="play-now fa-play-circle-o fa" ng-click = "playListNow(addAllToQueue(selectedPlaylist.tracks)"></div> -->
+              <div class="play-now fa-play-circle-o fa" ng-click = "playListNow(selectedPlaylist.tracks)"></div>
               <div class= "button-container">
                 <div class="add-playlist" ng-click = "addAllToQueue(selectedPlaylist.tracks, selectedPlaylist.name)"> Add To Queue </div>
               </div>

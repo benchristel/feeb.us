@@ -770,7 +770,7 @@ input:focus {
 .playlists .tracks {
     position: absolute;
     left: 20px;
-    top: 125px;
+    top: 128px;
     bottom: 0px;
     right: 0;
     overflow: hidden;
@@ -901,6 +901,11 @@ input:focus {
 
 }
 
+.playlists .add-playlist{
+  display: inline-block;
+}
+
+
 .catalog .add-album {
   float: left;
 }
@@ -955,6 +960,10 @@ input:focus {
   margin-right: 12px;
 }
 
+.playlists .play-now {
+  display: inline-block;
+}
+
 /*.list-container .tracks {*/
     /*display: block;*/
     /*overflow-y: hidden;*/
@@ -977,6 +986,11 @@ input:focus {
 
 .catalog .selected.song span {
     background-color: rgba(4,4, 4, 0.1)
+}
+
+.playlists .header {
+  position: absolute;
+  width: 100%
 }
 
 .playlists .header span,

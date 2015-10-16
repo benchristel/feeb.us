@@ -80,7 +80,7 @@
               <input id="searchbar" type="text" class="searchbar" placeholder="Search {{tab}}" ng-model="searchQuery" ng-model-options="{ debounce: 300 }" ng-blur="blur()" ng-focus="showResults=true">
               <div class="search-results" ng-show="showResults && tab == 'catalog'" ng-mousedown="onSearchResults=true" ng-mouseup="onSearchResults=false;">
                 <div class="header" ng-show = "trackResults.length > 0"> Songs </div>
-                <div class="song-results" ng-repeat= "song in trackResults"  ng-click="getAlbumTracks(song.album)" >
+                <div class="song-results" ng-repeat= "song in trackResults"  ng-click="getAlbumTracks(song.album, song)" >
                   <div class="song-title text">{{ song.name }}</div>
                   <div class="artist-name text">{{ song.artists[0].name }}</div>
                 </div>
@@ -215,7 +215,7 @@
               <span class="artist">Artist</span>
               <span class="album">Album</span>
           </div>
-          <div class="song" ng-repeat="song in trackList | orderBy:'trackNumber'" ng-show="showAlbum">
+          <div class="song" ng-repeat="song in trackList | orderBy:'trackNumber'" ng-show="showAlbum" ng-class= "{selected: song.selected}">
             <span class="track-number">{{ song.trackNumber }}</span>
             <span class="add-button fa fa-plus" ng-click="addToQueueAndLibrary(song)"></span>
             <span class="title">{{ song.title }}</span>

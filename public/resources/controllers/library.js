@@ -142,6 +142,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
   $scope.trackList= []
   $scope.showAlbum = true;
   $scope.selectedAlbum = {}
+  $scope.selectedTrack = null
 
   $scope.getArtistAlbums = function(artist){
     console.log("called artist")
@@ -155,12 +156,15 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     })
   }
 
-  $scope.getAlbumTracks = function(album){
+  $scope.getAlbumTracks = function(album, selectedTrack) {
     console.log("called album")
     console.log(album)
+
     // $location.hash("/album/" + album.id)
     $scope.showResults = false
     $scope.selectedAlbum = album
+    $scope.selectedTrack = typeof selectedTrack !== 'undefined' ?  selectedTrack.name : null;
+    console.log($scope.selectedTrack)
     $scope.showAlbum = true;
     SpotifyService.getAlbumTracks(album.id).then(function(result){
       $scope.trackList = []
@@ -173,7 +177,8 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
             trackNumber: track.track_number,
             youtubeId: youtubeId,
             youtubeImageId: youtubeId,
-            albumArtUrls: album.images
+            albumArtUrls: album.images,
+            selected: $scope.selectedTrack == track.name
           }
           $scope.trackList.push(song)
           $scope.trackList = _($scope.trackList).sortBy(function(track) { return track.trackNumber })

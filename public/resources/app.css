@@ -974,6 +974,11 @@ input:focus {
     clear: both;
     font-size: 14px;
 }
+
+.catalog .selected.song span {
+    background-color: rgba(4,4, 4, 0.1)
+}
+
 .playlists .header span,
 .playlists .tracks span,
 .catalog span {

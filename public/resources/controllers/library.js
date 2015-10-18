@@ -58,7 +58,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
   }
 
   function cleanUpLibrary() {
-    $scope.library = _(_($scope.library).sortBy(artistAlbumAndTrack)).uniq(true, artistAlbumAndTrack)
+    $scope.changeLibrary(_(_($scope.library).sortBy(artistAlbumAndTrack)).uniq(true, artistAlbumAndTrack))
   }
 
   function artistAlbumAndTrack(song) {

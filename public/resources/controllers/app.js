@@ -30,6 +30,10 @@ angular.module('OathStructure').
     }
   }
 
+  $scope.changeLibrary = function(newLibrary){
+    $scope.library = newLibrary
+  }
+
   $scope.saveLibrary = function(){
     localStorage['os-library'] = JSON.stringify($scope.library)
   }
@@ -39,7 +43,7 @@ angular.module('OathStructure').
   loadLibrary()
 
   $scope.deleteSongFromLibrary = function(song){
-    $scope.library = _.without($scope.library, song)
+    $scope.changeLibrary( _.without($scope.library, song))
   }
 
   $scope.savingPlaylist = false

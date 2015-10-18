@@ -654,35 +654,36 @@ input:focus {
 }
 
 .library .title {
-    width: 34%;
+    width: 33%;
 }
 
 .library .album {
-    width: 38%;
+    width: 37%;
 }
 
 .library .artist {
     width: 20%;
 }
-
+.library .edit,
 .library .delete {
     display: none;
     cursor: pointer;
-    width: 3%;
+    width: 2.5%;
 }
 
 .library .empty {
-    width: 3%;
+    width: 5%;
 }
-
+.library .song:hover .edit,
 .library .song:hover .delete {
     display: block;
+
 }
 
 .library .song:hover .empty {
     display: none;
 }
-
+.library .song .edit:hover,
 .library .song .delete:hover {
     color: #f67f00;
 }

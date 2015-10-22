@@ -125,7 +125,7 @@ angular.module('OathStructure').
     angular.extend($scope.songBeingEdited, $scope.pendingChanges)
     if (trackNumber !== $scope.pendingChanges.trackNumber){
       console.log("Track number: " + trackNumber)
-      console.log("New TN: " + $scope.pendingChanges)
+      console.log("New TN: " + $scope.pendingChanges.trackNumber)
       $scope.cleanUpLibrary()
     }
     $scope.editingSong = false
@@ -161,7 +161,8 @@ angular.module('OathStructure').
   }
 
   function artistAlbumAndTrack(song) {
-    return song.artist + "\n" + song.album + "\n" +  zeropad(song.discNumber) + "\n" + zeropad(song.trackNumber)
+    console.log("AAT: " + song.artist + "\n" + song.album + "\n" +  zeropad(song.discNumber) + "\n" + zeropad(song.trackNumber)+ "\n" + song.title)
+    return song.artist + "\n" + song.album + "\n" +  zeropad(song.discNumber) + "\n" + zeropad(song.trackNumber) + "\n" + song.title
   }
 
   function zeropad(n) {

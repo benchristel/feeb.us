@@ -242,6 +242,7 @@
 
 <div class="save-playlist-modal" ng-show="editingSong" ng-cloak>
   <div>
+    <input type ="number" id="discNumber" ng-model="pendingChanges.discNumber" ng-show="pendingChanges.discNumber !== undefined"></input>
     <input type ="number" id="trackNumber" ng-model="pendingChanges.trackNumber"></input>
     <input type ="text" id="title"ng-model="pendingChanges.title"></input>
     <input type ="text" id="artist" ng-model="pendingChanges.artist"></input>

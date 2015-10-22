@@ -115,7 +115,8 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
         width: '320',
         playerVars: { rel: 0, controls: 0 },
         events: {
-          'onStateChange': playerStateChanged
+          'onStateChange': playerStateChanged,
+          'onError': playerError
         }
       }
     )
@@ -147,5 +148,9 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
     console.debug('updated state: ' + state)
 
     $rootScope.$apply(notify)
+  }
+
+  function playerError() {
+    deejay.skipThisSong()
   }
 }])

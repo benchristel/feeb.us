@@ -8,8 +8,10 @@ angular.module('OathStructure').
 
   $scope.playlistName = ""
 
+  whitelist = ["searchbar",  "model", "title", "artist", "album", "youtubeId", "albumArt", "trackNumber"]
+
   $scope.keypress = function(event){
-    if (( document.activeElement !== null && document.activeElement.id !== "searchbar"  && document.activeElement.id !== "model") || document.activeElement === null){
+    if (( document.activeElement !== null && !_.contains(whitelist, document.activeElement.id)) || document.activeElement === null){
       if (event.which == 32){
         if (Deejay.isPlaying()){
           Deejay.pause()
@@ -36,6 +38,10 @@ angular.module('OathStructure').
 
   $scope.saveLibrary = function(){
     localStorage['os-library'] = JSON.stringify($scope.library)
+  }
+
+  $scope.cleanUpLibrary = function() {
+    $scope.library = _(_($scope.library).sortBy(artistAlbumAndTrack)).uniq(true, artistAlbumAndTrack)
   }
 
   window.addEventListener("beforeunload", $scope.saveLibrary);
@@ -102,6 +108,57 @@ angular.module('OathStructure').
 
   function updatePlaylists(playlist){
     $scope.playlists.push(playlist)
+  }
+
+  $scope.songBeingEdited = {}
+  $scope.pendingChanges = {}
+  $scope.editingSong = false
+
+  $scope.editSong = function(song){
+    $scope.editingSong = true
+    $scope.songBeingEdited = song
+    $scope.pendingChanges = angular.copy(song)
+  }
+
+  $scope.saveEdit = function(){
+    angular.extend($scope.songBeingEdited, $scope.pendingChanges)
+    $scope.editingSong = false
+  }
+
+  $scope.cancelSongEdit = function(){
+    $scope.songBeingEdited = {}
+    $scope.editingSong = false
+
+  }
+
+  $scope.addingSong = false
+  $scope.songToAdd = {}
+
+  $scope.addSongManually = function(){
+    $scope.addingSong = true
+  }
+
+  $scope.saveSong = function(){
+    $scope.library.push($scope.songToAdd)
+    $scope.cleanUpLibrary()
+    $scope.addingSong = false
+
+  }
+
+  $scope.cancelSongAdd = function(){
+    $scope.songToAdd = {}
+    $scope.addingSong = false
+  }
+
+  function artistAlbumAndTrack(song) {
+    return song.artist + "\n" + song.album + "\n" + zeropad(song.trackNumber)
+  }
+
+  function zeropad(n) {
+    var s = ""+n
+    if (s.length === 2) return "0" + s
+    if (s.length === 1) return "00" + s
+    return s
   }
 
 }])

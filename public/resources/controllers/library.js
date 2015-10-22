@@ -39,7 +39,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     _.each(list, function(song){
       $scope.library.push(song)
     })
-    cleanUpLibrary()
+    $scope.cleanUpLibrary()
   }
 
   $scope.playNow = function(list) {
@@ -54,23 +54,9 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
   $scope.addToQueueAndLibrary = function(song){
     $scope.library.push(song)
     $scope.addToQueue(song)
-    cleanUpLibrary()
+    $scope.cleanUpLibrary()
   }
 
-  function cleanUpLibrary() {
-    $scope.changeLibrary(_(_($scope.library).sortBy(artistAlbumAndTrack)).uniq(true, artistAlbumAndTrack))
-  }
-
-  function artistAlbumAndTrack(song) {
-    return song.artist + "\n" + song.album + "\n" + zeropad(song.trackNumber)
-  }
-
-  function zeropad(n) {
-    var s = ""+n
-    if (s.length === 2) return "0" + s
-    if (s.length === 1) return "00" + s
-    return s
-  }
 
   $scope.addAlbumToQueue = function(list){
     $scope.addAlbumToLibrary(list)

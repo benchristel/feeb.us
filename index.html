@@ -124,14 +124,14 @@
                     <span class="artist">{{ song.artist }}</span>
                     <span class="album">{{ song.album }}</span>
                     <span class="empty"></span>
-                    <span class="edit fa-pencil fa"></span>
+                    <span class="edit fa-pencil fa" ng-click="editSong(song)"></span>
                     <span class="delete fa-close fa" ng-click="deleteSongFromLibrary(song)"></span>
 
                 </div>
               </div>
 
               <div class="import" ng-show="library.length > 0">
-                Can't find what you're looking for? <div class="button" ng-click="selectTab('catalog')">Search Catalog</div>.
+                Can't find what you're looking for? <div class="button" ng-click="selectTab('catalog')">Search Catalog</div> or <div class="button" ng-click="addSongManually()"> Add Song Manually </div>
               </div>
 
               <div class="import" ng-show="library.length == 0">
@@ -236,6 +236,34 @@
     <div class="button-container">
       <div class="button" ng-click="savePlaylist(playlistName)">Save</div>
       <div class="button" ng-click="cancelSavePlaylist()">Cancel</div>
+    </div>
+  </div>
+</div>
+
+<div class="save-playlist-modal" ng-show="editingSong" ng-cloak>
+  <div>
+    <input type ="text" id="title"ng-model="pendingChanges.title"></input>
+    <input type ="text" id="artist" ng-model="pendingChanges.artist"></input>
+    <input type ="text" id="album" ng-model="pendingChanges.album"></input>
+    <input type ="text" id="youtubeId" ng-model="pendingChanges.youtubeId"></input>
+    <div class="button-container">
+      <div class="button" ng-click="saveEdit()">Save</div>
+      <div class="button" ng-click="cancelSongEdit()">Cancel</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="save-playlist-modal" ng-show="addingSong" ng-cloak>
+  <div>
+    <input type ="text" id="trackNumber" ng-model="songToAdd.trackNumber" placeholder="Track #"></input>
+    <input type ="text" id="title" ng-model="songToAdd.title"placeholder="Song Title"></input>
+    <input type ="text" id="artist" ng-model="songToAdd.artist" placeholder="Artist"></input>
+    <input type ="text" id="album" ng-model="songToAdd.album" placeholder="Album Name"></input>
+    <input type ="text" id="youtubeId" ng-model="songToAdd.youtubeId" placeholder="youtubeId"></input>
+    <div class="button-container">
+      <div class="button" ng-click="saveSong()">Save</div>
+      <div class="button" ng-click="cancelSongAdd()">Cancel</div>
     </div>
   </div>
 </div>

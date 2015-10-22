@@ -23,6 +23,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   //10. Record Label Whitelist? Check if channelTitle is on the whitelist.
   //11. Found official remix for Dear Science, Shout me out instead of album version. Add album name to search?
   //12. Spoitify: Silversun Pickups: Pins and Needles, Youtube: Pins & Needles. :( test for common switches?
+  //13. What happened to Viva La Vida? Coldplay
   function isLive(artist, title, videoTitle){
     title = title.toLowerCase()
     videoTitle = videoTitle.toLowerCase()

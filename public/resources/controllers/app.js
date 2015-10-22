@@ -107,7 +107,16 @@ angular.module('OathStructure').
   }
 
   function updatePlaylists(playlist){
-    $scope.playlists.push(playlist)
+    var exists = false;
+    _.each($scope.playlists, function(pl){
+        if (pl.name == playlist.name){
+          pl.tracks = playlist.tracks
+          exists = true
+        }
+    })
+    if (!exists){
+      $scope.playlists.push(playlist)
+    }
   }
 
   $scope.songBeingEdited = {}

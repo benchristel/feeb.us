@@ -121,7 +121,13 @@ angular.module('OathStructure').
   }
 
   $scope.saveEdit = function(){
+    var trackNumber = $scope.songBeingEdited.trackNumber
     angular.extend($scope.songBeingEdited, $scope.pendingChanges)
+    if (trackNumber !== $scope.pendingChanges.trackNumber){
+      console.log("Track number: " + trackNumber)
+      console.log("New TN: " + $scope.pendingChanges)
+      $scope.cleanUpLibrary()
+    }
     $scope.editingSong = false
   }
 
@@ -155,7 +161,7 @@ angular.module('OathStructure').
   }
 
   function artistAlbumAndTrack(song) {
-    return song.artist + "\n" + song.album + "\n" + zeropad(song.trackNumber)
+    return song.artist + "\n" + song.album + "\n" +  zeropad(song.discNumber) + "\n" + zeropad(song.trackNumber)
   }
 
   function zeropad(n) {

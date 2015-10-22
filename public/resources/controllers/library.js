@@ -161,6 +161,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
             artist: track.artists[0].name,
             album: album.name,
             trackNumber: track.track_number,
+            discNumber: track.disc_number,
             youtubeId: youtubeId,
             youtubeImageId: youtubeId,
             albumArtUrl: album.images[1].url,

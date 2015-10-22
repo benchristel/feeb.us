@@ -716,15 +716,30 @@ input:focus {
   width: 50%;
   margin-top: 12%;
   margin-left: 25%;
+  padding-top: 35px;
   text-align: center;
+  border-radius: 20px;
   background-color: #e8e8e0;
 }
 
 .save-playlist-modal input {
-    font-size: 20px;
-    margin-top: 20px;
+    font-size: 16px;
+    height: 30px;
+    padding-left: 4px;
+    margin-bottom: 10px;
     width: 90%;
     font-family: 'Lucida Grande', Helvetica, sans-serif;
+    color: #444;
+}
+
+.save-playlist-modal span {
+    display: inline-block;
+    text-align: left;
+    margin-bottom: 4px;
+    font-size: 16px;
+    width: 89%;
+    font-family: 'Lucida Grande', Helvetica, sans-serif;
+    color: #000;
 }
 
 .save-playlist-modal .button-container {

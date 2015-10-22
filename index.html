@@ -242,12 +242,19 @@
 
 <div class="save-playlist-modal" ng-show="editingSong" ng-cloak>
   <div>
+    <span ng-show="pendingChanges.discNumber !== undefined"> Disc Number </span>
     <input type ="number" id="discNumber" ng-model="pendingChanges.discNumber" ng-show="pendingChanges.discNumber !== undefined"></input>
+    <span> Track Number </span>
     <input type ="number" id="trackNumber" ng-model="pendingChanges.trackNumber"></input>
+    <span> Title </span>
     <input type ="text" id="title"ng-model="pendingChanges.title"></input>
+    <span> Artist </span>
     <input type ="text" id="artist" ng-model="pendingChanges.artist"></input>
+    <span> Album </span>
     <input type ="text" id="album" ng-model="pendingChanges.album"></input>
+    <span> YouTube ID </span>
     <input type ="text" id="youtubeId" ng-model="pendingChanges.youtubeId"></input>
+    <span> Album Art URL </span>
     <input type ="text" id="albumArt" ng-model="pendingChanges.albumArtUrl"></input>
     <div class="button-container">
       <div class="button" ng-click="saveEdit()">Save</div>

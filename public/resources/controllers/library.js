@@ -163,7 +163,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
             trackNumber: track.track_number,
             youtubeId: youtubeId,
             youtubeImageId: youtubeId,
-            albumArtUrls: album.images,
+            albumArtUrl: album.images[1].url,
             selected: $scope.selectedTrack == track.name
           }
           $scope.trackList.push(song)

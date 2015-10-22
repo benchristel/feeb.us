@@ -139,8 +139,12 @@ angular.module('OathStructure').
   }
 
   $scope.saveSong = function(){
-    $scope.library.push($scope.songToAdd)
-    $scope.cleanUpLibrary()
+    if ($scope.songToAdd.youtubeId && $scope.songToAdd.youtubeId !== ""){
+      $scope.songToAdd.trackNumber = $scope.songToAdd.trackNumber || 1
+      $scope.library.push($scope.songToAdd)
+      $scope.cleanUpLibrary()
+    }
+    $scope.songToAdd = {}
     $scope.addingSong = false
 
   }

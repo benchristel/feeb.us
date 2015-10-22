@@ -45,11 +45,11 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
 
   $scope.albumArt = function() {
     var song = songAt(currentlyPlayingIndex())
-    if (song && !song.albumArtUrls[1].url){
+    if (song && !song.albumArtUrl){
       return song ? song.youtubeImageId : null
     }else{
       if (song){
-        return song.albumArtUrls[1].url
+        return song.albumArtUrl
       }
     }
   }
@@ -132,8 +132,8 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
 
     $scope.queue.splice.apply($scope.queue, [index, 0].concat(list));
 
-    if ($scope.shuffled){ 
-      $scope.normalQueue.splice.apply($scope.normalQueue, [$scope.normalQueue.length, 0].concat(list)); 
+    if ($scope.shuffled){
+      $scope.normalQueue.splice.apply($scope.normalQueue, [$scope.normalQueue.length, 0].concat(list));
     }
 
     playNextSong()

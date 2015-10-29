@@ -170,8 +170,7 @@ angular.module('OathStructure').
   }
 
   function artistAlbumAndTrack(song) {
-    console.log("AAT: " + song.artist + "\n" + song.album + "\n" +  zeropad(song.discNumber) + "\n" + zeropad(song.trackNumber)+ "\n" + song.title)
-    return song.artist + "\n" + song.album + "\n" +  zeropad(song.discNumber) + "\n" + zeropad(song.trackNumber) + "\n" + song.title
+    return (song.artist + "\n" + song.album + "\n" +  zeropad(song.discNumber) + "\n" + zeropad(song.trackNumber) + "\n" + song.title).toLowerCase()
   }
 
   function zeropad(n) {

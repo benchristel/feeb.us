@@ -180,10 +180,15 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
   }
 
   window.onload = function() {
-    if (JSON.parse(localStorage.getItem("queue")) !== null){
-      $scope.queue = JSON.parse(localStorage.getItem("queue"))
-      Deejay.setCurrentSong(current())
-    }
+    $timeout(function() {
+        Deejay.setCurrentSong(current())
+    }, 0)
+  }
+
+  var isTheQueue = JSON.parse(localStorage.getItem("queue"))
+
+  if (isTheQueue !== null){
+    $scope.queue = isTheQueue
   }
 
 

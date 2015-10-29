@@ -35,26 +35,22 @@ angular.module('OathStructure').controller('PlayerController',  ['$scope','$wind
   message.on('deejay-updated', function(deejay) {
     console.debug('deejay-updated: between songs = ' + deejay.isBetweenSongs())
     if (deejay.isBetweenSongs()) {
-      updateProgress({position: 0, total: 1}, false)
+      updateProgress({position: 0, total: 1})
     } else if (deejay.isPlaying()) {
-      updateProgress({position: deejay.currentPlaybackPosition(), total: deejay.duration()}, true)
+      var remainingTime = deejay.duration() - deejay.currentPlaybackPosition()
+      $('.scrubber-fill').css('transition', remainingTime + 's linear')
+      $('.scrubber-fill').css('transform', 'scaleX(1)')
     } else if (deejay.isOffAir()) {
-      updateProgress({position: 1, total: 1}, false)
+      updateProgress({position: 1, total: 1})
     } else if (deejay.isPaused()) {
-      updateProgress({position: deejay.currentPlaybackPosition(), total: deejay.duration()}, false)
+      updateProgress({position: deejay.currentPlaybackPosition(), total: deejay.duration()})
     }
   })
 
-  $interval(function() {
-    if (Deejay.isPlaying() && !Deejay.isBetweenSongs()) {
-      updateProgress({position: Deejay.currentPlaybackPosition(), total: Deejay.duration()}, true)
-    }
-  }, 1000)
 
-  function updateProgress(progress, animate) {
-    var lookahead = animate ? 1 : 0
-    var fraction = (progress.position + lookahead) / progress.total
-    $('.scrubber-fill').css('transition', animate ? '1s linear' : '0s')
+  function updateProgress(progress) {
+    var fraction = (progress.position) / progress.total
+    $('.scrubber-fill').css('transition', '0s')
     $('.scrubber-fill').css('transform', 'scaleX('+fraction+')')
   }
 }])

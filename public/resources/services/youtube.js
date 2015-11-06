@@ -24,6 +24,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   //11. Found official remix for Dear Science, Shout me out instead of album version. Add album name to search?
   //12. Spoitify: Silversun Pickups: Pins and Needles, Youtube: Pins & Needles. :( test for common switches?
   //13. What happened to Viva La Vida? Coldplay
+  //14. Avoid videos with "cover" in it.. 
   function isLive(artist, title, videoTitle){
     title = title.toLowerCase()
     videoTitle = videoTitle.toLowerCase()

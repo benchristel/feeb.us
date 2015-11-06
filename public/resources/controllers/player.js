@@ -32,8 +32,22 @@ angular.module('OathStructure').controller('PlayerController',  ['$scope','$wind
     return Deejay.getCurrentSong()
   }
 
+  document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState == "visible" ){
+      updateProgress({position: Deejay.currentPlaybackPosition(), total: Deejay.duration()})
+      window.setTimeout(function () {
+        manageProgress(Deejay);
+      }, 0)
+
+      console.log(document.visibilityState)
+    }
+  });
+
   message.on('deejay-updated', function(deejay) {
-    console.debug('deejay-updated: between songs = ' + deejay.isBetweenSongs())
+    manageProgress(deejay);
+  })
+
+  function manageProgress(deejay) {
     if (deejay.isBetweenSongs()) {
       updateProgress({position: 0, total: 1})
     } else if (deejay.isPlaying()) {
@@ -45,8 +59,7 @@ angular.module('OathStructure').controller('PlayerController',  ['$scope','$wind
     } else if (deejay.isPaused()) {
       updateProgress({position: deejay.currentPlaybackPosition(), total: deejay.duration()})
     }
-  })
-
+  }
 
   function updateProgress(progress) {
     var fraction = (progress.position) / progress.total

@@ -116,13 +116,17 @@
             </div>
             <perfect-scrollbar class="body" wheel-propagation="false" suppressScrollX = "true" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
               <div>
-                <div class="song" ng-repeat="song in library | filter:searchQuery track by $index">
+                <div class="song" ng-repeat="song in library | filter:searchQuery track by $index" ng-click="select(song)">
                     <span class="track-number">{{ song.trackNumber }}</span>
                     <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
                     <span class="play-now fa fa-play" ng-click="playNow([song])"></span>
                     <span class="title">{{ song.title }}</span>
                     <span class="artist">{{ song.artist }}</span>
-                    <span class="album">{{ song.album }}</span>
+                    <span class="album">
+                      <span class="add-button fa fa-plus">&nbsp;Add Album</span>
+                      <span class="play-now fa fa-play">&nbsp;Play Now</span>
+                      <span class="text">{{ song.album }}</span>
+                    </span>
                     <span class="empty"></span>
                     <span class="edit fa-pencil fa" ng-click="editSong(song)"></span>
                     <span class="delete fa-close fa" ng-click="deleteSongFromLibrary(song)"></span>
@@ -297,7 +301,7 @@
 <script src="resources/controllers/library.js"></script>
 <script src="resources/controllers/player.js"></script>
 <script src="resources/controllers/queue.js"></script>
-<script src="https://www.youtube.com/iframe_api"></script>
+<script src="resources/iframeAPI.js"></script>
 
 
 
@@ -305,8 +309,9 @@
 <script type="text/javascript">
 "use strict";
 
-
+var youtubeIframeApiIsTotallyReady = false
 function onYouTubeIframeAPIReady() {
+  youtubeIframeApiIsTotallyReady = true
   message.send('youtube-iframe-api-ready')
 }
 

@@ -125,9 +125,14 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
     }
   }
   message.on('youtube-iframe-api-ready', function(){
-    console.log("received message")
+    console.log("received youtube message")
     youtubeIsReady()
   })
+
+  if (youtubeIframeApiIsTotallyReady){
+    console.log("Youtube was already ready")
+    youtubeIsReady()
+  }
 
   function playerStateChanged(event) {
     if (deejay.isOffAir()) return

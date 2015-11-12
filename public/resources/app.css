@@ -637,12 +637,28 @@ input:focus {
 .library .song:hover .track-number {
     display: none;
 }
-.library .song .play-now,
-.library .song .add-button {
+.library .song > .play-now,
+.library .song > .add-button {
     display: none;
     width: 2.5%;
     cursor: pointer;
 }
+
+.library .song .album .play-now,
+.library .song .album .add-button {
+    display: none;
+    cursor: pointer;
+}
+
+.library .song .album:hover .play-now,
+.library .song .album:hover .add-button {
+    display: inline;
+}
+
+.library .song .album:hover .text {
+  display: none;
+}
+
 
 .library .song .play-now:hover,
 .library .song .add-button:hover {

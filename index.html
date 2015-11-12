@@ -123,8 +123,8 @@
                     <span class="title">{{ song.title }}</span>
                     <span class="artist">{{ song.artist }}</span>
                     <span class="album">
-                      <span class="add-button fa fa-plus">&nbsp;Add Album</span>
-                      <span class="play-now fa fa-play">&nbsp;Play Now</span>
+                      <span class="add-button fa fa-plus" ng-click = "addLibraryAlbumToQueue(song)">&nbsp;Add Album</span>
+                      <span class="play-now fa fa-play"  ng-click = "playAlbumNow(song)">&nbsp;Play Now</span>
                       <span class="text">{{ song.album }}</span>
                     </span>
                     <span class="empty"></span>

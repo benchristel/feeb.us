@@ -42,6 +42,7 @@ angular.module('OathStructure').
 
   $scope.cleanUpLibrary = function() {
     $scope.library = _(_($scope.library).sortBy(artistAlbumAndTrack)).uniq(true, artistAlbumAndTrack)
+    $scope.saveLibrary()
   }
 
   window.addEventListener("beforeunload", $scope.saveLibrary);

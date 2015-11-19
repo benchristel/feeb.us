@@ -41,6 +41,7 @@ You need Ruby and Bundler for local development. Installing Ruby is beyond the s
 
 ```bash
 gem install bundler
+gem install sass
 
 # in the oath-structure directory
 bundle install
@@ -51,6 +52,12 @@ You can then start the server with the `run` script:
 ```bash
 # in the oath-structure directory
 ./run
+```
+
+If you make changes to the .scss files, you will need to run sass to compile them to css.
+
+```bash
+sass --watch app.scss:app.css
 ```
 
 ## Contributing

@@ -103,6 +103,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
   }
 
   function notify() {
+    console.log("deejay-updated: "+state+" "+deejay.currentPlaybackPosition())
     message.send('deejay-updated', deejay)
   }
 
@@ -135,7 +136,14 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
   }
 
   function playerStateChanged(event) {
-    if (deejay.isOffAir()) return
+    if (event.data === YT.PlayerState.UNSTARTED || event.data === YT.PlayerState.CUED) {
+      return
+    }
+
+    if(deejay.isOffAir()){
+      deejay.goOnAir()
+    }
+    console.log("Shit going down: "  + event.data)
 
     if (event.data === YT.PlayerState.ENDED) {
       currentSong = null
@@ -149,9 +157,9 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
     states[YT.PlayerState.ENDED]     = BETWEEN_SONGS
     states[YT.PlayerState.CUED]      = BETWEEN_SONGS
 
+
     state = states[event.data]
     console.debug('updated state: ' + state)
-
     $rootScope.$apply(notify)
   }
 

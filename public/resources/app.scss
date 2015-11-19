@@ -1,6 +1,12 @@
 $brand-orange: #f67f00;
 $medium-gray: #444;
 
+@mixin ellipsize-single-line {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -356,9 +362,7 @@ input:focus {
       font-size: 13px;
       color: #d0d0d0;
       border-top: 1px solid #555;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+      @include ellipsize-single-line;
     }
     .artist-results, .album-results {
       height: 50px;
@@ -373,9 +377,7 @@ input:focus {
       font-size: 13px;
       color: #d0d0d0;
       border-top: 1px solid #555;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+      @include ellipsize-single-line;
     }
     .song-results:hover, .artist-results:hover, .album-results:hover {
       background-color: #111;
@@ -509,11 +511,6 @@ input:focus {
   }
 }
 
-/*.catalog .hover-name {
-  text-shadow: 0px 1px 0 #333;
-  color: white;
-}*/
-
 ::-webkit-input-placeholder {
   color: #666;
 }
@@ -535,7 +532,6 @@ input:focus {
 .library {
   .header span {
     color: #888;
-    /*font-weight: bold;*/
     font-size: 14px;
     padding-top: 20px;
     padding-bottom: 2px;
@@ -708,7 +704,6 @@ input:focus {
   bottom: 25px;
   left: 25px;
   right: 25px;
-  /*overflow: hidden;*/
   .delete {
     visibility: hidden;
     cursor: pointer;
@@ -719,9 +714,6 @@ input:focus {
   }
   .track-container {
     position: absolute;
-    /*display: block;*/
-    /*float:left;*/
-    /*padding-left: 20px;*/
     overflow: hidden;
   }
   .tracks {
@@ -751,9 +743,7 @@ input:focus {
   .list-name {
     clear: both;
     font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @include ellipsize-single-line;
     span {
       height: 28px;
       line-height: 28px;
@@ -787,9 +777,7 @@ input:focus {
   .playlist-title {
     font-size: 34px;
     padding-bottom: 20px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    @include ellipsize-single-line;
     /*padding-left: 20px;*/
     /*display: block;
     float: left;*/
@@ -924,13 +912,27 @@ input:focus {
   }
 }
 
+@mixin table-element {
+  display: block;
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .catalog {
   .song {
     clear: both;
     font-size: 14px;
+
+    &.selected span {
+      background-color: rgba(4, 4, 4, 0.1);
+    }
   }
-  .selected.song span {
-    background-color: rgba(4, 4, 4, 0.1);
+
+  span {
+    @include table-element;
   }
 }
 
@@ -939,31 +941,12 @@ input:focus {
     position: absolute;
     width: 100%;
     span {
-      display: block;
-      float: left;
-      padding-left: 5px;
-      padding-right: 5px;
-      white-space: nowrap;
-      overflow: hidden;
+      @include table-element;
     }
   }
   .tracks span {
-    display: block;
-    float: left;
-    padding-left: 5px;
-    padding-right: 5px;
-    white-space: nowrap;
-    overflow: hidden;
+    @include table-element
   }
-}
-
-.catalog span {
-  display: block;
-  float: left;
-  padding-left: 5px;
-  padding-right: 5px;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .playlists {

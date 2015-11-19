@@ -49,9 +49,13 @@ angular.module('OathStructure').controller('PlayerController',  ['$scope','$wind
 
   function manageProgress(deejay) {
     if (deejay.isBetweenSongs()) {
+
+      console.log("Got called....")
       updateProgress({position: 0, total: 1})
+
     } else if (deejay.isPlaying()) {
       var remainingTime = deejay.duration() - deejay.currentPlaybackPosition()
+      console.log(remainingTime)
       $('.scrubber-fill').css('transition', remainingTime + 's linear')
       $('.scrubber-fill').css('transform', 'scaleX(1)')
     } else if (deejay.isOffAir()) {

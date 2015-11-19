@@ -418,10 +418,6 @@ input:focus {
       opacity: 0;
       transition: opacity .3s ease; }
 
-/*.catalog .hover-name {
-  text-shadow: 0px 1px 0 #333;
-  color: white;
-}*/
 ::-webkit-input-placeholder {
   color: #666; }
 
@@ -444,7 +440,6 @@ input:focus {
   right: 25px; }
   .library .header span {
     color: #888;
-    /*font-weight: bold;*/
     font-size: 14px;
     padding-top: 20px;
     padding-bottom: 2px;
@@ -566,8 +561,7 @@ input:focus {
   top: 100px;
   bottom: 25px;
   left: 25px;
-  right: 25px;
-  /*overflow: hidden;*/ }
+  right: 25px; }
   .playlists .delete {
     visibility: hidden;
     cursor: pointer;
@@ -576,9 +570,6 @@ input:focus {
       color: #f67f00; }
   .playlists .track-container {
     position: absolute;
-    /*display: block;*/
-    /*float:left;*/
-    /*padding-left: 20px;*/
     overflow: hidden; }
   .playlists .tracks {
     position: absolute;
@@ -605,8 +596,8 @@ input:focus {
     clear: both;
     font-size: 14px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; }
+    text-overflow: ellipsis;
+    overflow: hidden; }
     .playlists .list-name span {
       height: 28px;
       line-height: 28px;
@@ -633,9 +624,9 @@ input:focus {
   .playlists .playlist-title {
     font-size: 34px;
     padding-bottom: 20px;
+    white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
     /*padding-left: 20px;*/
     /*display: block;
     float: left;*/
@@ -743,8 +734,15 @@ input:focus {
 .catalog .song {
   clear: both;
   font-size: 14px; }
-.catalog .selected.song span {
-  background-color: rgba(4, 4, 4, 0.1); }
+  .catalog .song.selected span {
+    background-color: rgba(4, 4, 4, 0.1); }
+.catalog span {
+  display: block;
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+  white-space: nowrap;
+  overflow: hidden; }
 
 .playlists .header {
   position: absolute;
@@ -757,14 +755,6 @@ input:focus {
     white-space: nowrap;
     overflow: hidden; }
 .playlists .tracks span {
-  display: block;
-  float: left;
-  padding-left: 5px;
-  padding-right: 5px;
-  white-space: nowrap;
-  overflow: hidden; }
-
-.catalog span {
   display: block;
   float: left;
   padding-left: 5px;

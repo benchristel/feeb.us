@@ -1,3 +1,6 @@
+$brand-orange: #f67f00;
+$medium-gray: #444;
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -16,7 +19,7 @@ input:focus {
 #player-chrome {
   height: 80px;
   width: 100%;
-  background-color: #444;
+  background-color: $medium-gray;
   position: relative;
   .song-info {
     position: absolute;
@@ -72,7 +75,7 @@ input:focus {
 }
 
 .scrubber-fill {
-  background-color: #f67f00;
+  background-color: $brand-orange;
   height: 100%;
   position: absolute;
   width: 100%;
@@ -116,7 +119,7 @@ input:focus {
   position: relative;
   width: 320px;
   height: 100%;
-  background-color: #444;
+  background-color: $medium-gray;
   overflow: hidden;
 }
 
@@ -176,7 +179,7 @@ input:focus {
   border-top: 1px solid #555;
   overflow: hidden;
   &.playing {
-    background-color: #f67f00;
+    background-color: $brand-orange;
   }
   &.done {
     opacity: 0.5;
@@ -227,7 +230,7 @@ input:focus {
     background-color: #111;
   }
   &.playing:hover {
-    background-color: #f67f00;
+    background-color: $brand-orange;
   }
   &:hover .close {
     display: block;
@@ -314,7 +317,7 @@ input:focus {
     position: relative;
     float: right;
     .search-results {
-      background-color: #444;
+      background-color: $medium-gray;
       color: #eeeeee;
       font-size: 13px;
       line-height: 18px;
@@ -411,7 +414,7 @@ input:focus {
     padding-left: 15px;
     position: relative;
     z-index: 2;
-    border: 2px solid #444;
+    border: 2px solid $medium-gray;
   }
   .clear {
     clear: both;
@@ -429,7 +432,7 @@ input:focus {
     text-transform: lowercase;
   }
   .selected.tab {
-    border-bottom: 2px solid #f67f00;
+    border-bottom: 2px solid $brand-orange;
     color: #000;
   }
   .tab:hover {
@@ -445,7 +448,7 @@ input:focus {
   left: 20px;
   right: 20px;
   z-index: 0;
-  border-top: 1px solid #444;
+  border-top: 1px solid $medium-gray;
   .artist-header, .album-header {
     position: relative;
     height: auto;
@@ -464,7 +467,7 @@ input:focus {
     right: 20px;
     padding-left: 20px;
     padding-bottom: 40px;
-    color: #444;
+    color: $medium-gray;
   }
   .artist-image, .album-image {
     height: 223px;
@@ -603,7 +606,7 @@ input:focus {
       }
     }
     .play-now:hover, .add-button:hover {
-      color: #f67f00;
+      color: $brand-orange;
     }
   }
   .track-number {
@@ -636,7 +639,7 @@ input:focus {
       }
     }
     .edit:hover, .delete:hover {
-      color: #f67f00;
+      color: $brand-orange;
     }
   }
   .import {
@@ -644,7 +647,7 @@ input:focus {
     font-size: 14px;
     padding-top: 20px;
     clear: both;
-    color: #444;
+    color: $medium-gray;
     .button {
       cursor: pointer;
       color: #888;
@@ -677,7 +680,7 @@ input:focus {
     margin-bottom: 10px;
     width: 90%;
     font-family: 'Lucida Grande', Helvetica, sans-serif;
-    color: #444;
+    color: $medium-gray;
   }
   span {
     display: inline-block;
@@ -711,7 +714,7 @@ input:focus {
     cursor: pointer;
     display: inline;
     &:hover {
-      color: #f67f00;
+      color: $brand-orange;
     }
   }
   .track-container {
@@ -830,7 +833,7 @@ input:focus {
   font-size: 20px;
   font-variant: small-caps;
   text-transform: lowercase;
-  background-color: #f67f00;
+  background-color: $brand-orange;
   color: white;
   text-shadow: 0px 1px 0 #333;
   width: 150px;
@@ -921,19 +924,6 @@ input:focus {
   }
 }
 
-/*.list-container .tracks {*/
-/*display: block;*/
-/*overflow-y: hidden;*/
-/*bottom: 0;*/
-/*left: 0;*/
-/*position: relative;
-overflow-y: hidden;
-bottom: 0;
-right: 0;
-padding-left: 20px;*/
-/*overflow: hidden;*/
-/*}*/
-
 .catalog {
   .song {
     clear: both;
@@ -1021,18 +1011,18 @@ padding-left: 20px;*/
     cursor: pointer;
   }
   .play-button:hover {
-    color: #f67f00;
+    color: $brand-orange;
   }
 }
 
 .playlists .song {
   .play-button:hover, .add-button:hover {
-    color: #f67f00;
+    color: $brand-orange;
   }
 }
 
 .catalog .song .add-button:hover {
-  color: #f67f00;
+  color: $brand-orange;
 }
 
 .playlists .track-number, .catalog .track-number {

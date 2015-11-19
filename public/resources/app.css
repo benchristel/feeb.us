@@ -740,18 +740,6 @@ input:focus {
   clear: both;
   font-size: 14px; }
 
-/*.list-container .tracks {*/
-/*display: block;*/
-/*overflow-y: hidden;*/
-/*bottom: 0;*/
-/*left: 0;*/
-/*position: relative;
-overflow-y: hidden;
-bottom: 0;
-right: 0;
-padding-left: 20px;*/
-/*overflow: hidden;*/
-/*}*/
 .catalog .song {
   clear: both;
   font-size: 14px; }

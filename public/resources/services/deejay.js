@@ -135,15 +135,23 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
     youtubeIsReady()
   }
 
+  currentYoutubePlayerState = null;
+  stateTransitions = []
   function playerStateChanged(event) {
-    if (event.data === YT.PlayerState.UNSTARTED || event.data === YT.PlayerState.CUED) {
+    var msg = "" + currentYoutubePlayerState + " -> " + event.data + " " + player.getCurrentTime() + "/" + player.getDuration()
+    console.debug(msg)
+    stateTransitions.push(msg)
+    currentYoutubePlayerState = event.data
+
+    if (state != PLAYING && event.data === YT.PlayerState.UNSTARTED || event.data === YT.PlayerState.CUED) {
+      // console.log("Not updating player state.")
       return
     }
 
     if(deejay.isOffAir()){
       deejay.goOnAir()
     }
-    console.log("Shit going down: "  + event.data)
+    // console.log("Shit going down: "  + event.data)
 
     if (event.data === YT.PlayerState.ENDED) {
       currentSong = null
@@ -159,7 +167,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
 
 
     state = states[event.data]
-    console.debug('updated state: ' + state)
+    // console.debug('updated state: ' + state)
     $rootScope.$apply(notify)
   }
 

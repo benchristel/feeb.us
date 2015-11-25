@@ -1,4 +1,4 @@
-angular.module('OathStructure').controller('PlayerController',  ['$scope','$window', '$interval', 'Deejay', function ($scope, $window, $interval, Deejay) {
+angular.module('OathStructure').controller('PlayerController',  ['$scope','$window', '$interval', '$timeout', 'Deejay', function ($scope, $window, $interval, $timeout, Deejay) {
   $scope.play = function() {
     Deejay.play()
   }
@@ -55,9 +55,12 @@ angular.module('OathStructure').controller('PlayerController',  ['$scope','$wind
 
     } else if (deejay.isPlaying()) {
       var remainingTime = deejay.duration() - deejay.currentPlaybackPosition()
-      console.log(remainingTime)
-      $('.scrubber-fill').css('transition', remainingTime + 's linear')
-      $('.scrubber-fill').css('transform', 'scaleX(1)')
+      console.log("resetting to time " + deejay.currentPlaybackPosition())
+      updateProgress({position: deejay.currentPlaybackPosition(), total: deejay.duration()})
+      $timeout(function() {
+        $('.scrubber-fill').css('transition', remainingTime + 's linear')
+        $('.scrubber-fill').css('transform', 'scaleX(1)')
+      }, 0)
     } else if (deejay.isOffAir()) {
       updateProgress({position: 1, total: 1})
     } else if (deejay.isPaused()) {

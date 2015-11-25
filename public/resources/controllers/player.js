@@ -62,7 +62,8 @@ angular.module('OathStructure').controller('PlayerController',  ['$scope','$wind
         $('.scrubber-fill').css('transform', 'scaleX(1)')
       }, 0)
     } else if (deejay.isOffAir()) {
-      updateProgress({position: 1, total: 1})
+      console.log("Animate to offAir new")
+      updateProgress({position: 1, total: 1.0000001})//Crazy css transform bug. Using 1 causes nothing to happen, sometimes.
     } else if (deejay.isPaused()) {
       updateProgress({position: deejay.currentPlaybackPosition(), total: deejay.duration()})
     }
@@ -70,6 +71,7 @@ angular.module('OathStructure').controller('PlayerController',  ['$scope','$wind
 
   function updateProgress(progress) {
     var fraction = (progress.position) / progress.total
+    console.debug("fraction: " + fraction)
     $('.scrubber-fill').css('transition', '0s')
     $('.scrubber-fill').css('transform', 'scaleX('+fraction+')')
   }

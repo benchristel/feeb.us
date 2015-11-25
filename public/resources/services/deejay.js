@@ -143,14 +143,16 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
     stateTransitions.push(msg)
     currentYoutubePlayerState = event.data
 
-    if (state != PLAYING && event.data === YT.PlayerState.UNSTARTED || event.data === YT.PlayerState.CUED) {
-      // console.log("Not updating player state.")
+    if (state != PLAYING && (event.data === YT.PlayerState.UNSTARTED || event.data === YT.PlayerState.CUED)) {
+      console.log("Not updating player state.")
       return
     }
 
-    if(deejay.isOffAir()){
-      deejay.goOnAir()
+    if(deejay.isOffAir() &&  event.data == YT.PlayerState.PAUSED){
+      return
     }
+    console.log("Going on air!!!!: Event Data: " + event.data)
+
     // console.log("Shit going down: "  + event.data)
 
     if (event.data === YT.PlayerState.ENDED) {
@@ -159,10 +161,10 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
 
     var states = {}
     states[YT.PlayerState.UNSTARTED] = BETWEEN_SONGS
-    states[YT.PlayerState.BUFFERING] = PAUSED
+    states[YT.PlayerState.ENDED]     = BETWEEN_SONGS
     states[YT.PlayerState.PLAYING]   = PLAYING
     states[YT.PlayerState.PAUSED]    = PAUSED
-    states[YT.PlayerState.ENDED]     = BETWEEN_SONGS
+    states[YT.PlayerState.BUFFERING] = PAUSED
     states[YT.PlayerState.CUED]      = BETWEEN_SONGS
 
 

@@ -1,4 +1,4 @@
-angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootScope) {
+angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', function($rootScope, $window) {
   var OFF_AIR = 0
   var PAUSED = 1
   var PLAYING = 2
@@ -38,6 +38,9 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', function($rootS
     this.goOnAir()
     player.cueVideoById(song.youtubeId)
     player.playVideo()
+    console.log("Playing new song from the top")
+    $window.ga('send', 'event', 'Video', 'play')
+
     //Is there supposed to be a notify here?
   }
 

@@ -18,23 +18,27 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   // (handled) 6. Check for live
   //7. Check for "not available"
   //8. Check for views?
-  //8. Grizzly bear Shields yeilds same song multiple times and live performances
   //9. Filter by duration
-  //10. Record Label Whitelist? Check if channelTitle is on the whitelist.
+  //  (In the works) 10. Record Label Whitelist? Check if channelTitle is on the whitelist.
   //11. Found official remix for Dear Science, Shout me out instead of album version. Add album name to search?
   //12. Spoitify: Silversun Pickups: Pins and Needles, Youtube: Pins & Needles. :( test for common switches?
   //13. What happened to Viva La Vida? Coldplay
-  //14. Avoid videos with "cover" in it..
+  // (handled) 14. Avoid videos with "cover" in it..
   //15. Downtown (feat. Eric Nally, Melle Mel, Kool Moe Dee & Grandmaster Caz)
-  function isLive(artist, title, videoTitle){
+  function isLiveOrCover(artist, title, videoTitle){
+     return doesNotContainString(artist, title, videoTitle, "live") || doesNotContainString(artist, title, videoTitle, "cover")
+  }
+
+  function doesNotContainString(artist, title, videoTitle, string){
     title = title.toLowerCase()
     videoTitle = videoTitle.toLowerCase()
     if (videoTitle.indexOf(artist.toLowerCase()) !== -1){
       title =  artist + " " + title
     }
-    var titleCount = (title.match(/live/g) || []).length;
+    var re = new RegExp(string, 'g');
+    var titleCount = (title.match(re) || []).length;
     console.log(title + " " + titleCount)
-    var videoTitleCount = (title.match(/live/g) || []).length;
+    var videoTitleCount = (videoTitle.match(re) || []).length;
     console.log(videoTitle + " " + videoTitleCount)
 
     return titleCount !== videoTitleCount
@@ -42,56 +46,71 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
 
   this.getYoutubeId = function(artist, song){
     if (loaded == true) {
-      var query = hashTagQuery(artist, song)
-      console.log(query)
-      return searchYoutubePromise(query).then(function(resultOne){
-        console.log(resultOne)
-        if (!resultOne || !resultOne.items || resultOne.items.length == 0 || resultOne.items[0].snippet.title.toLowerCase() != song.toLowerCase()){
-          query = artist + " " + song
-          console.log(query)
-          return searchYoutubePromise(query).then(function(resultOnePointFive){
-            console.log(resultOnePointFive)
-            for (var i = 0; i < resultOnePointFive.items.length; i++){
-              var result = resultOnePointFive.items[i]
-              var title = result.snippet.channelTitle.toLowerCase()
-              console.log(title)
-              console.log(title.replace(/\W/g, '').indexOf(artist.toLowerCase().replace(/\W/g, '')) !== -1)
-              console.log( _.contains(whitelist, title))
-              console.log(!isLive(artist, song, resultOnePointFive.items[i].snippet.title))
-              console.log(resultOnePointFive.items[i].snippet.title.toLowerCase().indexOf(song.toLowerCase()) !== -1)
-              console.log(resultOnePointFive.items[i].snippet.title.toLowerCase() + " " + song.toLowerCase())
-              console.log(resultOnePointFive.items[i].snippet.title.toLowerCase().indexOf(song.toLowerCase()))
-
-              if ((title.replace(/\W/g, '').indexOf(artist.toLowerCase().replace(/\W/g, '')) !== -1 ||  _.contains(whitelist, title)) && !isLive(artist, song, resultOnePointFive.items[i].snippet.title) && resultOnePointFive.items[i].snippet.title.toLowerCase().indexOf(song.toLowerCase()) !== -1){
-                return result.id.videoId
-              }
-            }
-            query = vevoQuery(artist, song)
-            console.log(query)
-            return searchYoutubePromise(query).then(function(resultTwo){
-              if (!resultTwo || !resultTwo.items || resultTwo.items.length == 0 || resultTwo.items[0].snippet.title.toLowerCase().indexOf(song.toLowerCase()) == -1 || isLive(artist, song, resultTwo.items[0].snippet.title)){
-                query = lyricQuery(artist, song)
-                console.log(query)
-                return prom_two = searchYoutubePromise(query).then(function(resultThree){
-                  if (!resultThree || !resultThree.items || resultThree.items.length == 0 || isLive(artist, song, resultThree.items[0].snippet.title)||resultThree.items[0].snippet.title.toLowerCase().indexOf(song.toLowerCase()) == -1){
-                    console.log("Couldn't find anything")
-                    return null
-                  }else{
-                    return resultThree.items[0].id.videoId
-                  }
-                })
-              }else{
-                return resultTwo.items[0].id.videoId
-              }
+      return hashTagSearch(artist, song).then(function(id) {
+        return id || basicSearch(artist, song).then(function(id) {
+          return id || vevoSearch(artist, song).then(function(id) {
+            return id || lyricSearch(artist, song).then(function(id) {
+              return id
             })
           })
-        }else{
-          return resultOne.items[0].id.videoId
-        }
+        })
       })
     }else{
       return  Promise.resolve(null)
     }
+  }
+
+  function hashTagSearch(artist, song){
+    var query = hashTagQuery(artist, song)
+    console.log(query)
+    return searchYoutubePromise(query).then(function(result){
+      if (!result || !result.items || result.items.length == 0 || result.items[0].snippet.title.toLowerCase() != song.toLowerCase()){
+        return null
+      }else{
+        return result.items[0].id.videoId
+      }
+    })
+  }
+
+
+  function basicSearch(artist, song){
+    query = basicQuery(artist, song)
+    console.log(query)
+    return searchYoutubePromise(query).then(function(queryResult){
+      for (var i = 0; i < queryResult.items.length; i++){
+        var result = queryResult.items[i]
+        var title = result.snippet.channelTitle.toLowerCase()
+        if ((title.replace(/\W/g, '').indexOf(artist.toLowerCase().replace(/\W/g, '')) !== -1 ||  _.contains(whitelist, title)) && !isLiveOrCover(artist, song, queryResult.items[i].snippet.title) && queryResult.items[i].snippet.title.toLowerCase().indexOf(song.toLowerCase()) !== -1){
+          return result.id.videoId
+        }
+      }
+      return null
+    })
+  }
+
+  function vevoSearch(artist, song){
+    query = vevoQuery(artist, song)
+    console.log(query)
+    return searchYoutubePromise(query).then(function(result){
+      if (!result || !result.items || result.items.length == 0 || result.items[0].snippet.title.toLowerCase().indexOf(song.toLowerCase()) == -1 || isLiveOrCover(artist, song, result.items[0].snippet.title)){
+        return null
+      }else{
+        return result.items[0].id.videoId
+      }
+    })
+  }
+
+  function lyricSearch(artist, song){
+    query = lyricQuery(artist, song)
+    console.log(query)
+    return searchYoutubePromise(query).then(function(result){
+      if (!result || !result.items || result.items.length == 0 || isLiveOrCover(artist, song, result.items[0].snippet.title)||result.items[0].snippet.title.toLowerCase().indexOf(removeAfterHyphen(song).toLowerCase()) == -1){
+        console.log("Couldn't find anything for song: " + song)
+        return null
+      }else{
+        return result.items[0].id.videoId
+      }
+    })
   }
 
   this.findYoutubeId = function(artist, song_name, song){
@@ -159,15 +178,24 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   }
 
   function hashTagQuery(artist, song){
-    return "\"#" + artist.replace(/\W/g, '') + "\" " + song
+    return "\"#" + artist.replace(/\W/g, '') + "\" (\"" + song +"\" | \"" + removeAfterHyphen(song) + "\")"
   }
 
   function lyricQuery(artist, song){
-    return "\"" +artist + "\" \"" + song + "\""
+    return "\"" +artist + "\" (\"" + song +"\" | \"" + removeAfterHyphen(song) + "\")"
+  }
+
+  function basicQuery(artist, song){
+    return "\"" +artist + "\" (\"" + song +"\" | \"" + removeAfterHyphen(song) + "\")"
   }
 
   function vevoQuery(artist, song){
-    return  "\"" +artist.replace(/\W/g, '') + "VEVO\" " + song
+    return  "\"" +artist.replace(/\W/g, '') + "VEVO\" (\"" + song +"\" | \"" + removeAfterHyphen(song) + "\")"
+  }
+
+  function removeAfterHyphen(song){
+    var s = song.substr(0, song.lastIndexOf(" - "))
+    return s.length > 0 ? s : song
   }
 
 }])

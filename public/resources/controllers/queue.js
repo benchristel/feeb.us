@@ -94,7 +94,6 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
 
   function playNextSong() {
     var newSong = advance()
-    console.log("New Song title: " + newSong.title)
     if (newSong) {
       Deejay.fromTheTop(newSong)
     } else {

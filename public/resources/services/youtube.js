@@ -6,7 +6,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     loaded = true
   })
 
-  var whitelist = ["epitaphrecords", "fueledbyramen", "roadrunnerrecords", "atlanticvideos", "topshelfrecords"]
+  var whitelist = ["epitaphrecords", "fueledbyramen", "roadrunnerrecords", "atlanticvideos", "topshelfrecords", "Various Artists - Topic"]
 
   //Auto searching could use some improvement. Possibly verify channelId by channel.list
   //Improvements to make:
@@ -92,7 +92,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     query = vevoQuery(artist, song)
     console.log(query)
     return searchYoutubePromise(query).then(function(result){
-      if (!result || !result.items || result.items.length == 0 || result.items[0].snippet.title.toLowerCase().indexOf(song.toLowerCase()) == -1 || isLiveOrCover(artist, song, result.items[0].snippet.title)){
+      if (!result || !result.items || result.items.length == 0 || !containsSongName(result.items[0], song) || isLiveOrCover(artist, song, result.items[0].snippet.title)){
         return null
       }else{
         return result.items[0].id.videoId
@@ -103,13 +103,16 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   function lyricSearch(artist, song){
     query = lyricQuery(artist, song)
     console.log(query)
-    return searchYoutubePromise(query).then(function(result){
-      if (!result || !result.items || result.items.length == 0 || isLiveOrCover(artist, song, result.items[0].snippet.title)||result.items[0].snippet.title.toLowerCase().indexOf(removeAfterHyphen(song).toLowerCase()) == -1){
-        console.log("Couldn't find anything for song: " + song)
-        return null
-      }else{
-        return result.items[0].id.videoId
+    return searchYoutubePromise(query).then(function(queryResult){
+      for (var i = 0; i < queryResult.items.length; i++){
+        var result = queryResult.items[i]
+        var title = result.snippet.channelTitle.toLowerCase()
+        if (!isLiveOrCover(artist, song, result.snippet.title) && containsSongName(result, song)){
+          return result.id.videoId
+        }
       }
+      console.log("Couldn't find anything for song: " + song)
+      return null
     })
   }
 
@@ -121,6 +124,10 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
       searchYoutube(lyricquery, song, "lyric")
     }
 
+  }
+
+  function containsSongName(result, song){
+    return result.snippet.title.toLowerCase().indexOf(removeAfterHyphen(song).toLowerCase()) !== -1
   }
 
   function searchYoutube(query, song){

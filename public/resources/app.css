@@ -455,6 +455,31 @@ input:focus {
   .library .song {
     clear: both;
     font-size: 14px; }
+    .library .song.unplayable {
+      color: #aaa; }
+    .library .song:hover {
+      background-color: #ccc; }
+      .library .song:hover .play-now, .library .song:hover .add-button {
+        display: block; }
+      .library .song:hover .track-number {
+        display: none; }
+    .library .song span {
+      height: 28px;
+      line-height: 28px;
+      border-bottom: 1px solid #ccc; }
+    .library .song > .play-now, .library .song > .add-button {
+      display: none;
+      width: 2.5%;
+      cursor: pointer; }
+    .library .song .album .play-now, .library .song .album .add-button {
+      display: none;
+      cursor: pointer; }
+    .library .song .album:hover .play-now, .library .song .album:hover .add-button {
+      display: inline; }
+    .library .song .album:hover .text {
+      display: none; }
+    .library .song .play-now:hover, .library .song .add-button:hover {
+      color: #f67f00; }
   .library span {
     display: block;
     float: left;
@@ -462,29 +487,6 @@ input:focus {
     padding-right: 5px;
     white-space: nowrap;
     overflow: hidden; }
-  .library .song span {
-    height: 28px;
-    line-height: 28px;
-    border-bottom: 1px solid #ccc; }
-  .library .song:hover span {
-    background-color: #ccc; }
-  .library .song:hover .play-now, .library .song:hover .add-button {
-    display: block; }
-  .library .song:hover .track-number {
-    display: none; }
-  .library .song > .play-now, .library .song > .add-button {
-    display: none;
-    width: 2.5%;
-    cursor: pointer; }
-  .library .song .album .play-now, .library .song .album .add-button {
-    display: none;
-    cursor: pointer; }
-  .library .song .album:hover .play-now, .library .song .album:hover .add-button {
-    display: inline; }
-  .library .song .album:hover .text {
-    display: none; }
-  .library .song .play-now:hover, .library .song .add-button:hover {
-    color: #f67f00; }
   .library .track-number {
     width: 5%; }
   .library .title {
@@ -496,7 +498,8 @@ input:focus {
   .library .edit, .library .delete {
     display: none;
     cursor: pointer;
-    width: 2.5%; }
+    width: 2.5%;
+    color: #222; }
   .library .empty {
     width: 5%; }
   .library .song:hover .edit, .library .song:hover .delete {
@@ -815,5 +818,11 @@ input:focus {
 
 .playlists .artist, .catalog .artist {
   width: 20%; }
+
+.clearfix:after {
+  content: " ";
+  display: block;
+  height: 0;
+  clear: both; }
 
 /*# sourceMappingURL=app.css.map */

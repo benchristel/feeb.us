@@ -116,7 +116,11 @@
             </div>
             <perfect-scrollbar class="body" wheel-propagation="false" suppressScrollX = "true" wheel-speed="20" refresh-on-change="searchQuery" scroll-up="true" use-keyboard="false">
               <div>
-                <div class="song" ng-repeat="song in library | filter:searchQuery track by $index" ng-click="select(song)">
+                <div class="song clearfix"
+                     ng-attr-title="{{song.youtubeId == null || song.youtubeId == '' ? 'This song is unplayable. Edit it.' : ''}}"
+                     ng-class= "{unplayable: song.youtubeId==null || song.youtubeId == '' }"
+                     ng-repeat="song in library | filter:searchQuery track by $index"
+                     ng-click="select(song)">
                     <span class="track-number">{{ song.trackNumber }}</span>
                     <span class="add-button fa fa-plus" ng-click="addToQueue(song)"></span>
                     <span class="play-now fa fa-play" ng-click="playNow([song])"></span>

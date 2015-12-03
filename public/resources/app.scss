@@ -1,4 +1,5 @@
 $brand-orange: #f67f00;
+$brand-tan: #e8e8e0;
 $medium-gray: #444;
 
 @mixin ellipsize-single-line {
@@ -118,7 +119,7 @@ input:focus {
   width: 100%;
   top: 80px;
   bottom: 0px;
-  background-color: #e8e8e0;
+  background-color: $brand-tan;
 }
 
 #queue-container {
@@ -552,33 +553,27 @@ input:focus {
     overflow: hidden;
   }
   .song {
+    $greyed-out-text: #aaa;
+
     clear: both;
     font-size: 14px;
-  }
-  span {
-    display: block;
-    float: left;
-    padding-left: 5px;
-    padding-right: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  .song {
-    span {
-      height: 28px;
-      line-height: 28px;
-      border-bottom: 1px solid #ccc;
+    &.unplayable {
+      color: $greyed-out-text;
     }
     &:hover {
-      span {
-        background-color: #ccc;
-      }
+      background-color: #ccc;
+
       .play-now, .add-button {
         display: block;
       }
       .track-number {
         display: none;
       }
+    }
+    span {
+      height: 28px;
+      line-height: 28px;
+      border-bottom: 1px solid #ccc;
     }
     > {
       .play-now, .add-button {
@@ -604,6 +599,15 @@ input:focus {
     .play-now:hover, .add-button:hover {
       color: $brand-orange;
     }
+
+  }
+  span {
+    display: block;
+    float: left;
+    padding-left: 5px;
+    padding-right: 5px;
+    white-space: nowrap;
+    overflow: hidden;
   }
   .track-number {
     width: 5%;
@@ -621,6 +625,7 @@ input:focus {
     display: none;
     cursor: pointer;
     width: 2.5%;
+    color: #222;
   }
   .empty {
     width: 5%;
@@ -667,7 +672,7 @@ input:focus {
     padding-top: 35px;
     text-align: center;
     border-radius: 20px;
-    background-color: #e8e8e0;
+    background-color: $brand-tan;
   }
   input {
     font-size: 16px;
@@ -1022,4 +1027,11 @@ input:focus {
 
 .playlists .artist, .catalog .artist {
   width: 20%;
+}
+
+.clearfix:after {
+   content: " ";
+   display: block;
+   height: 0;
+   clear: both;
 }

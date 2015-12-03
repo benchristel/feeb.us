@@ -6,8 +6,9 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     loaded = true
   })
 
-  var whitelist = ["epitaphrecords", "fueledbyramen", "roadrunnerrecords", "atlanticvideos", "topshelfrecords", "Various Artists - Topic"]
-
+//  var whitelist = ["epitaphrecords", "fueledbyramen", "roadrunnerrecords", "atlanticvideos", "topshelfrecords", "various artists - topic"] //need to be lowercase
+  var whitelistMap = [{title: "epitaphrecords", id: "UCDE5Ezmxq1bNVak4lmkpCMw"}, {title: "fueledbyramen", id: "UClVrJwcIy7saPcGc1nct80A"}, {title: "roadrunnerrecords", id: "UCRRxSTgPUY0q_YToaczc2BQ"}, {title: "atlanticvideos", id: "UCe4LM_eKc9ywRmVuBm5pjQg"}, {title: "topshelfrecords" , id: "UCVbn68_moZGl2ClB44wznXQ" }, {title: "various artists - topic", id: "UCi-ctA4Kzme9gCvloOMg7bA"}] //need to be lowercase
+  var whitelist = whitelistMap.map(function(obj){ return obj.id })
   //Auto searching could use some improvement. Possibly verify channelId by channel.list
   //Improvements to make:
   // (handled) 1. Some channels use "Official" at the end or before VEVO: e.g. BORNSOfficialVEVO, also "band" e.g. grizzlybearband, and uk (royalblood)
@@ -73,21 +74,6 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   }
 
 
-  function basicSearch(artist, song){
-    query = basicQuery(artist, song)
-    console.log(query)
-    return searchYoutubePromise(query).then(function(queryResult){
-      for (var i = 0; i < queryResult.items.length; i++){
-        var result = queryResult.items[i]
-        var title = result.snippet.channelTitle.toLowerCase()
-        if ((title.replace(/\W/g, '').indexOf(artist.toLowerCase().replace(/\W/g, '')) !== -1 ||  _.contains(whitelist, title)) && !isLiveOrCover(artist, song, queryResult.items[i].snippet.title) && queryResult.items[i].snippet.title.toLowerCase().indexOf(song.toLowerCase()) !== -1){
-          return result.id.videoId
-        }
-      }
-      return null
-    })
-  }
-
   function vevoSearch(artist, song){
     query = vevoQuery(artist, song)
     console.log(query)
@@ -97,6 +83,21 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
       }else{
         return result.items[0].id.videoId
       }
+    })
+  }
+
+  function basicSearch(artist, song){
+    query = basicQuery(artist, song)
+    console.log(query)
+    return searchYoutubePromise(query).then(function(queryResult){
+      for (var i = 0; i < queryResult.items.length; i++){
+        var result = queryResult.items[i]
+        var title = result.snippet.channelTitle.toLowerCase()
+        if ((title.replace(/\W/g, '').indexOf(artist.toLowerCase().replace(/\W/g, '')) !== -1 ||  _.contains(whitelist, result.snippet.channelId)) && !isLiveOrCover(artist, song, result.snippet.title) && containsSongName(result, song)){
+          return result.id.videoId
+        }
+      }
+      return null
     })
   }
 

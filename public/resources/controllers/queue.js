@@ -87,15 +87,18 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
 
   message.on('deejay-updated', function(deejay) {
     if (deejay.needsSong()) {
+      console.log("Deejay needs a song for some reason. Playing next one")
       playNextSong()
     }
   })
 
   function playNextSong() {
     var newSong = advance()
+    console.log("New Song title: " + newSong.title)
     if (newSong) {
       Deejay.fromTheTop(newSong)
     } else {
+      console.log("Went off air for some reason")
       Deejay.goOffAir()
     }
   }

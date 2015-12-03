@@ -22,7 +22,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
   this.goOnAir = function() {
     if (this.isOffAir()) {
       state = BETWEEN_SONGS
-      notify()
+      notify("go on air")
     }
   }
 
@@ -30,14 +30,18 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
     state = OFF_AIR
     currentSong = null
     stopVideo()
-    notify()
+    notify("go off air")
   }
 
   this.fromTheTop = function(song) {
     currentSong = song
+    console.log("Song Name: " + song.title)
+    console.log("Song ID: " +song.youtubeId)
     this.goOnAir()
     player.cueVideoById(song.youtubeId)
     player.playVideo()
+    // player.loadVideoById(song.youtubeId)
+
     console.log("Playing new song from the top")
     $window.ga('send', 'event', 'Video', 'play')
 
@@ -46,10 +50,11 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
 
   this.skipThisSong = function() {
     currentSong = null
-    notify()
+    notify(" skip song")
   }
 
   this.needsSong = function() {
+    console.log("Current song = " + currentSong)
     return this.isOnAir() && !currentSong
   }
 
@@ -105,7 +110,9 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
     player.cueVideoById(null)
   }
 
-  function notify() {
+  function notify(caller) {
+    caller = typeof caller !== 'undefined' ? caller : "default";
+    console.log(caller)
     console.log("deejay-updated: "+state+" "+deejay.currentPlaybackPosition())
     message.send('deejay-updated', deejay)
   }
@@ -142,7 +149,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
   stateTransitions = []
   function playerStateChanged(event) {
     var msg = "" + currentYoutubePlayerState + " -> " + event.data + " " + player.getCurrentTime() + "/" + player.getDuration()
-    console.debug(msg)
+    console.log(msg)
     stateTransitions.push(msg)
     currentYoutubePlayerState = event.data
 
@@ -159,6 +166,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
     // console.log("Shit going down: "  + event.data)
 
     if (event.data === YT.PlayerState.ENDED) {
+      console.log("Song ended")
       currentSong = null
     }
 
@@ -176,7 +184,8 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
     $rootScope.$apply(notify)
   }
 
-  function playerError() {
+  function playerError(error) {
+    console.log("error: " + error.data)
     deejay.skipThisSong()
   }
 }])

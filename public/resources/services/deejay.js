@@ -38,9 +38,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
     console.log("Song Name: " + song.title)
     console.log("Song ID: " +song.youtubeId)
     this.goOnAir()
-    player.cueVideoById(song.youtubeId)
-    player.playVideo()
-    // player.loadVideoById(song.youtubeId)
+    player.loadVideoById(song.youtubeId)
 
     console.log("Playing new song from the top")
     $window.ga('send', 'event', 'Video', 'play')

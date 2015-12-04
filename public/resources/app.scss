@@ -1,6 +1,7 @@
 $brand-orange: #f67f00;
 $brand-tan: #e8e8e0;
 $medium-gray: #444;
+$greyed-out-text: #aaa;
 
 @mixin ellipsize-single-line {
   white-space: nowrap;
@@ -553,7 +554,6 @@ input:focus {
     overflow: hidden;
   }
   .song {
-    $greyed-out-text: #aaa;
 
     clear: both;
     font-size: 14px;
@@ -933,6 +933,9 @@ input:focus {
 
     &.selected span {
       background-color: rgba(4, 4, 4, 0.1);
+    }
+    &.unplayable span{
+      color: $greyed-out-text;
     }
   }
 

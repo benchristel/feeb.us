@@ -739,6 +739,8 @@ input:focus {
   font-size: 14px; }
   .catalog .song.selected span {
     background-color: rgba(4, 4, 4, 0.1); }
+  .catalog .song.unplayable span {
+    color: #aaa; }
 .catalog span {
   display: block;
   float: left;

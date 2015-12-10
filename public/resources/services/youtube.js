@@ -12,7 +12,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   //Auto searching could use some improvement. Possibly verify channelId by channel.list
   //Improvements to make:
   // (handled) 1. Some channels use "Official" at the end or before VEVO: e.g. BORNSOfficialVEVO, also "band" e.g. grizzlybearband, and uk (royalblood)
-  //2. some names have weird characters like BØRNS -- avoid? replace (with O)? Still works for the most part...
+  // (Handled) 2. some names have weird characters like BØRNS -- avoid? replace (with O)? Still works for the most part...
   //3. Possibly try VEVO first?
   //4. Investigate songs/bands with non-distinct names to see if just artist + song is good enough instead of adding "lyrics".
   //5. Check for length of video....
@@ -27,7 +27,12 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   // (handled) 14. Avoid videos with "cover" in it..
   //15. Downtown (feat. Eric Nally, Melle Mel, Kool Moe Dee & Grandmaster Caz)
   function isLiveOrCover(artist, title, videoTitle){
-     return doesNotContainString(artist, title, videoTitle, "live") || doesNotContainString(artist, title, videoTitle, "cover")
+     return doesNotContainString(artist, title, videoTitle, "live") || doesNotContainString(artist, title, videoTitle, "cover") || doesNotContainString(artist, title, videoTitle, "remix") || doesNotContainString(artist, title, videoTitle, "perform")
+  }
+
+  function providedToYoutube(description){
+    return description.indexOf("Provided to YouTube") !== -1
+
   }
 
   function doesNotContainString(artist, title, videoTitle, string){
@@ -65,11 +70,15 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     var query = hashTagQuery(artist, song)
     console.log(query)
     return searchYoutubePromise(query).then(function(result){
-      if (!result || !result.items || result.items.length == 0 || result.items[0].snippet.title.toLowerCase() != song.toLowerCase()){
-        return null
-      }else{
-        return result.items[0].id.videoId
+      console.log(result)
+      for (var i = 0; i < result.items.length; i++){
+        if (!containsSongName(result.items[i], song) || isLiveOrCover(artist, song, result.items[i].snippet.title) || !providedToYoutube(result.items[i].snippet.description)){
+          continue
+        }else{
+          return result.items[i].id.videoId
+        }
       }
+      return null
     })
   }
 
@@ -78,11 +87,14 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     query = vevoQuery(artist, song)
     console.log(query)
     return searchYoutubePromise(query).then(function(result){
-      if (!result || !result.items || result.items.length == 0 || !containsSongName(result.items[0], song) || isLiveOrCover(artist, song, result.items[0].snippet.title)){
-        return null
-      }else{
-        return result.items[0].id.videoId
+      for (var i = 0; i < result.items.length; i++){
+        if (!containsSongName(result.items[i], song) || isLiveOrCover(artist, song, result.items[i].snippet.title)){
+          continue
+        }else{
+          return result.items[i].id.videoId
+        }
       }
+      return null
     })
   }
 
@@ -92,8 +104,8 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     return searchYoutubePromise(query).then(function(queryResult){
       for (var i = 0; i < queryResult.items.length; i++){
         var result = queryResult.items[i]
-        var title = result.snippet.channelTitle.toLowerCase()
-        if ((title.replace(/\W/g, '').indexOf(artist.toLowerCase().replace(/\W/g, '')) !== -1 ||  _.contains(whitelist, result.snippet.channelId)) && !isLiveOrCover(artist, song, result.snippet.title) && containsSongName(result, song)){
+        var channelTitle = result.snippet.channelTitle.toLowerCase()
+        if ((removeBadCharacters(channelTitle).indexOf(removeBadCharacters(artist.toLowerCase())) !== -1 ||  _.contains(whitelist, result.snippet.channelId) || providedToYoutube(result.snippet.description)) && !isLiveOrCover(artist, song, result.snippet.title) && containsSongName(result, song)){
           return result.id.videoId
         }
       }
@@ -167,26 +179,13 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
     return defer.promise;
   }
 
-  function verifyChannelId(channelId, artist){
-    var defer=$q.defer();
 
-    var request = gapi.client.youtube.search.list({
-      id: channelId,
-      part: 'snippet'
-    })
-
-    request.execute(function(response) {
-      if (response.items[0].title == "#" + artist.replace(/\W/g, '') ){
-        defer.resolve(true)
-      }else{
-        defer.resolve(false)
-      }
-    });
-    return defer.promise;
+  function removeBadCharacters(str){
+    return str.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~ ]/g, '')
   }
 
   function hashTagQuery(artist, song){
-    return "\"#" + artist.replace(/\W/g, '') + "\" (\"" + song +"\" | \"" + removeAfterHyphen(song) + "\")"
+    return "\"#" + removeBadCharacters(artist) + "\" (\"" + song +"\" | \"" + removeAfterHyphen(song) + "\")"
   }
 
   function lyricQuery(artist, song){
@@ -198,7 +197,7 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   }
 
   function vevoQuery(artist, song){
-    return  "\"" +artist.replace(/\W/g, '') + "VEVO\" (\"" + song +"\" | \"" + removeAfterHyphen(song) + "\")"
+    return  "\"" +removeBadCharacters(artist) + "VEVO\" (\"" + song +"\" | \"" + removeAfterHyphen(song) + "\")"
   }
 
   function removeAfterHyphen(song){

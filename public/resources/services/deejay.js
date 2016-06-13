@@ -42,7 +42,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
 
     console.log("Playing new song from the top")
     $window.ga('send', 'event', 'Video', 'play')
-    titleScroller(song, " " + song.title + " - " + song.artist + " |   ", true);
+    titleScroller(song, song.title);
 
     //Is there supposed to be a notify here?
   }
@@ -51,8 +51,12 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
     if (song == currentSong){
       document.title = text;
       setTimeout(function () {
-          titleScroller(song, text.substr(1) + text.substr(0, 1));
-      }, 300);
+        if (text == song.artist){
+          titleScroller(song, song.title);
+        }else {
+          titleScroller(song, song.artist);
+        }
+      }, 6000);
     }
   }
 

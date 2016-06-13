@@ -68,6 +68,8 @@ angular.module('OathStructure').
 
   getPlaylists()
 
+
+
   message.on('saving-playlist', function(playlist){
     $scope.savingPlaylist = true;
     $scope.playlistToBeSaved = playlist

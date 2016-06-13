@@ -21,9 +21,9 @@ angular.module('OathStructure').service('YoutubeService', ['$rootScope' , '$q', 
   //8. Check for views?
   //9. Filter by duration
   //  (In the works) 10. Record Label Whitelist? Check if channelTitle is on the whitelist.
-  //11. Found official remix for Dear Science, Shout me out instead of album version. Add album name to search?
+  // (handled that shit!)11. Found official remix for Dear Science, Shout me out instead of album version. Add album name to search?
   //12. Spoitify: Silversun Pickups: Pins and Needles, Youtube: Pins & Needles. :( test for common switches?
-  //13. What happened to Viva La Vida? Coldplay
+  // (Handled)13. What happened to Viva La Vida? Coldplay
   // (handled) 14. Avoid videos with "cover" in it..
   //15. Downtown (feat. Eric Nally, Melle Mel, Kool Moe Dee & Grandmaster Caz)
   function isLiveOrCover(artist, title, videoTitle){

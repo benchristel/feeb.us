@@ -30,7 +30,14 @@ angular.module('OathStructure').controller('QueueController', ['$anchorScroll','
   }
 
   $scope.$on('$locationChangeStart', function(ev, next, last, newState) {
-    ev.preventDefault();
+    console.log(ev)
+    console.log(next)
+    console.log(last)
+    console.log(newState)
+    if (next != last){
+      ev.preventDefault();
+
+    }
   });
 
   $scope.repeat = function(){

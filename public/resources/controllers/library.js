@@ -1,12 +1,52 @@
-angular.module('OathStructure').controller('LibraryController', ['$scope', '$location', '$anchorScroll', '$timeout', 'YoutubeService', 'SpotifyService',
-                                                         function($scope, $location, $anchorScroll, $timeout, YoutubeService, SpotifyService) {
+angular.module('OathStructure').controller('LibraryController', ['$scope', '$location', '$window', '$anchorScroll', '$timeout', 'YoutubeService', 'SpotifyService',
+                                                         function($scope, $location, $window, $anchorScroll, $timeout, YoutubeService, SpotifyService) {
 
   $scope.tab = 'library'
   // $scope.playlists = [{'name': 'THe best', 'tracks': [{'title':'subbydobydo' }, {'title':'malcom'},{'title': 'taken by surprise in the early eve' }]}, {'name': 'Worst', 'tracks': [{'title':'death is inexorable'}, {'title':'Smart money is on the other guy'}]} ]
   // $scope.playlists = []
   $scope.selectTab = function(tab){
+    console.log("selectedTab")
     $scope.tab = tab
+
+    // $location.hash(tab)
+
+    history.pushState({tab: $scope.tab, showAlbum: $scope.showAlbum, albumList: $scope.albumList}, null, null);
+    // $location.state($scope.tab)
   }
+
+  $scope.onPopState = function(state){
+    console.log(state)
+    if(state.tab !== null){
+      $scope.tab = state.tab;
+    }
+    if(state.showAlbum !== null){
+      $scope.showAlbum = state.showAlbum
+    }
+    if(state.albumList !== null){
+      $scope.albumList = state.albumList
+    }
+  };
+
+  history.replaceState({tab: $scope.tab, showAlbum: $scope.showAlbum, albumList: $scope.albumList}, null, null);
+
+
+
+  // $window.onpopstate = function(event) {
+  //   console.log("State popped. Back or forward probably")
+  //   $scope.tab = event.state.tab;
+  //   console.log($scope.tab)
+  // };
+
+  // $window.addEventListener("popstate", function(event){
+  //   event.stopPropagation();
+  //   event.preventDefault();
+  //   $timeout(function() {
+  //       fn($scope, {
+  //           $tab : event.state,
+  //           $event : event
+  //       });
+  //   });
+  // });
 
   $scope.searchQuery = ""
   $scope.selectedPlaylist = {}
@@ -151,6 +191,8 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     $scope.artist = artist
     SpotifyService.getArtistAlbums(artist.id).then(function(result){
       $scope.albumList = result
+      history.pushState({tab: $scope.tab, showAlbum: $scope.showAlbum, albumList: $scope.albumList}, null, null);
+
     })
   }
 
@@ -164,6 +206,7 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     $scope.selectedTrack = typeof selectedTrack !== 'undefined' ?  selectedTrack.name : null;
     console.log($scope.selectedTrack)
     $scope.showAlbum = true;
+    history.pushState({tab: $scope.tab, showAlbum: $scope.showAlbum, albumList: $scope.albumList}, null, null);
     SpotifyService.getAlbumTracks(album.id).then(function(result){
       $scope.trackList = []
       _.each(result, function(track){
@@ -192,3 +235,20 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
   }
 
 }])
+
+angular.module('OathStructure').directive("ngPopstate", function($parse, $timeout, $window){
+    return function($scope, $element, $attributes){
+      var fn = $parse($attributes["ngPopstate"]);
+      $window.addEventListener("popstate", function(event){
+          console.log("Is this called??")
+          event.stopPropagation();
+          event.preventDefault();
+          $timeout(function() {
+              fn($scope, {
+                  $state : event.state,
+                  $event : event
+              });
+          });
+      });
+    };
+});

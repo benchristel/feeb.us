@@ -2,51 +2,41 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
                                                          function($scope, $location, $window, $anchorScroll, $timeout, YoutubeService, SpotifyService) {
 
   $scope.tab = 'library'
-  // $scope.playlists = [{'name': 'THe best', 'tracks': [{'title':'subbydobydo' }, {'title':'malcom'},{'title': 'taken by surprise in the early eve' }]}, {'name': 'Worst', 'tracks': [{'title':'death is inexorable'}, {'title':'Smart money is on the other guy'}]} ]
-  // $scope.playlists = []
+
   $scope.selectTab = function(tab){
     console.log("selectedTab")
     $scope.tab = tab
-
-    // $location.hash(tab)
-
-    history.pushState({tab: $scope.tab, showAlbum: $scope.showAlbum, albumList: $scope.albumList}, null, null);
-    // $location.state($scope.tab)
+    console.log(extractState($scope))
+    history.pushState(extractState($scope), null, null);
   }
+
+
+
 
   $scope.onPopState = function(state){
     console.log(state)
-    if(state.tab !== null){
-      $scope.tab = state.tab;
+    for (var key in state) {
+      $scope[key] = state[key]
     }
-    if(state.showAlbum !== null){
-      $scope.showAlbum = state.showAlbum
-    }
-    if(state.albumList !== null){
-      $scope.albumList = state.albumList
+    console.log(_.isEqual($scope.trackList, ["get"]))
+    if (_.isEqual($scope.trackList, ["get"])){
+      $scope.getAlbumTracks($scope.selectedAlbum, $scope.selectedTrack)
     }
   };
 
-  history.replaceState({tab: $scope.tab, showAlbum: $scope.showAlbum, albumList: $scope.albumList}, null, null);
+  history.replaceState(extractState($scope), null, null);
 
+  function extractState(fullState){
+    var state = Object.keys(fullState).reduce(function(previous, current) {
+      if (typeof fullState[current] !== "function" && current[0] !== "$" && current !== "activeElement"){
+        previous[current] = fullState[current];
+      }
+      return previous;
+    }, {});
+    return state
 
+  }
 
-  // $window.onpopstate = function(event) {
-  //   console.log("State popped. Back or forward probably")
-  //   $scope.tab = event.state.tab;
-  //   console.log($scope.tab)
-  // };
-
-  // $window.addEventListener("popstate", function(event){
-  //   event.stopPropagation();
-  //   event.preventDefault();
-  //   $timeout(function() {
-  //       fn($scope, {
-  //           $tab : event.state,
-  //           $event : event
-  //       });
-  //   });
-  // });
 
   $scope.searchQuery = ""
   $scope.selectedPlaylist = {}
@@ -184,14 +174,13 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
 
   $scope.getArtistAlbums = function(artist){
     console.log("called artist")
-    // $location.hash("/artist/" + artist.id)
     console.log(artist)
     $scope.showResults = false
     $scope.showAlbum = false;
     $scope.artist = artist
     SpotifyService.getArtistAlbums(artist.id).then(function(result){
       $scope.albumList = result
-      history.pushState({tab: $scope.tab, showAlbum: $scope.showAlbum, albumList: $scope.albumList}, null, null);
+      history.pushState(extractState($scope), null, null);
 
     })
   }
@@ -200,13 +189,22 @@ angular.module('OathStructure').controller('LibraryController', ['$scope', '$loc
     console.log("called album")
     console.log(album)
 
-    // $location.hash("/album/" + album.id)
     $scope.showResults = false
     $scope.selectedAlbum = album
-    $scope.selectedTrack = typeof selectedTrack !== 'undefined' ?  selectedTrack.name : null;
-    console.log($scope.selectedTrack)
+    if (typeof selectedTrack !== 'undefined' && selectedTrack !== null){
+      $scope.selectedTrack = typeof selectedTrack.name !== 'undefined' ? selectedTrack.name : selectedTrack
+    }else{
+      $scope.selectedTrack = null;
+    }
+    // $scope.selectedTrack = selectedTrack !== null ?  selectedTrack.name : null;
+
     $scope.showAlbum = true;
-    history.pushState({tab: $scope.tab, showAlbum: $scope.showAlbum, albumList: $scope.albumList}, null, null);
+    if (!(_.isEqual($scope.trackList, ["get"]))){
+      console.log("adding to history from getAlbumTracks")
+      var state = extractState($scope)
+      state.trackList = ["get"]
+      history.pushState(state, null, null);
+    }
     SpotifyService.getAlbumTracks(album.id).then(function(result){
       $scope.trackList = []
       _.each(result, function(track){
@@ -240,7 +238,6 @@ angular.module('OathStructure').directive("ngPopstate", function($parse, $timeou
     return function($scope, $element, $attributes){
       var fn = $parse($attributes["ngPopstate"]);
       $window.addEventListener("popstate", function(event){
-          console.log("Is this called??")
           event.stopPropagation();
           event.preventDefault();
           $timeout(function() {

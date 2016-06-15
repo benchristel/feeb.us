@@ -4,6 +4,7 @@
 <link href="resources/app.css" rel="stylesheet"></link>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href="resources/perfect-scrollbar.min.css" rel="stylesheet">
+<base href="/">
 </head>
 <body ng-app="OathStructure" ng-controller="AppController" ng-keypress="keypress($event)">
 
@@ -71,7 +72,7 @@
         </perfect-scrollbar>
     </div>
 
-    <div class="library-container" ng-controller="LibraryController" ng-cloak>
+    <div class="library-container" ng-controller="LibraryController" ng-cloak ng-popstate="onPopState($state)">
         <div class="tabs">
             <div class="tab" ng-class="{selected: (tab == 'playlists')}" ng-click = "selectTab('playlists')">Playlists</div>
             <div class="tab "  ng-class="{selected: (tab == 'library')}" ng-click = "selectTab('library')">Library</div>
@@ -157,8 +158,8 @@
                 </div>
             </perfect-scrollbar>
           </div>
-          <div class= 'list-container'>
-            <div class = "playlist-header">
+          <div class= 'list-container' ng-hide = "selectedPlaylist.name == undefined"  >
+            <div class = "playlist-header" >
               <div class="playlist-title"> {{selectedPlaylist.name}} </div>
               <div class="play-now fa-play-circle-o fa" ng-click = "playListNow(selectedPlaylist.tracks)"></div>
               <div class= "button-container">

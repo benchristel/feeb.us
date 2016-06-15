@@ -1,6 +1,6 @@
 angular.module('OathStructure').
-  controller('AppController', ['$scope', '$http', 'Deejay',
-                      function ($scope,   $http,   Deejay) {
+  controller('AppController', ['$scope', '$http', 'Deejay', 'TitleChanger',
+                      function ($scope,   $http,   Deejay, TitleChanger) {
   $scope.searchQueryChars = function() {
     if (!$scope.searchQuery) return []
     return $scope.searchQuery.split('')

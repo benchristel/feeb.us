@@ -42,23 +42,12 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
 
     console.log("Playing new song from the top")
     $window.ga('send', 'event', 'Video', 'play')
-    titleScroller(song, song.title);
+    // titleScroller(song, song.title);
 
     //Is there supposed to be a notify here?
   }
 
-  function titleScroller(song, text) {
-    if (song == currentSong){
-      document.title = text;
-      setTimeout(function () {
-        if (text == song.artist){
-          titleScroller(song, song.title);
-        }else {
-          titleScroller(song, song.artist);
-        }
-      }, 4000);
-    }
-  }
+
 
   this.skipThisSong = function() {
     currentSong = null

@@ -56,7 +56,7 @@ angular.module('OathStructure').service('Deejay', ['$rootScope', '$window', func
         }else {
           titleScroller(song, song.artist);
         }
-      }, 6000);
+      }, 4000);
     }
   }
 

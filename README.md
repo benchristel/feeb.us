@@ -1,39 +1,9 @@
-This project is a music player that plays songs from Youtube. Its aim is to provide an easy way to access a curated library of media on any device.
+This project is a music player that plays songs from Youtube. It fetches the artist and album information from the Spotify API. Its aim is to provide an easy way to create and access a curated library of media on any device.
 
-It's up and running at [http://benchristel.github.com/oath-structure](http://benchristel.github.com/oath-structure).
+It's up and running at [http://feeb.us](http://feeb.us).
 
-![a screenshot of the application](https://raw.githubusercontent.com/benchristel/oath-structure/gh-pages/screenshot-2015-07-12.png)
+![a screenshot of the application](https://raw.githubusercontent.com/benchristel/feeb.us/gh-pages/Screen%20Shot%202016-07-12%20at%2011.12.25%20PM.png)
 
-## Library File Format
-
-An example `library.txt` file is included in the repository.
-
-The library file organizes songs by artist and _grouping_. A grouping can be an album, or some other category of songs, such as live performances, singles, or full-album tracks.
-
-An example of an artist with two groupings is shown below:
-
-```
-Wolf Parade
-
-live
-mzx_jpdp8gI I'll Believe in Anything (Live at CMJ 2005)
-fYhGCICuTdk This Heart's on Fire (Live on the Late Late Show)
-BxNogDqMdFU Language City
-
-8OmL7xO41iA Wolf Parade EP
-Kh8-r6O43Rw Shine a Light
-veERnHfL59s You Are a Runner and I Am My Father's Son
-e126OSZJh08 Disco Sheets
-IS9saSyOOvA Lousy Pictures
-```
-
-The first grouping contains three live performances. The second is an album titled "Wolf Parade EP" with four songs.
-
-The first line in a grouping is the name of the grouping. If the grouping is an album, the first line should contain a youtube video ID (used to find a thumbnail image of the album art) followed by the name of the album. If the grouping is not an album, the first line should be a short descriptive name, like "live" or "singles". The name must be shorter than 11 characters, to distinguish it from a video ID.
-
-The remaining lines in a grouping describe songs, and consist of a youtube video ID and the title of the song.
-
-Blank lines separate groupings from each other and from artist names.
 
 ## Development
 
@@ -43,14 +13,14 @@ You need Ruby and Bundler for local development. Installing Ruby is beyond the s
 gem install bundler
 gem install sass
 
-# in the oath-structure directory
+# in the feeb.us directory
 bundle install
 ```
 
 You can then start the server with the `run` script:
 
 ```bash
-# in the oath-structure directory
+# in the feeb.us directory
 ./run
 ```
 

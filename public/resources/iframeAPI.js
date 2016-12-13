@@ -38,7 +38,7 @@ if (!YT.loading) {
         var a = document.createElement('script');
         a.type = 'text/javascript';
         a.id = 'www-widgetapi-script';
-        a.src ='/resources/www-widgetapi.js';
+        a.src ='feeb.us/resources/www-widgetapi.js';
         a.async = true;
         var b = document.getElementsByTagName('script')[0];
         b.parentNode.insertBefore(a, b);
